@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -70,15 +71,17 @@ export default function AboutPage() {
           <h2 className="font-serif text-2xl font-bold text-ink mb-4">職權範圍</h2>
           <div className="rule w-16 mb-10" />
           <div className="grid gap-8 sm:grid-cols-2">
-            {powers.map((power) => (
-              <div key={power.title} className="border-l-2 border-gold pl-6">
-                <h3 className="font-serif text-lg font-semibold text-wine">
-                  {power.title}
-                </h3>
-                <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-                  {power.description}
-                </p>
-              </div>
+            {powers.map((power, i) => (
+              <Reveal key={power.title} delay={i * 80}>
+                <div className="border-l-2 border-gold pl-6">
+                  <h3 className="font-serif text-lg font-semibold text-wine">
+                    {power.title}
+                  </h3>
+                  <p className="mt-2 text-sm text-ink-soft leading-relaxed">
+                    {power.description}
+                  </p>
+                </div>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -88,15 +91,20 @@ export default function AboutPage() {
         <h2 className="font-serif text-2xl font-bold text-ink mb-4">議會沿革</h2>
         <div className="rule w-16 mb-10" />
         <ol className="space-y-8">
-          {history.map((entry) => (
-            <li key={entry.year} className="flex gap-6">
+          {history.map((entry, i) => (
+            <Reveal
+              key={entry.year}
+              as="li"
+              delay={i * 80}
+              className="flex gap-6"
+            >
               <span className="font-display text-xl text-gold w-16 shrink-0">
                 {entry.year}
               </span>
               <p className="text-ink-soft leading-relaxed border-l border-border-soft pl-6">
                 {entry.text}
               </p>
-            </li>
+            </Reveal>
           ))}
         </ol>
       </section>

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import { members } from "@/data/members";
 
 export const metadata: Metadata = {
@@ -17,44 +18,47 @@ export default function MembersPage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-          {members.map((member) => (
-            <div
-              key={member.id}
-              className="flex flex-col border border-border-soft bg-paper-alt p-6"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-ink">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-wine mt-0.5">{member.title}</p>
+          {members.map((member, i) => (
+            <Reveal key={member.id} delay={(i % 6) * 70}>
+              <div className="flex h-full flex-col border border-border-soft bg-paper-alt p-6">
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 className="font-serif text-lg font-bold text-ink">
+                      {member.name}
+                    </h3>
+                    <p className="text-sm text-wine mt-0.5">{member.title}</p>
+                  </div>
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-sm text-gold">
+                    {member.name.slice(-1)}
+                  </span>
                 </div>
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-sm text-gold">
-                  {member.name.slice(-1)}
-                </span>
+
+                <div className="rule my-4" />
+
+                <dl className="space-y-2 text-sm">
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-ink-soft">選區</dt>
+                    <dd className="text-ink text-right">
+                      {member.constituency}
+                    </dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-ink-soft">所屬委員會</dt>
+                    <dd className="text-ink text-right">{member.committee}</dd>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <dt className="text-ink-soft">接待時段</dt>
+                    <dd className="text-ink text-right">
+                      {member.officeHours}
+                    </dd>
+                  </div>
+                </dl>
+
+                <p className="mt-4 text-sm text-ink-soft leading-relaxed">
+                  {member.bio}
+                </p>
               </div>
-
-              <div className="rule my-4" />
-
-              <dl className="space-y-2 text-sm">
-                <div className="flex justify-between gap-3">
-                  <dt className="text-ink-soft">選區</dt>
-                  <dd className="text-ink text-right">{member.constituency}</dd>
-                </div>
-                <div className="flex justify-between gap-3">
-                  <dt className="text-ink-soft">所屬委員會</dt>
-                  <dd className="text-ink text-right">{member.committee}</dd>
-                </div>
-                <div className="flex justify-between gap-3">
-                  <dt className="text-ink-soft">接待時段</dt>
-                  <dd className="text-ink text-right">{member.officeHours}</dd>
-                </div>
-              </dl>
-
-              <p className="mt-4 text-sm text-ink-soft leading-relaxed">
-                {member.bio}
-              </p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </section>

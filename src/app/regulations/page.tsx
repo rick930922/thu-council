@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import { getGroupedRegulations } from "@/data/regulations";
 
 export const metadata: Metadata = {
@@ -25,8 +26,8 @@ export default function RegulationsPage() {
             </h2>
             <div className="rule w-16 mt-3 mb-6" />
             <ul className="divide-y divide-border-soft border-t border-b border-border-soft">
-              {regs.map((reg) => (
-                <li key={reg.id}>
+              {regs.map((reg, i) => (
+                <Reveal key={reg.id} as="li" delay={(i % 6) * 50}>
                   <a
                     href={reg.fileUrl}
                     className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-5 px-2 -mx-2 hover:bg-paper-alt transition-colors"
@@ -38,7 +39,7 @@ export default function RegulationsPage() {
                       最後修正日期：{reg.lastAmended}
                     </span>
                   </a>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>

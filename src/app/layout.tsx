@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { Noto_Serif_TC, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
@@ -38,7 +39,11 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-paper text-ink font-serif">
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main className="flex-1">
+          <ViewTransition enter="page-enter" exit="page-exit" default="none">
+            {children}
+          </ViewTransition>
+        </main>
         <SiteFooter />
       </body>
     </html>

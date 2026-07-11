@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import {
   committees,
   presidium,
@@ -51,8 +52,12 @@ export default function OrganizationPage() {
       />
 
       <section className="mx-auto max-w-6xl px-6 py-16 space-y-8">
-        <OrgUnitCard unit={presidium} />
-        <OrgUnitCard unit={secretariat} />
+        <Reveal>
+          <OrgUnitCard unit={presidium} />
+        </Reveal>
+        <Reveal delay={80}>
+          <OrgUnitCard unit={secretariat} />
+        </Reveal>
       </section>
 
       <section className="border-t border-border-soft bg-paper-alt/40">
@@ -62,8 +67,10 @@ export default function OrganizationPage() {
           </h2>
           <div className="rule w-16 mb-10" />
           <div className="grid gap-8 lg:grid-cols-2">
-            {committees.map((committee) => (
-              <OrgUnitCard key={committee.id} unit={committee} />
+            {committees.map((committee, i) => (
+              <Reveal key={committee.id} delay={i * 80}>
+                <OrgUnitCard unit={committee} />
+              </Reveal>
             ))}
           </div>
         </div>

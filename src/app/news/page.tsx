@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import { getSortedNews } from "@/data/news";
 
 export const metadata: Metadata = {
@@ -20,8 +21,8 @@ export default function NewsPage() {
 
       <section className="mx-auto max-w-4xl px-6 py-16">
         <ul className="divide-y divide-border-soft border-t border-b border-border-soft">
-          {news.map((item) => (
-            <li key={item.slug}>
+          {news.map((item, i) => (
+            <Reveal key={item.slug} as="li" delay={Math.min(i, 5) * 60}>
               <Link
                 href={`/news/${item.slug}`}
                 className="group flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8 py-6 hover:bg-paper-alt transition-colors px-2 -mx-2"
@@ -41,7 +42,7 @@ export default function NewsPage() {
                   </p>
                 </div>
               </Link>
-            </li>
+            </Reveal>
           ))}
         </ul>
       </section>

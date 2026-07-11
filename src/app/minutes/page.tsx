@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
+import Reveal from "@/components/Reveal";
 import { getGroupedMinutes } from "@/data/minutes";
 
 export const metadata: Metadata = {
@@ -25,10 +26,12 @@ export default function MinutesPage() {
             </h2>
             <div className="rule w-16 mt-3 mb-8" />
             <ul className="space-y-6">
-              {records.map((record) => (
-                <li
+              {records.map((record, i) => (
+                <Reveal
                   key={record.id}
-                  className="border border-border-soft bg-paper-alt p-6"
+                  as="li"
+                  delay={(i % 5) * 70}
+                  className="block border border-border-soft bg-paper-alt p-6"
                 >
                   <div className="flex flex-wrap items-center gap-3">
                     <span
@@ -57,7 +60,7 @@ export default function MinutesPage() {
                   >
                     下載完整紀錄 →
                   </a>
-                </li>
+                </Reveal>
               ))}
             </ul>
           </div>
