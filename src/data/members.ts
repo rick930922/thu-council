@@ -1,138 +1,51 @@
 export type CouncilMember = {
   id: string;
   name: string;
-  title: string;
-  constituency: string;
-  committee: string;
-  officeHours: string;
-  bio: string;
+  college: string;
+  department: string;
 };
 
 export const members: CouncilMember[] = [
-  {
-    id: "liang-junyi",
-    name: "梁俊億",
-    title: "議長",
-    constituency: "社會科學院",
-    committee: "議長團",
-    officeHours: "週一 14:00–16:00",
-    bio: "主持議會會議進行，統籌議會對外事務與跨委員會協調工作。",
-  },
-  {
-    id: "chen-boyu",
-    name: "陳柏宇",
-    title: "副議長 ／ 法制委員會召集人",
-    constituency: "法律學院",
-    committee: "法制委員會",
-    officeHours: "週二 15:00–17:00",
-    bio: "協助議長綜理會務，專責自治法規審查與議事程序把關。",
-  },
-  {
-    id: "wang-pinrui",
-    name: "王品叡",
-    title: "議員",
-    constituency: "文學院",
-    committee: "法制委員會",
-    officeHours: "週三 12:00–14:00",
-    bio: "關注校園言論自由與學生權益相關法規之增修。",
-  },
-  {
-    id: "li-guanwei",
-    name: "李冠緯",
-    title: "議員",
-    constituency: "工學院",
-    committee: "法制委員會",
-    officeHours: "週四 13:00–15:00",
-    bio: "長期關心工學院實驗場域安全規範與自治法規銜接。",
-  },
-  {
-    id: "zeng-shihan",
-    name: "曾詩涵",
-    title: "議員",
-    constituency: "創藝學院",
-    committee: "法制委員會",
-    officeHours: "週一 16:00–18:00",
-    bio: "推動創藝學院學生展演空間使用規則之制度化。",
-  },
-  {
-    id: "zhang-shurui",
-    name: "張書睿",
-    title: "議員 ／ 預算審查委員會召集人",
-    constituency: "管理學院",
-    committee: "預算審查委員會",
-    officeHours: "週二 12:00–14:00",
-    bio: "專責學生自治會年度預決算審查與經費執行監督。",
-  },
-  {
-    id: "he-yunqin",
-    name: "何芸溱",
-    title: "議員",
-    constituency: "國際學院",
-    committee: "預算審查委員會",
-    officeHours: "週三 15:00–17:00",
-    bio: "關注國際學生事務經費編列與獎助學金分配透明度。",
-  },
-  {
-    id: "liu-zonghan",
-    name: "劉宗翰",
-    title: "議員",
-    constituency: "農學院",
-    committee: "預算審查委員會",
-    officeHours: "週五 12:00–14:00",
-    bio: "推動農學院實習場域設備汰換預算之專案審查。",
-  },
-  {
-    id: "you-ziqing",
-    name: "游子晴",
-    title: "議員 ／ 考核委員會召集人",
-    constituency: "社會科學院",
-    committee: "考核委員會",
-    officeHours: "週四 14:00–16:00",
-    bio: "統籌學生自治會行政部門施政質詢與執行進度追蹤。",
-  },
-  {
-    id: "cai-chenghan",
-    name: "蔡承翰",
-    title: "議員",
-    constituency: "理學院",
-    committee: "考核委員會",
-    officeHours: "週一 12:00–14:00",
-    bio: "關注理學院獎學金核發時效與行政流程效率。",
-  },
-  {
-    id: "jian-yuan",
-    name: "簡妤安",
-    title: "議員",
-    constituency: "文學院",
-    committee: "考核委員會",
-    officeHours: "週二 16:00–18:00",
-    bio: "追蹤住宿服務組宿舍設施修繕案執行進度。",
-  },
-  {
-    id: "xu-yazhu",
-    name: "許雅筑",
-    title: "議員 ／ 公共關係委員會召集人",
-    constituency: "管理學院",
-    committee: "公共關係委員會",
-    officeHours: "週三 12:00–14:00",
-    bio: "統籌「議會開講」座談系列與議會社群媒體經營。",
-  },
-  {
-    id: "lin-zhiyuan",
-    name: "林致遠",
-    title: "議員",
-    constituency: "工學院",
-    committee: "公共關係委員會",
-    officeHours: "週五 14:00–16:00",
-    bio: "負責議會陳情信箱回覆與校園意見彙整。",
-  },
-  {
-    id: "qiu-bocheng",
-    name: "邱柏成",
-    title: "議員",
-    constituency: "共同選區（研究生／僑生）",
-    committee: "公共關係委員會",
-    officeHours: "週四 12:00–14:00",
-    bio: "代表研究生與僑生同學反映跨選區共通議題。",
-  },
+  { id: "chen-jirui", name: "陳紀睿", college: "理學院", department: "生科系" },
+
+  { id: "zhang-zhongyi", name: "張仲毅", college: "社會科學院", department: "政治學系" },
+  { id: "liang-junyi", name: "梁俊億", college: "社會科學院", department: "政治學系政治理論組" },
+  { id: "xu-junrui", name: "許峻睿", college: "社會科學院", department: "政治學系" },
+  { id: "cai-yulin", name: "蔡玗霖", college: "社會科學院", department: "社會學系" },
+  { id: "li-shengya", name: "李聖亞", college: "社會科學院", department: "行政管理暨政策學系" },
+
+  { id: "gao-yuen", name: "高予恩", college: "創意設計暨藝術學院", department: "美術系" },
+  { id: "huang-baihao", name: "黃柏皓", college: "創意設計暨藝術學院", department: "美術系" },
+  { id: "wang-liyan", name: "王立言", college: "創意設計暨藝術學院", department: "美術系" },
+  { id: "hong-caiyu", name: "洪采妤", college: "創意設計暨藝術學院", department: "音樂系" },
+  { id: "lin-junya", name: "林均亞", college: "創意設計暨藝術學院", department: "音樂系" },
+  { id: "chen-xingyu", name: "陳星羽", college: "創意設計暨藝術學院", department: "音樂系" },
+
+  { id: "li-yuxuan", name: "李宇衒", college: "工學院", department: "環工系" },
+  { id: "chen-zeyu", name: "陳則宇", college: "工學院", department: "環工系" },
+  { id: "hong-ruojie", name: "洪若傑", college: "工學院", department: "工工系" },
+  { id: "chen-xinyu", name: "陳信宇", college: "工學院", department: "電機系" },
+  { id: "lin-weixiang", name: "林暐翔", college: "工學院", department: "電機系" },
+  { id: "wang-yuwei", name: "王郁為", college: "工學院", department: "電機系" },
+
+  { id: "yang-xiuqi", name: "楊琇棋", college: "國際學院", department: "永續科學與管理學士學位學程" },
+
+  { id: "lin-xiujun", name: "林琇君", college: "農業暨健康學院", department: "畜產系" },
+  { id: "hong-chongkai", name: "洪崇凱", college: "農業暨健康學院", department: "畜產系" },
+  { id: "chen-hong", name: "陳紘", college: "農業暨健康學院", department: "畜產系" },
+
+  { id: "yang-peihua", name: "楊佩樺", college: "管理學院", department: "會計系" },
+  { id: "xu-weifeng", name: "許暐鋒", college: "管理學院", department: "國貿系" },
+
+  { id: "xue-qiaofeng", name: "薛喬丰", college: "研究所", department: "" },
+  { id: "zhao-youren", name: "趙宥任", college: "研究所", department: "" },
 ];
+
+export function getGroupedMembers() {
+  const groups = new Map<string, CouncilMember[]>();
+  for (const member of members) {
+    if (!groups.has(member.college)) groups.set(member.college, []);
+    groups.get(member.college)!.push(member);
+  }
+  return groups;
+}
