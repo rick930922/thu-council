@@ -27,13 +27,22 @@ function OrgUnitCard({ unit }: { unit: OrgUnit }) {
         {unit.description}
       </p>
       <div className="rule my-6" />
-      <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+      <ul className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
         {unit.members.map((member) => (
           <li
             key={`${unit.id}-${member.name}`}
-            className="flex items-baseline justify-between border-b border-border-soft/70 py-1.5 text-sm"
+            className="flex items-center justify-between gap-3 border-b border-border-soft/70 py-1.5 text-sm"
           >
-            <span className="text-ink">{member.name}</span>
+            <span className="flex items-center gap-3">
+              {member.photo && (
+                <img
+                  src={member.photo}
+                  alt={member.name}
+                  className="h-10 w-10 shrink-0 rounded-full border border-gold/50 object-cover"
+                />
+              )}
+              <span className="text-ink">{member.name}</span>
+            </span>
             <span className="text-ink-soft">{member.title}</span>
           </li>
         ))}

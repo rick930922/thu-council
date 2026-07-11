@@ -16,9 +16,6 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border-soft bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-gold/60 bg-paper-alt font-display text-lg text-wine">
-            THU
-          </span>
           <span className="flex flex-col leading-tight">
             <span className="eyebrow text-[0.6rem] text-ink-soft">
               {site.englishName}

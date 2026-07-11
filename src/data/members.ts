@@ -10,8 +10,8 @@ export type CouncilMember = {
 
 export const members: CouncilMember[] = [
   {
-    id: "lin-tingyu",
-    name: "林亭渝",
+    id: "liang-junyi",
+    name: "梁俊億",
     title: "議長",
     constituency: "社會科學院",
     committee: "議長團",

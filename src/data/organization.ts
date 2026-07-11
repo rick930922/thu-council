@@ -1,6 +1,7 @@
 export type OrgMember = {
   name: string;
   title: string;
+  photo?: string;
 };
 
 export type OrgUnit = {
@@ -19,7 +20,7 @@ export const presidium: OrgUnit = {
   description:
     "綜理議會會務，對外代表議會，主持大會與臨時會議程，並協調各常設委員會運作。",
   members: [
-    { name: "林亭渝", title: "議長" },
+    { name: "梁俊億", title: "議長", photo: "/members/liang-junyi.jpg" },
     { name: "陳柏宇", title: "副議長" },
   ],
 };
@@ -30,9 +31,9 @@ export const secretariat: OrgUnit = {
   englishName: "Secretariat",
   description:
     "辦理議會行政庶務、會議紀錄整理、公文往來與新聞稿發布，為議長團及各委員會之幕僚單位。",
-  convener: "黃思婷（秘書長）",
+  convener: "謝政諺（秘書長）",
   members: [
-    { name: "黃思婷", title: "秘書長" },
+    { name: "謝政諺", title: "秘書長", photo: "/members/xie-zhengyan.jpg" },
     { name: "郭子謙", title: "副秘書長" },
     { name: "許雅筑", title: "文書組長" },
     { name: "賴信宏", title: "資訊組員" },
