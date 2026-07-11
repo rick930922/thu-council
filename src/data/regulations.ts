@@ -1,80 +1,112 @@
-export type RegulationCategory =
-  | "組織法規"
-  | "議事法規"
-  | "選罷法規"
-  | "財務法規";
+export type RegulationCategory = "組織法規" | "議事法規" | "選罷法規";
 
 export type Regulation = {
   id: string;
   category: RegulationCategory;
   title: string;
-  lastAmended: string;
+  lastAmended?: string;
   fileUrl: string;
 };
 
+const PDF = "/docs/thu-student-regulations.pdf";
+
 export const regulations: Regulation[] = [
   {
-    id: "student-council-organic-act",
+    id: "council-organic-act",
     category: "組織法規",
     title: "東海大學學生議會組織法",
-    lastAmended: "2025-09-25",
-    fileUrl: "#",
+    lastAmended: "2021-12-02",
+    fileUrl: `${PDF}#page=69`,
   },
   {
-    id: "committee-establishment-act",
+    id: "procedure-committee-organic-act",
     category: "組織法規",
-    title: "常設委員會設置辦法",
-    lastAmended: "2025-09-25",
-    fileUrl: "#",
+    title: "東海大學學生議會程序委員會組織法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=74`,
+  },
+  {
+    id: "discipline-committee-organic-act",
+    category: "組織法規",
+    title: "東海大學學生議會紀律委員會組織法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=75`,
+  },
+  {
+    id: "legislation-committee-organic-act",
+    category: "組織法規",
+    title: "東海大學學生議會法制委員會組織法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=76`,
+  },
+  {
+    id: "rights-protection-committee-organic-act",
+    category: "組織法規",
+    title: "東海大學學生議會權益維護委員會組織法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=77`,
+  },
+  {
+    id: "audit-committee-organic-act",
+    category: "組織法規",
+    title: "東海大學學生議會經費稽核委員會組織法",
+    lastAmended: "2022-12-08",
+    fileUrl: `${PDF}#page=78`,
+  },
+  {
+    id: "finance-admin-review-committee-organic-act",
+    category: "組織法規",
+    title: "東海大學學生議會財務暨行政審查委員會組織法",
+    lastAmended: "2022-12-08",
+    fileUrl: `${PDF}#page=79`,
+  },
+  {
+    id: "powers-exercise-act",
+    category: "議事法規",
+    title: "東海大學學生議會職權行使法",
+    lastAmended: "2023-05-18",
+    fileUrl: `${PDF}#page=81`,
+  },
+  {
+    id: "member-conduct-act",
+    category: "議事法規",
+    title: "東海大學學生議會議員行為規範法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=87`,
   },
   {
     id: "rules-of-procedure",
     category: "議事法規",
-    title: "議事規則",
-    lastAmended: "2026-07-03",
-    fileUrl: "#",
+    title: "東海大學學生議會議事規則",
+    lastAmended: "2022-11-15",
+    fileUrl: `${PDF}#page=90`,
   },
   {
-    id: "public-attendance-act",
+    id: "public-attendance-rules",
     category: "議事法規",
-    title: "議會旁聽辦法",
-    lastAmended: "2026-07-03",
-    fileUrl: "#",
+    title: "東海大學學生議會旁聽規則",
+    lastAmended: "1989-12-27",
+    fileUrl: `${PDF}#page=97`,
   },
   {
-    id: "interpellation-guidelines",
+    id: "hearing-procedures",
     category: "議事法規",
-    title: "施政報告與質詢作業要點",
-    lastAmended: "2025-09-25",
-    fileUrl: "#",
+    title: "東海大學學生議會聽證辦法",
+    fileUrl: `${PDF}#page=98`,
   },
   {
-    id: "election-recall-act",
+    id: "member-attendance-act",
+    category: "議事法規",
+    title: "東海大學學生議會議員出缺席辦法",
+    lastAmended: "2023-05-18",
+    fileUrl: `${PDF}#page=99`,
+  },
+  {
+    id: "speaker-election-recall-act",
     category: "選罷法規",
-    title: "學生議員選舉罷免辦法",
-    lastAmended: "2026-04-22",
-    fileUrl: "#",
-  },
-  {
-    id: "candidate-registration-guidelines",
-    category: "選罷法規",
-    title: "候選人登記作業要點",
-    lastAmended: "2026-04-22",
-    fileUrl: "#",
-  },
-  {
-    id: "annual-budget-review-act",
-    category: "財務法規",
-    title: "學生自治會年度預決算審查辦法",
-    lastAmended: "2025-09-25",
-    fileUrl: "#",
-  },
-  {
-    id: "club-subsidy-distribution-act",
-    category: "財務法規",
-    title: "社團輔導金分配辦法",
-    lastAmended: "2026-07-03",
-    fileUrl: "#",
+    title: "東海大學學生議會正副議長選舉罷免辦法",
+    lastAmended: "2015-12-29",
+    fileUrl: `${PDF}#page=100`,
   },
 ];
 

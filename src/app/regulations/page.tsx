@@ -15,7 +15,7 @@ export default function RegulationsPage() {
       <PageHero
         eyebrow="Regulations"
         title="法規彙編專區"
-        description="議會相關組織、議事、選罷與財務等自治法規全文彙編，供全校師生查閱下載（範例連結）。"
+        description="與學生議會直接相關之組織、議事及選罷法規全文，點選條目可開啟《東海大學學生自治法規》彙編對應頁次。"
       />
 
       <section className="mx-auto max-w-4xl px-6 py-16 space-y-14">
@@ -30,14 +30,18 @@ export default function RegulationsPage() {
                 <Reveal key={reg.id} as="li" delay={(i % 6) * 50}>
                   <a
                     href={reg.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-5 px-2 -mx-2 hover:bg-paper-alt transition-colors"
                   >
                     <span className="font-serif text-base font-medium text-ink group-hover:text-wine transition-colors">
                       {reg.title}
                     </span>
-                    <span className="text-xs text-ink-soft shrink-0">
-                      最後修正日期：{reg.lastAmended}
-                    </span>
+                    {reg.lastAmended && (
+                      <span className="text-xs text-ink-soft shrink-0">
+                        最後修正日期：{reg.lastAmended}
+                      </span>
+                    )}
                   </a>
                 </Reveal>
               ))}
