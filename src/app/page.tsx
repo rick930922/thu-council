@@ -52,16 +52,16 @@ export default function Home() {
 
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
-              href="/about"
+              href="/organization"
               className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-colors"
             >
-              認識議會
+              組織成員
             </Link>
             <Link
-              href="/news"
-              className="rounded-sm border border-ink/20 px-6 py-3 text-sm tracking-wide text-ink hover:border-wine hover:text-wine transition-colors"
+              href="/members"
+              className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-colors"
             >
-              最新消息
+              議員名單
             </Link>
           </div>
         </div>
