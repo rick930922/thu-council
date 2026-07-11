@@ -2,6 +2,7 @@ export type Officer = {
   name: string;
   title: string;
   photo?: string;
+  meta?: string;
   vacant?: boolean;
 };
 
@@ -9,6 +10,8 @@ export type SecretariatGroup = {
   id: string;
   name: string;
   scope: string;
+  leader: string;
+  deputy: string;
 };
 
 export type Committee = {
@@ -24,8 +27,17 @@ export const presidium = {
   description:
     "由學生議員互選產生議長、副議長各一人。議長本公平中立原則主持會議、維持議事秩序，並對外代表議會；副議長協助議長綜理會務。",
   members: [
-    { name: "梁俊億", title: "議長", photo: "/members/liang-junyi.jpg" },
-    { name: "高予恩", title: "副議長" },
+    {
+      name: "梁俊億",
+      title: "議長",
+      photo: "/members/liang-junyi.jpg",
+      meta: "社會科學院・政治學系政治理論組",
+    },
+    {
+      name: "高予恩",
+      title: "副議長",
+      meta: "創意設計暨藝術學院・美術系",
+    },
   ] satisfies Officer[],
 };
 
@@ -43,28 +55,38 @@ export const secretariat = {
       id: "document",
       name: "文書組",
       scope: "文書收發與檔案管理、文稿撰擬、印信典守、會議紀錄及議會會議之錄影錄音。",
+      leader: "尚未定案",
+      deputy: "尚未定案",
     },
     {
       id: "procedural-affairs",
       name: "議事組",
       scope:
         "議程編擬、議案文件整理、議員出缺席業務，並承辦程序委員會與紀律委員會相關庶務。",
+      leader: "尚未定案",
+      deputy: "尚未定案",
     },
     {
       id: "general-affairs",
       name: "總務組",
       scope: "財產購置與營繕、膳食交通管理、款項出納及預算經費使用等總務事宜。",
+      leader: "尚未定案",
+      deputy: "尚未定案",
     },
     {
       id: "press",
       name: "新聞組",
       scope: "發布議會消息與新聞稿、公報編印發行、網頁資料維護及對外公共關係。",
+      leader: "尚未定案",
+      deputy: "尚未定案",
     },
     {
       id: "legal-affairs",
       name: "法政組",
       scope:
         "審議學生會法規修正、廢止及草案事項，並就影響學生權益之法規案向大會提出建議報告。",
+      leader: "尚未定案",
+      deputy: "尚未定案",
     },
   ] satisfies SecretariatGroup[],
 };

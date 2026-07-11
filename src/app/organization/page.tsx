@@ -14,29 +14,40 @@ export const metadata: Metadata = {
   title: "組織成員介紹",
 };
 
-function OfficerRow({ officer }: { officer: Officer }) {
+function OfficerCard({ officer }: { officer: Officer }) {
   return (
-    <li className="flex items-center justify-between gap-3 border-b border-border-soft/70 py-1.5 text-sm">
-      <span className="flex items-center gap-3">
-        {officer.vacant ? (
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-dashed border-ink-soft/40" />
-        ) : officer.photo ? (
-          <img
-            src={officer.photo}
-            alt={officer.name}
-            className="h-10 w-10 shrink-0 rounded-full border border-gold/50 object-cover"
-          />
-        ) : (
-          <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-gold/50 font-display text-sm text-gold">
+    <div className="flex flex-col sm:flex-row items-start gap-6 border border-border-soft bg-paper-alt p-6">
+      {officer.vacant ? (
+        <div className="flex h-56 w-44 shrink-0 items-center justify-center border border-dashed border-ink-soft/40 mx-auto sm:mx-0">
+          <span className="text-sm italic text-ink-soft">尚未定案</span>
+        </div>
+      ) : officer.photo ? (
+        <img
+          src={officer.photo}
+          alt={officer.name}
+          className="h-56 w-44 shrink-0 border border-gold/50 object-cover mx-auto sm:mx-0"
+        />
+      ) : (
+        <div className="flex h-56 w-44 shrink-0 items-center justify-center border border-gold/50 bg-paper mx-auto sm:mx-0">
+          <span className="font-display text-4xl text-gold">
             {officer.name.slice(-1)}
           </span>
+        </div>
+      )}
+      <div className="pt-2">
+        <h4 className="font-serif text-2xl font-bold text-ink">
+          <span className={officer.vacant ? "italic text-ink-soft" : ""}>
+            {officer.name}
+          </span>{" "}
+          <span className="text-wine">{officer.title}</span>
+        </h4>
+        {officer.meta && (
+          <p className="mt-3 text-sm text-ink-soft leading-relaxed">
+            {officer.meta}
+          </p>
         )}
-        <span className={officer.vacant ? "italic text-ink-soft" : "text-ink"}>
-          {officer.name}
-        </span>
-      </span>
-      <span className="text-ink-soft">{officer.title}</span>
-    </li>
+      </div>
+    </div>
   );
 }
 
@@ -80,11 +91,11 @@ export default function OrganizationPage() {
               {presidium.description}
             </p>
             <div className="rule my-6" />
-            <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            <div className="space-y-6">
               {presidium.members.map((m) => (
-                <OfficerRow key={m.name} officer={m} />
+                <OfficerCard key={m.name} officer={m} />
               ))}
-            </ul>
+            </div>
           </div>
         </Reveal>
 
@@ -102,11 +113,11 @@ export default function OrganizationPage() {
               {secretariat.description}
             </p>
             <div className="rule my-6" />
-            <ul className="grid gap-x-6 gap-y-2 sm:grid-cols-2">
+            <div className="space-y-6">
               {secretariat.members.map((m) => (
-                <OfficerRow key={m.name} officer={m} />
+                <OfficerCard key={m.name} officer={m} />
               ))}
-            </ul>
+            </div>
             <div className="rule my-6" />
             <p className="eyebrow text-[0.65rem] text-ink-soft mb-4">
               秘書處下設五組
@@ -120,6 +131,17 @@ export default function OrganizationPage() {
                   <p className="mt-2 text-sm text-ink-soft leading-relaxed">
                     {g.scope}
                   </p>
+                  <div className="rule my-4" />
+                  <dl className="space-y-1.5 text-sm">
+                    <div className="flex justify-between gap-3">
+                      <dt className="text-ink-soft">組長</dt>
+                      <dd className="italic text-ink-soft">{g.leader}</dd>
+                    </div>
+                    <div className="flex justify-between gap-3">
+                      <dt className="text-ink-soft">副組長</dt>
+                      <dd className="italic text-ink-soft">{g.deputy}</dd>
+                    </div>
+                  </dl>
                 </div>
               ))}
             </div>
