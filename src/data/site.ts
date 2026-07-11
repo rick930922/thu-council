@@ -5,7 +5,7 @@ export const site = {
   shortName: "東海學生議會",
   englishName: "Tunghai University Student Council",
   tagline: "監督、審議、代言——為東海學子發聲",
-  term: "任期 2025.08 – 2026.07",
+  term: "任期 2026.08 – 2027.07",
   address: "臺中市西屯區臺灣大道四段1727號 學生活動中心 302 室",
   email: "thu.council38@thu.edu.tw",
   phone: "04-2359-0121 分機 91038",

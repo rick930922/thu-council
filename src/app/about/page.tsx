@@ -43,10 +43,6 @@ const history = [
     year: "2015",
     text: "議事規則全面修訂，增訂旁聽與陳情制度，強化議事公開透明。",
   },
-  {
-    year: "2025",
-    text: "第三十八屆學生議會成立，持續深化議會與同學之間的溝通橋樑。",
-  },
 ];
 
 export default function AboutPage() {
