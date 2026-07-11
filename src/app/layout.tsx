@@ -26,7 +26,7 @@ export const metadata: Metadata = {
   description:
     "東海大學第三十八屆學生議會官方網站——組織成員介紹、學生議員介紹、最新消息、議事紀錄與法規彙編。",
   verification: {
-    google: "ghg2kp5yS3euEzh7FOPKkJHwHGPhhKN6GRjZ4fa34-Y",
+    google: "yrZHuj0nL7AMHHWKgXZWCgI93dsoWBH_URCawsVcAIM",
   },
 };
 
