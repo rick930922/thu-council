@@ -148,14 +148,34 @@
 
 <script>
   const STORAGE_KEY = "thu-council-live-v1";
+  const API_URL = "/api/live-state";
+
   function loadShared() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
     catch (e) { return {}; }
   }
+  function saveLocal(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  async function fetchRemote() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  }
+  function postRemote(patch) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }).catch(() => {});
+  }
   function saveShared(patch) {
     const state = loadShared();
     Object.assign(state, patch);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    saveLocal(state);
+    postRemote(patch);
   }
 
   function formatClock(now) {
@@ -165,16 +185,40 @@
   }
 
   const editableIds = ["tickerText1", "recessLabel", "clock"];
-  const state = loadShared();
+
+  function applyState(s) {
+    let tickerChanged = false;
+    editableIds.forEach((id) => {
+      const el = document.getElementById(id);
+      const key = "recess_" + id;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+        if (id === "tickerText1") tickerChanged = true;
+      }
+    });
+    if (tickerChanged) {
+      document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
+    }
+  }
+
+  const initial = loadShared();
   editableIds.forEach((id) => {
     const key = "recess_" + id;
-    if (state[key] !== undefined) {
-      document.getElementById(id).textContent = state[key];
+    if (initial[key] !== undefined) {
+      document.getElementById(id).textContent = initial[key];
     } else if (id === "clock") {
       document.getElementById("clock").textContent = formatClock(new Date());
     }
   });
   document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
+
+  (async () => {
+    const remote = await fetchRemote();
+    if (remote) {
+      saveLocal(Object.assign({}, loadShared(), remote));
+      applyState(remote);
+    }
+  })();
 
   editableIds.forEach((id) => {
     const el = document.getElementById(id);
@@ -185,6 +229,13 @@
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
   });
+
+  setInterval(async () => {
+    const remote = await fetchRemote();
+    if (!remote) return;
+    saveLocal(Object.assign({}, loadShared(), remote));
+    applyState(remote);
+  }, 1500);
 
   function updateTimecode() {
     const now = new Date();

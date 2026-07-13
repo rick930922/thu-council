@@ -202,14 +202,34 @@
 
 <script>
   const STORAGE_KEY = "thu-council-live-v1";
+  const API_URL = "/api/live-state";
+
   function loadShared() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
     catch (e) { return {}; }
   }
+  function saveLocal(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  async function fetchRemote() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  }
+  function postRemote(patch) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }).catch(() => {});
+  }
   function saveShared(patch) {
     const state = loadShared();
     Object.assign(state, patch);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    saveLocal(state);
+    postRemote(patch);
   }
 
   const editableIds = ["agendaTitle", "agreeCount", "disagreeCount", "agendaBottomText"];
@@ -247,6 +267,35 @@
     renderStamp();
     saveShared({ vote_stampState: stampState });
   });
+
+  function applyState(s) {
+    editableIds.forEach((id) => {
+      const el = document.getElementById(id);
+      const key = "vote_" + id;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+      }
+    });
+    if (s.vote_stampState !== undefined && s.vote_stampState !== stampState) {
+      stampState = s.vote_stampState;
+      renderStamp();
+    }
+  }
+
+  (async () => {
+    const remote = await fetchRemote();
+    if (remote) {
+      saveLocal(Object.assign({}, loadShared(), remote));
+      applyState(remote);
+    }
+  })();
+
+  setInterval(async () => {
+    const remote = await fetchRemote();
+    if (!remote) return;
+    saveLocal(Object.assign({}, loadShared(), remote));
+    applyState(remote);
+  }, 1500);
 
   function updateClock() {
     const now = new Date();

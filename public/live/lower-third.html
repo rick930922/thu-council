@@ -254,26 +254,63 @@
 
 <script>
   const STORAGE_KEY = "thu-council-live-v1";
+  const API_URL = "/api/live-state";
 
   function loadShared() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
     catch (e) { return {}; }
   }
+  function saveLocal(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  async function fetchRemote() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  }
+  function postRemote(patch) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }).catch(() => {});
+  }
   function saveShared(patch) {
     const state = loadShared();
     Object.assign(state, patch);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    saveLocal(state);
+    postRemote(patch);
     return state;
   }
 
   const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText"];
-  const state = loadShared();
-  editableIds.forEach((id) => {
-    if (state[id] !== undefined) document.getElementById(id).textContent = state[id];
-  });
-  if (state.sessionNum !== undefined) {
-    document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => el.textContent = state.sessionNum);
+
+  function applyState(s) {
+    editableIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (s[id] !== undefined && document.activeElement !== el && el.textContent !== s[id]) {
+        el.textContent = s[id];
+      }
+    });
+    if (s.sessionNum !== undefined) {
+      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => {
+        if (document.activeElement !== el) el.textContent = s.sessionNum;
+      });
+    }
   }
+
+  applyState(loadShared());
+
+  (async () => {
+    const remote = await fetchRemote();
+    if (remote) {
+      const merged = Object.assign({}, loadShared(), remote);
+      saveLocal(merged);
+      applyState(merged);
+    }
+  })();
 
   editableIds.forEach((id) => {
     const el = document.getElementById(id);
@@ -296,16 +333,15 @@
 
   window.addEventListener("storage", (e) => {
     if (e.key !== STORAGE_KEY) return;
-    const s = loadShared();
-    editableIds.forEach((id) => {
-      if (s[id] !== undefined && document.getElementById(id).textContent !== s[id]) {
-        document.getElementById(id).textContent = s[id];
-      }
-    });
-    if (s.sessionNum !== undefined) {
-      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => el.textContent = s.sessionNum);
-    }
+    applyState(loadShared());
   });
+
+  setInterval(async () => {
+    const remote = await fetchRemote();
+    if (!remote) return;
+    saveLocal(Object.assign({}, loadShared(), remote));
+    applyState(remote);
+  }, 1500);
 
   function updateClock() {
     const now = new Date();
