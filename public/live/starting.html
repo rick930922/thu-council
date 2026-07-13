@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>學生議會直播 - 即將開始</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper-alt: #fdfbf6;
+    --ink-soft: #b9ab9b;
+    --wine: #7a2e2e;
+    --wine-dark: #591f1f;
+    --gold: #b08d57;
+    --gold-soft: #cbad7c;
+    --border-soft: #e4dac9;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 1920px; height: 1080px;
+    overflow: auto;
+    font-family: "Noto Serif TC", serif;
+    background:
+      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.035) 1px, transparent 0) 0 0 / 26px 26px,
+      radial-gradient(ellipse at 50% 42%, #7a2e2e 0%, #45191b 55%, #200d0e 100%);
+  }
+  #stage { position: relative; width: 100%; height: 100%; }
+
+  #center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+
+  /* ---- ambient pulsing rings behind the mark ---- */
+  #rings {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 640px; height: 640px;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  #rings .ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    border: 1px solid rgba(176,141,87,0.35);
+    border-radius: 50%;
+    animation: ring-pulse 4.5s cubic-bezier(.4,0,.2,1) infinite;
+  }
+  #rings .ring.r1 { animation-delay: 0s; }
+  #rings .ring.r2 { animation-delay: 1.5s; }
+  #rings .ring.r3 { animation-delay: 3s; }
+  @keyframes ring-pulse {
+    0%   { width: 260px; height: 260px; opacity: 0.55; transform: translate(-50%, -50%); }
+    100% { width: 620px; height: 620px; opacity: 0; transform: translate(-50%, -50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #rings .ring { animation: none; opacity: 0; }
+  }
+
+  /* ---- entrance sequence ---- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px) scale(0.98);
+    animation: reveal-in 900ms cubic-bezier(.22,1,.36,1) forwards;
+  }
+  @keyframes reveal-in {
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  #mark {
+    position: relative;
+    display: flex; flex-direction: column; align-items: center;
+    z-index: 2;
+  }
+  #mark .thusp-word {
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 64px;
+    letter-spacing: 0.34em;
+    color: var(--gold);
+    animation-delay: 80ms;
+  }
+  #mark .brand-rule {
+    width: 120px; height: 1px;
+    background: var(--gold);
+    opacity: 0.7;
+    margin: 18px 0 14px;
+    animation-delay: 260ms;
+  }
+  #mark .brand-text {
+    font-size: 30px; letter-spacing: 0.12em;
+    color: var(--paper-alt);
+    animation-delay: 380ms;
+  }
+
+  #eventLabel {
+    margin-top: 46px;
+    font-family: "EB Garamond", serif;
+    font-size: 22px;
+    letter-spacing: 0.36em;
+    text-transform: uppercase;
+    color: var(--gold-soft);
+    background: rgba(0,0,0,0.25);
+    border: 1px solid rgba(176,141,87,0.45);
+    padding: 10px 30px;
+    border-radius: 999px;
+    outline: none;
+    animation-delay: 520ms;
+  }
+
+  #countdownRow {
+    margin-top: 34px;
+    display: flex; align-items: baseline; gap: 16px;
+    animation-delay: 640ms;
+  }
+  #countdownLabel {
+    font-size: 24px;
+    color: var(--ink-soft);
+  }
+  #countdown {
+    font-family: "EB Garamond", serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 56px; font-weight: 700;
+    color: var(--paper-alt);
+    letter-spacing: 0.06em;
+  }
+  #countdown.imminent { color: var(--gold-soft); animation: pulse-text 1.4s ease-in-out infinite; }
+  @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  #targetTimeText {
+    margin-top: 14px;
+    font-family: "EB Garamond", serif;
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    outline: none;
+    animation-delay: 760ms;
+  }
+
+  /* ---- bottom bar ---- */
+  #bottomBar {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, rgba(89,31,31,0.9) 0%, rgba(32,13,14,0.95) 100%);
+    border-top: 2px solid var(--gold);
+    height: 74px;
+    display: flex; align-items: center; justify-content: center;
+    gap: 16px;
+  }
+  #sessionText {
+    font-family: "EB Garamond", serif;
+    font-size: 22px;
+    letter-spacing: 0.1em;
+    color: var(--paper-alt);
+    outline: none;
+  }
+  #bottomBar .prep-dot {
+    display: flex; align-items: center; gap: 8px;
+    font-family: "EB Garamond", serif;
+    font-size: 18px; letter-spacing: 0.18em;
+    color: var(--gold-soft);
+  }
+  #bottomBar .prep-dot .dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold);
+    animation: pulse-text 1.6s ease-in-out infinite;
+  }
+
+  [contenteditable="true"] {
+    cursor: text; border-radius: 6px; padding: 2px 10px; margin: -2px -10px;
+  }
+  [contenteditable="true"]:hover { background: rgba(176,141,87,0.15); }
+  [contenteditable="true"]:focus {
+    background: rgba(176,141,87,0.25);
+    box-shadow: 0 0 0 1px rgba(176,141,87,0.6);
+  }
+  .flash { animation: flash-update 900ms ease; }
+  @keyframes flash-update {
+    0% { color: #ffe9b3; }
+    100% { color: inherit; }
+  }
+
+  #hint {
+    position: absolute; left: 36px; top: 28px;
+    font-family: "EB Garamond", serif;
+    font-size: 18px; color: rgba(255,255,255,0.55);
+    background: rgba(0,0,0,0.4);
+    padding: 6px 14px; border-radius: 6px;
+    transition: opacity 600ms ease;
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="hint">點文字即可修改　｜　開始時間欄位請輸入 24 小時制「HH:MM」，倒數會自動計算</div>
+
+  <div id="center">
+    <div id="rings">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="ring r3"></div>
+    </div>
+
+    <div id="mark">
+      <span class="thusp-word reveal">THUSP</span>
+      <span class="brand-rule reveal"></span>
+      <span class="brand-text reveal">東海大學第三十八屆學生議會</span>
+    </div>
+
+    <div id="eventLabel" class="reveal" contenteditable="true" spellcheck="false">即將開始</div>
+
+    <div id="countdownRow" class="reveal">
+      <span id="countdownLabel">距離開始尚有</span>
+      <span id="countdown">--:--</span>
+    </div>
+    <div id="targetTimeText" class="reveal" contenteditable="true" spellcheck="false">預計 19:30 開始</div>
+  </div>
+
+  <div id="bottomBar">
+    <span class="prep-dot"><span class="dot"></span>準備中</span>
+    <span style="opacity:.4;">｜</span>
+    <span id="sessionText" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "thu-council-live-v1";
+  const API_URL = "/api/live-state";
+
+  function loadShared() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch (e) { return {}; }
+  }
+  function saveLocal(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  async function fetchRemote() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  }
+  function postRemote(patch) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }).catch(() => {});
+  }
+  function saveShared(patch) {
+    const state = loadShared();
+    Object.assign(state, patch);
+    saveLocal(state);
+    postRemote(patch);
+  }
+
+  const editableIds = ["eventLabel", "targetTimeText", "sessionText"];
+
+  function applyState(s) {
+    editableIds.forEach((id) => {
+      const el = document.getElementById(id);
+      const key = "start_" + id;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+      }
+    });
+  }
+
+  const initial = loadShared();
+  editableIds.forEach((id) => {
+    const key = "start_" + id;
+    if (initial[key] !== undefined) {
+      document.getElementById(id).textContent = initial[key];
+    }
+  });
+
+  (async () => {
+    const remote = await fetchRemote();
+    if (remote) {
+      saveLocal(Object.assign({}, loadShared(), remote));
+      applyState(remote);
+    }
+  })();
+
+  editableIds.forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener("blur", () => {
+      saveShared({ ["start_" + id]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  setInterval(async () => {
+    const remote = await fetchRemote();
+    if (!remote) return;
+    saveLocal(Object.assign({}, loadShared(), remote));
+    applyState(remote);
+  }, 1500);
+
+  function updateCountdown() {
+    const text = document.getElementById("targetTimeText").textContent;
+    const match = text.match(/(\d{1,2}):(\d{2})/);
+    const countdownEl = document.getElementById("countdown");
+    if (!match) {
+      countdownEl.textContent = "--:--";
+      countdownEl.classList.remove("imminent");
+      return;
+    }
+    const hour = parseInt(match[1], 10);
+    const minute = parseInt(match[2], 10);
+
+    const now = new Date();
+    const taipeiNowStr = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).formatToParts(now).reduce((acc, p) => { acc[p.type] = p.value; return acc; }, {});
+
+    const target = new Date(Date.UTC(
+      taipeiNowStr.year, taipeiNowStr.month - 1, taipeiNowStr.day,
+      hour - 8, minute, 0
+    ));
+    let nowUTC = new Date(Date.UTC(
+      taipeiNowStr.year, taipeiNowStr.month - 1, taipeiNowStr.day,
+      taipeiNowStr.hour - 8, taipeiNowStr.minute, taipeiNowStr.second
+    ));
+
+    let diffMs = target - nowUTC;
+    if (diffMs <= 0) {
+      countdownEl.textContent = "00:00";
+      countdownEl.classList.add("imminent");
+      return;
+    }
+    countdownEl.classList.remove("imminent");
+    const totalSeconds = Math.floor(diffMs / 1000);
+    const mm = Math.floor(totalSeconds / 60);
+    const ss = totalSeconds % 60;
+    countdownEl.textContent = String(mm).padStart(2, "0") + ":" + String(ss).padStart(2, "0");
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
+</script>
+</body>
+</html>
