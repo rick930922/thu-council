@@ -186,6 +186,10 @@
       <div class="label">不同意</div>
       <div><span class="count" id="disagreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
     </div>
+    <div class="vote-box">
+      <div class="label">廢票</div>
+      <div><span class="count" id="spoiledCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
+    </div>
   </div>
 
   <div id="bottomStack">
@@ -231,7 +235,7 @@
     postRemote(patch);
   }
 
-  const editableIds = ["agendaTitle", "agreeCount", "disagreeCount", "agendaBottomText"];
+  const editableIds = ["agendaTitle", "agreeCount", "disagreeCount", "spoiledCount", "agendaBottomText"];
   const state = loadShared();
   editableIds.forEach((id) => {
     const key = "vote_" + id;

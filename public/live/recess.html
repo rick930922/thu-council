@@ -36,20 +36,12 @@
     position: absolute; top: 0; left: 0; right: 0;
     background: rgba(89,31,31,0.85);
     border-bottom: 2px solid var(--gold);
-    overflow: hidden; white-space: nowrap;
-    height: 54px; display: flex; align-items: center;
+    height: 54px; display: flex; align-items: center; justify-content: center;
   }
-  .ticker-track { display: inline-flex; animation: ticker-scroll 18s linear infinite; }
-  .ticker-track:hover, .ticker-track:focus-within { animation-play-state: paused; }
-  .ticker-track span {
-    padding: 0 60px;
+  #tickerText1 {
     font-family: "EB Garamond", serif;
     font-size: 26px; letter-spacing: 0.1em;
     color: var(--paper-alt); font-weight: 600;
-  }
-  @keyframes ticker-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
   }
 
   #center {
@@ -125,14 +117,11 @@
 <body>
 <div id="stage">
 
-  <div id="hint">點文字即可修改跑馬燈／休息文字　｜　滑鼠移到跑馬燈上會暫停捲動方便點擊</div>
+  <div id="hint">點文字即可修改跑馬燈／休息文字</div>
   <div id="timecode" id="timecode"></div>
 
   <div class="ticker">
-    <div class="ticker-track">
-      <span id="tickerText1" contenteditable="true" spellcheck="false">休息 5 分鐘，於 19:45 分開會</span>
-      <span id="tickerText2" aria-hidden="true">休息 5 分鐘，於 19:45 分開會</span>
-    </div>
+    <span id="tickerText1" contenteditable="true" spellcheck="false">休息 5 分鐘，於 19:45 分開會</span>
   </div>
 
   <div id="center">
@@ -188,18 +177,13 @@
   const editableIds = ["tickerText1", "recessLabel"];
 
   function applyState(s) {
-    let tickerChanged = false;
     editableIds.forEach((id) => {
       const el = document.getElementById(id);
       const key = "recess_" + id;
       if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
         el.textContent = s[key];
-        if (id === "tickerText1") tickerChanged = true;
       }
     });
-    if (tickerChanged) {
-      document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
-    }
   }
 
   const initial = loadShared();
@@ -209,7 +193,6 @@
       document.getElementById(id).textContent = initial[key];
     }
   });
-  document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
 
   (async () => {
     const remote = await fetchRemote();
@@ -223,7 +206,6 @@
     const el = document.getElementById(id);
     el.addEventListener("blur", () => {
       saveShared({ ["recess_" + id]: el.textContent });
-      if (id === "tickerText1") document.getElementById("tickerText2").textContent = el.textContent;
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
