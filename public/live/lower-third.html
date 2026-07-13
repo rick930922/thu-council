@@ -126,6 +126,9 @@
     display: inline-flex;
     animation: ticker-scroll 22s linear infinite;
   }
+  .ticker-track:hover, .ticker-track:focus-within {
+    animation-play-state: paused;
+  }
   .ticker-track span {
     padding: 0 60px;
     font-family: "EB Garamond", serif;
@@ -211,7 +214,7 @@
 <body>
 <div id="stage">
 
-  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 Q：顯示/隱藏質詢議員名牌　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改</div>
+  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 Q：顯示/隱藏質詢議員名牌　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改　｜　滑鼠移到跑馬燈上會暫停捲動方便點擊</div>
 
   <div id="topRightStack">
     <div id="brand">
