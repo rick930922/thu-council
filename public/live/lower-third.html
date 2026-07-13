@@ -241,8 +241,8 @@
   <div id="bottomStack">
     <div class="ticker">
       <div class="ticker-track" id="tickerTrack">
-        <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第<span class="session-num" data-mirror="sessionNum">1</span>次定期大會</span>
-        <span id="tickerText2" aria-hidden="true">東海大學第三十八屆學生議會・第<span class="session-num" data-mirror="sessionNum">1</span>次定期大會</span>
+        <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
+        <span id="tickerText2" aria-hidden="true">東海大學第三十八屆學生議會・第1次定期大會</span>
       </div>
     </div>
     <div class="info-bar">
@@ -288,19 +288,19 @@
     return state;
   }
 
-  const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText"];
+  const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText", "tickerText1"];
 
   function applyState(s) {
+    let tickerChanged = false;
     editableIds.forEach((id) => {
       const el = document.getElementById(id);
       if (s[id] !== undefined && document.activeElement !== el && el.textContent !== s[id]) {
         el.textContent = s[id];
+        if (id === "tickerText1") tickerChanged = true;
       }
     });
-    if (s.sessionNum !== undefined) {
-      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => {
-        if (document.activeElement !== el) el.textContent = s.sessionNum;
-      });
+    if (tickerChanged) {
+      document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
     }
   }
 
@@ -319,19 +319,10 @@
     const el = document.getElementById(id);
     el.addEventListener("blur", () => {
       saveShared({ [id]: el.textContent });
+      if (id === "tickerText1") document.getElementById("tickerText2").textContent = el.textContent;
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
-  });
-
-  // session number is edited via the ticker text's inline span (double-click to isolate edit)
-  document.querySelectorAll('.session-num').forEach(el => {
-    el.setAttribute("contenteditable", "true");
-    el.addEventListener("blur", () => {
-      const val = el.textContent;
-      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(e2 => e2.textContent = val);
-      saveShared({ sessionNum: val });
-    });
   });
 
   window.addEventListener("storage", (e) => {
