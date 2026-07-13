@@ -116,30 +116,17 @@
     background: var(--paper-alt);
     border-top: 2px solid var(--gold);
     border-bottom: 1px solid var(--border-soft);
-    overflow: hidden;
-    white-space: nowrap;
     height: 46px;
     display: flex;
     align-items: center;
+    justify-content: center;
   }
-  .ticker-track {
-    display: inline-flex;
-    animation: ticker-scroll 22s linear infinite;
-  }
-  .ticker-track:hover, .ticker-track:focus-within {
-    animation-play-state: paused;
-  }
-  .ticker-track span {
-    padding: 0 60px;
+  #tickerText1 {
     font-family: "EB Garamond", serif;
     font-size: 24px;
     letter-spacing: 0.1em;
     color: var(--wine-dark);
     font-weight: 600;
-  }
-  @keyframes ticker-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
   }
 
   .info-bar {
@@ -214,7 +201,7 @@
 <body>
 <div id="stage">
 
-  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 Q：顯示/隱藏質詢議員名牌　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改　｜　滑鼠移到跑馬燈上會暫停捲動方便點擊</div>
+  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 Q：顯示/隱藏質詢議員名牌　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改</div>
 
   <div id="topRightStack">
     <div id="brand">
@@ -240,10 +227,7 @@
 
   <div id="bottomStack">
     <div class="ticker">
-      <div class="ticker-track" id="tickerTrack">
-        <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
-        <span id="tickerText2" aria-hidden="true">東海大學第三十八屆學生議會・第1次定期大會</span>
-      </div>
+      <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
     </div>
     <div class="info-bar">
       <div class="clock" id="datetime"></div>
@@ -291,17 +275,12 @@
   const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText", "tickerText1"];
 
   function applyState(s) {
-    let tickerChanged = false;
     editableIds.forEach((id) => {
       const el = document.getElementById(id);
       if (s[id] !== undefined && document.activeElement !== el && el.textContent !== s[id]) {
         el.textContent = s[id];
-        if (id === "tickerText1") tickerChanged = true;
       }
     });
-    if (tickerChanged) {
-      document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
-    }
   }
 
   applyState(loadShared());
@@ -319,7 +298,6 @@
     const el = document.getElementById(id);
     el.addEventListener("blur", () => {
       saveShared({ [id]: el.textContent });
-      if (id === "tickerText1") document.getElementById("tickerText2").textContent = el.textContent;
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
