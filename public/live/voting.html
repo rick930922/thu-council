@@ -67,7 +67,7 @@
 
   #voteBoxes {
     position: absolute;
-    top: 220px; left: 48px;
+    right: 40px; bottom: 124px;
     display: flex; gap: 40px;
   }
   .vote-box {
@@ -95,8 +95,8 @@
   }
 
   #stamp {
-    position: absolute; top: 236px; left: 48px;
-    transform: rotate(-8deg);
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
     font-family: "EB Garamond", serif;
     font-weight: 700;
     font-size: 44px;
@@ -180,14 +180,13 @@
     <div class="vote-box">
       <div class="label">同意</div>
       <div><span class="count" id="agreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
+      <div id="stamp">通過</div>
     </div>
     <div class="vote-box">
       <div class="label">不同意</div>
       <div><span class="count" id="disagreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
     </div>
   </div>
-
-  <div id="stamp">通過</div>
 
   <div id="bottomStack">
     <div class="info-bar">
