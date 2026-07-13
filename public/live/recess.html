@@ -67,14 +67,26 @@
   }
 
   #brandRow {
-    display: flex; align-items: center; gap: 14px;
+    display: flex; flex-direction: column; align-items: center;
     margin-top: 8px;
   }
-  #brandRow svg { width: 34px; height: 34px; }
+  #brandRow .thusp-word {
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 30px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+  }
+  #brandRow .brand-rule {
+    width: 70px; height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+    margin: 8px 0 6px;
+  }
   #brandRow .brand-text {
     font-family: "EB Garamond", serif;
-    font-size: 24px; letter-spacing: 0.16em;
-    color: var(--gold);
+    font-size: 22px; letter-spacing: 0.1em;
+    color: var(--paper-alt);
   }
 
   #clock {
@@ -125,11 +137,8 @@
   <div id="center">
     <div id="recessLabel" contenteditable="true" spellcheck="false">休息</div>
     <div id="brandRow">
-      <svg viewBox="0 0 40 40" fill="none">
-        <circle cx="20" cy="20" r="18" stroke="#b08d57" stroke-width="2"/>
-        <circle cx="20" cy="20" r="12" stroke="#b08d57" stroke-width="1"/>
-        <text x="20" y="27" text-anchor="middle" font-family="'Noto Serif TC', serif" font-size="18" fill="#b08d57">東</text>
-      </svg>
+      <span class="thusp-word">THUSP</span>
+      <span class="brand-rule"></span>
       <span class="brand-text">東海大學第三十八屆學生議會</span>
     </div>
     <div id="clock"></div>

@@ -16,12 +16,13 @@ export default function SiteHeader() {
     <header className="sticky top-0 z-40 border-b border-border-soft bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         <Link href="/" className="flex items-center gap-3 group">
-          <span className="flex flex-col leading-tight">
-            <span className="eyebrow text-[0.6rem] text-ink-soft">
-              {site.englishName}
+          <span className="flex flex-col items-start leading-tight">
+            <span className="font-display text-2xl font-bold tracking-[0.3em] text-wine group-hover:text-wine-dark transition-colors">
+              {site.abbreviation}
             </span>
-            <span className="font-serif text-lg font-bold tracking-wide text-ink group-hover:text-wine transition-colors">
-              {site.fullName}
+            <span className="my-1 h-px w-10 bg-gold" />
+            <span className="font-serif text-sm tracking-wide text-ink-soft">
+              {site.name}
             </span>
           </span>
         </Link>
