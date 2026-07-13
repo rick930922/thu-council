@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>學生議會直播 - 休息畫面</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper-alt: #fdfbf6;
+    --wine: #7a2e2e;
+    --wine-dark: #591f1f;
+    --gold: #b08d57;
+    --border-soft: #e4dac9;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    width: 1920px; height: 1080px;
+    overflow: hidden;
+    font-family: "Noto Serif TC", serif;
+    background: rgba(20,10,10,0.6);
+  }
+  #stage { position: relative; width: 100%; height: 100%; }
+
+  #timecode {
+    position: absolute; top: 28px; left: 36px;
+    font-family: "EB Garamond", serif;
+    font-size: 20px; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.55);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .ticker {
+    position: absolute; top: 0; left: 0; right: 0;
+    background: rgba(89,31,31,0.85);
+    border-bottom: 2px solid var(--gold);
+    overflow: hidden; white-space: nowrap;
+    height: 54px; display: flex; align-items: center;
+  }
+  .ticker-track { display: inline-flex; animation: ticker-scroll 18s linear infinite; }
+  .ticker-track span {
+    padding: 0 60px;
+    font-family: "EB Garamond", serif;
+    font-size: 26px; letter-spacing: 0.1em;
+    color: var(--paper-alt); font-weight: 600;
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  #center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 18px;
+  }
+  #recessLabel {
+    font-size: 190px;
+    font-weight: 900;
+    color: var(--paper-alt);
+    letter-spacing: 0.12em;
+    text-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    outline: none;
+  }
+
+  #brandRow {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 8px;
+  }
+  #brandRow svg { width: 34px; height: 34px; }
+  #brandRow .brand-text {
+    font-family: "EB Garamond", serif;
+    font-size: 24px; letter-spacing: 0.16em;
+    color: var(--gold);
+  }
+
+  #clock {
+    font-family: "EB Garamond", serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 46px; font-weight: 700;
+    color: var(--paper-alt);
+    margin-top: 4px;
+  }
+
+  [contenteditable="true"] {
+    cursor: text; border-radius: 6px; padding: 2px 10px; margin: -2px -10px;
+  }
+  [contenteditable="true"]:hover { background: rgba(176,141,87,0.15); }
+  [contenteditable="true"]:focus {
+    background: rgba(176,141,87,0.25);
+    box-shadow: 0 0 0 1px rgba(176,141,87,0.6);
+  }
+  .flash { animation: flash-update 900ms ease; }
+  @keyframes flash-update {
+    0% { color: #ffe9b3; }
+    100% { color: inherit; }
+  }
+
+  #hint {
+    position: absolute; left: 36px; bottom: 28px;
+    font-family: "EB Garamond", serif;
+    font-size: 18px; color: rgba(255,255,255,0.55);
+    background: rgba(0,0,0,0.4);
+    padding: 6px 14px; border-radius: 6px;
+    transition: opacity 600ms ease;
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="hint">點文字即可修改跑馬燈內容　｜　時間會自動更新</div>
+  <div id="timecode" id="timecode"></div>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span id="tickerText1" contenteditable="true" spellcheck="false">休息 5 分鐘，於 19:45 分開會</span>
+      <span id="tickerText2" aria-hidden="true">休息 5 分鐘，於 19:45 分開會</span>
+    </div>
+  </div>
+
+  <div id="center">
+    <div id="recessLabel" contenteditable="true" spellcheck="false">休息</div>
+    <div id="brandRow">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="18" stroke="#b08d57" stroke-width="2"/>
+        <circle cx="20" cy="20" r="12" stroke="#b08d57" stroke-width="1"/>
+        <text x="20" y="27" text-anchor="middle" font-family="'Noto Serif TC', serif" font-size="18" fill="#b08d57">東</text>
+      </svg>
+      <span class="brand-text">東海大學第三十八屆學生議會</span>
+    </div>
+    <div id="clock"></div>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "thu-council-live-v1";
+  function loadShared() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch (e) { return {}; }
+  }
+  function saveShared(patch) {
+    const state = loadShared();
+    Object.assign(state, patch);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  const editableIds = ["tickerText1", "recessLabel"];
+  const state = loadShared();
+  editableIds.forEach((id) => {
+    const key = "recess_" + id;
+    if (state[key] !== undefined) document.getElementById(id).textContent = state[key];
+  });
+  document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
+
+  editableIds.forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener("blur", () => {
+      saveShared({ ["recess_" + id]: el.textContent });
+      if (id === "tickerText1") document.getElementById("tickerText2").textContent = el.textContent;
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("clock").textContent = new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).format(now);
+    document.getElementById("timecode").textContent = "LIVE " + new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).format(now).replace(/\//g, ".");
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
+</script>
+</body>
+</html>

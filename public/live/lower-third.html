@@ -18,300 +18,288 @@
     --gold: #b08d57;
     --border-soft: #e4dac9;
   }
-
   * { box-sizing: border-box; }
-
   html, body {
-    margin: 0;
-    padding: 0;
+    margin: 0; padding: 0;
     background: transparent;
-    width: 1920px;
-    height: 1080px;
+    width: 1920px; height: 1080px;
     overflow: hidden;
     font-family: "Noto Serif TC", serif;
   }
+  #stage { position: relative; width: 100%; height: 100%; }
 
-  #stage {
-    position: relative;
-    width: 100%;
-    height: 100%;
-  }
-
-  /* ---- Session badge (top-left of the lower third) ---- */
-  #card {
+  /* ---------- top-right persistent emblem ---------- */
+  #brand {
     position: absolute;
-    left: 64px;
-    bottom: 56px;
-    width: 1400px;
-    transform: translateY(0);
-    opacity: 1;
-    transition: transform 480ms cubic-bezier(.22,1,.36,1), opacity 360ms ease;
+    top: 40px; right: 48px;
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(42,20,20,0.55);
+    padding: 10px 22px 10px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(176,141,87,0.5);
   }
-  #card.hidden {
-    transform: translateY(24px);
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  .rule-top {
-    height: 3px;
-    background: linear-gradient(to right, var(--gold) 0%, var(--gold) 60%, transparent 100%);
-  }
-
-  .panel {
-    background: linear-gradient(180deg, rgba(89,31,31,0.94) 0%, rgba(42,20,20,0.94) 100%);
-    padding: 22px 36px 24px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.35);
-    border-bottom: 1px solid rgba(176,141,87,0.5);
-  }
-
-  .eyebrow-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    margin-bottom: 14px;
-    font-family: "EB Garamond", serif;
-  }
-
-  .eyebrow {
-    letter-spacing: 0.24em;
-    text-transform: uppercase;
-    font-size: 20px;
-    color: var(--gold);
-    display: flex;
-    align-items: baseline;
-    gap: 18px;
-  }
-
-  .eyebrow .divider {
-    color: rgba(176,141,87,0.5);
-  }
-
-  .session-num {
-    font-variant-numeric: tabular-nums;
-  }
-
-  .datetime {
-    font-family: "EB Garamond", serif;
-    font-size: 20px;
-    letter-spacing: 0.06em;
+  #brand svg { width: 34px; height: 34px; flex-shrink: 0; }
+  #brand .brand-text {
     color: var(--paper-alt);
-    opacity: 0.85;
-    font-variant-numeric: tabular-nums;
+    font-family: "EB Garamond", serif;
+    font-size: 22px;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
   }
 
-  .main-row {
+  /* ---------- floating "目前發言" callout ---------- */
+  #speakerBadge {
+    position: absolute;
+    top: 108px; right: 48px;
+    width: 420px;
+    text-align: right;
+    transition: opacity 360ms ease, transform 360ms ease;
+  }
+  #speakerBadge.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+  .speaker-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--wine-dark);
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    padding: 5px 16px;
+    border-radius: 4px 4px 0 0;
+  }
+  .speaker-plate {
+    background: rgba(253,251,246,0.96);
+    padding: 14px 20px;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .speaker-name {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    outline: none;
+  }
+  .speaker-role {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-left: 8px;
+    outline: none;
+  }
+
+  /* ---------- bottom: ticker + info bar ---------- */
+  #bottomStack {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    transition: transform 420ms cubic-bezier(.22,1,.36,1), opacity 320ms ease;
+  }
+  #bottomStack.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+
+  .ticker {
+    background: var(--paper-alt);
+    border-top: 2px solid var(--gold);
+    border-bottom: 1px solid var(--border-soft);
+    overflow: hidden;
+    white-space: nowrap;
+    height: 46px;
     display: flex;
     align-items: center;
-    gap: 28px;
-    flex-wrap: wrap;
   }
-
-  .field {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker-scroll 22s linear infinite;
   }
-
-  .field-label {
+  .ticker-track span {
+    padding: 0 60px;
     font-family: "EB Garamond", serif;
-    font-size: 15px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: rgba(246,241,231,0.55);
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: var(--wine-dark);
+    font-weight: 600;
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
-  .field-value {
-    font-size: 34px;
+  .info-bar {
+    background: linear-gradient(180deg, rgba(89,31,31,0.97) 0%, rgba(42,20,20,0.97) 100%);
+    height: 96px;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    gap: 32px;
+  }
+  .clock {
+    font-family: "EB Garamond", serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 46px;
+    font-weight: 700;
+    color: var(--paper-alt);
+    min-width: 210px;
+  }
+  .v-div {
+    width: 1px; height: 44px;
+    background: rgba(176,141,87,0.4);
+  }
+  .agenda-text {
+    flex: 1;
+    font-size: 30px;
     font-weight: 600;
     color: var(--paper-alt);
-    line-height: 1.25;
     outline: none;
-    min-width: 40px;
   }
-
-  .field-value.speaker {
-    color: var(--gold);
-    font-size: 40px;
-    font-weight: 700;
-  }
-
-  .v-sep {
-    width: 1px;
-    align-self: stretch;
-    background: linear-gradient(to bottom, transparent, var(--border-soft) 20%, var(--border-soft) 80%, transparent);
-    opacity: 0.4;
-  }
-
-  .speaking-row {
-    margin-top: 16px;
-    padding-top: 14px;
-    border-top: 1px solid rgba(176,141,87,0.3);
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  .speaking-label {
+  .live-dot {
+    display: flex; align-items: center; gap: 10px;
     font-family: "EB Garamond", serif;
-    font-size: 16px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(246,241,231,0.55);
+    font-size: 22px;
+    letter-spacing: 0.16em;
+    color: var(--paper-alt);
+  }
+  .live-dot .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #c0392b;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
   }
 
   [contenteditable="true"] {
-    cursor: text;
-    border-radius: 4px;
-    padding: 2px 6px;
-    margin: -2px -6px;
+    cursor: text; border-radius: 4px;
+    padding: 2px 6px; margin: -2px -6px;
   }
-
-  [contenteditable="true"]:hover {
-    background: rgba(176,141,87,0.12);
-  }
-
+  [contenteditable="true"]:hover { background: rgba(176,141,87,0.15); }
   [contenteditable="true"]:focus {
-    background: rgba(176,141,87,0.22);
+    background: rgba(176,141,87,0.25);
     box-shadow: 0 0 0 1px rgba(176,141,87,0.6);
   }
-
-  .flash {
-    animation: flash-update 900ms ease;
-  }
-
+  .flash { animation: flash-update 900ms ease; }
   @keyframes flash-update {
-    0% { color: #fff3d6; }
+    0% { color: #ffe9b3; }
     100% { color: inherit; }
   }
 
   #hint {
-    position: absolute;
-    left: 64px;
-    top: 40px;
+    position: absolute; left: 48px; top: 40px;
     font-family: "EB Garamond", serif;
-    font-size: 18px;
-    color: rgba(255,255,255,0.55);
-    background: rgba(0,0,0,0.35);
-    padding: 6px 14px;
-    border-radius: 6px;
+    font-size: 18px; color: rgba(255,255,255,0.6);
+    background: rgba(0,0,0,0.4);
+    padding: 6px 14px; border-radius: 6px;
+    transition: opacity 600ms ease;
   }
 </style>
 </head>
 <body>
 <div id="stage">
 
-  <div id="hint">按 H 鍵：顯示 / 隱藏字卡　｜　直接點文字即可修改</div>
+  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改</div>
 
-  <div id="card">
-    <div class="rule-top"></div>
-    <div class="panel">
+  <div id="brand">
+    <svg viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18" stroke="#b08d57" stroke-width="2"/>
+      <circle cx="20" cy="20" r="12" stroke="#b08d57" stroke-width="1"/>
+      <text x="20" y="27" text-anchor="middle" font-family="'Noto Serif TC', serif" font-size="18" fill="#b08d57">東</text>
+    </svg>
+    <span class="brand-text">東海大學第三十八屆學生議會</span>
+  </div>
 
-      <div class="eyebrow-row">
-        <div class="eyebrow">
-          <span>東海大學第三十八屆學生議會</span>
-          <span class="divider">｜</span>
-          <span>第 <span id="sessionNum" class="session-num" contenteditable="true" spellcheck="false">1</span> 次定期大會</span>
-        </div>
-        <div class="datetime" id="datetime"></div>
+  <div id="speakerBadge">
+    <div class="speaker-tag">目前發言</div>
+    <div class="speaker-plate">
+      <span class="speaker-name" id="speakerName" contenteditable="true" spellcheck="false">發言人姓名</span><span class="speaker-role" id="speakerRole" contenteditable="true" spellcheck="false">部長</span>
+    </div>
+  </div>
+
+  <div id="bottomStack">
+    <div class="ticker">
+      <div class="ticker-track" id="tickerTrack">
+        <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第 <span class="session-num" data-mirror="sessionNum">1</span> 次定期大會</span>
+        <span id="tickerText2" aria-hidden="true">東海大學第三十八屆學生議會・第 <span class="session-num" data-mirror="sessionNum">1</span> 次定期大會</span>
       </div>
-
-      <div class="main-row">
-        <div class="field">
-          <div class="field-label">質詢議員</div>
-          <div class="field-value" id="askerName" contenteditable="true" spellcheck="false">議員姓名</div>
-        </div>
-
-        <div class="v-sep"></div>
-
-        <div class="field">
-          <div class="field-label">質詢對象部門</div>
-          <div class="field-value" id="targetDept" contenteditable="true" spellcheck="false">部門名稱</div>
-        </div>
-      </div>
-
-      <div class="speaking-row">
-        <span class="speaking-label">現在發言</span>
-        <span class="field-value speaker" id="speakerName" contenteditable="true" spellcheck="false">發言人姓名</span>
-        <span class="speaking-label" style="margin-left:6px;">／</span>
-        <span class="field-value speaker" id="speakerDept" contenteditable="true" spellcheck="false" style="font-size:28px;">發言部門</span>
-      </div>
-
+    </div>
+    <div class="info-bar">
+      <div class="clock" id="datetime"></div>
+      <div class="v-div"></div>
+      <div class="agenda-text" id="agendaText" contenteditable="true" spellcheck="false">質詢部門：財務部</div>
+      <div class="live-dot"><span class="dot"></span>LIVE</div>
     </div>
   </div>
 
 </div>
 
 <script>
-  const STORAGE_KEY = "thu-council-lower-third-v1";
-  const editableIds = ["sessionNum", "askerName", "targetDept", "speakerName", "speakerDept"];
+  const STORAGE_KEY = "thu-council-live-v1";
 
-  function loadState() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-      editableIds.forEach((id) => {
-        if (saved[id] !== undefined) {
-          document.getElementById(id).textContent = saved[id];
-        }
-      });
-    } catch (e) {}
+  function loadShared() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch (e) { return {}; }
+  }
+  function saveShared(patch) {
+    const state = loadShared();
+    Object.assign(state, patch);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    return state;
   }
 
-  function saveState() {
-    const state = {};
-    editableIds.forEach((id) => {
-      state[id] = document.getElementById(id).textContent;
-    });
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  const editableIds = ["speakerName", "speakerRole", "agendaText"];
+  const state = loadShared();
+  editableIds.forEach((id) => {
+    if (state[id] !== undefined) document.getElementById(id).textContent = state[id];
+  });
+  if (state.sessionNum !== undefined) {
+    document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => el.textContent = state.sessionNum);
   }
 
   editableIds.forEach((id) => {
     const el = document.getElementById(id);
     el.addEventListener("blur", () => {
-      saveState();
-      el.classList.remove("flash");
-      void el.offsetWidth;
-      el.classList.add("flash");
+      saveShared({ [id]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
-    el.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        el.blur();
-      }
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  // session number is edited via the ticker text's inline span (double-click to isolate edit)
+  document.querySelectorAll('.session-num').forEach(el => {
+    el.setAttribute("contenteditable", "true");
+    el.addEventListener("blur", () => {
+      const val = el.textContent;
+      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(e2 => e2.textContent = val);
+      saveShared({ sessionNum: val });
     });
   });
 
-  loadState();
-
-  function updateClock() {
-    const now = new Date();
-    const formatted = new Intl.DateTimeFormat("zh-TW", {
-      timeZone: "Asia/Taipei",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false,
-    }).format(now);
-    document.getElementById("datetime").textContent = formatted;
-  }
-  updateClock();
-  setInterval(updateClock, 1000 * 15);
-
-  let visible = true;
-  window.addEventListener("keydown", (e) => {
-    if (e.key.toLowerCase() === "h") {
-      visible = !visible;
-      document.getElementById("card").classList.toggle("hidden", !visible);
+  window.addEventListener("storage", (e) => {
+    if (e.key !== STORAGE_KEY) return;
+    const s = loadShared();
+    editableIds.forEach((id) => {
+      if (s[id] !== undefined && document.getElementById(id).textContent !== s[id]) {
+        document.getElementById(id).textContent = s[id];
+      }
+    });
+    if (s.sessionNum !== undefined) {
+      document.querySelectorAll('[data-mirror="sessionNum"]').forEach(el => el.textContent = s.sessionNum);
     }
   });
 
-  document.getElementById("hint").addEventListener("animationend", () => {});
-  setTimeout(() => {
-    document.getElementById("hint").style.transition = "opacity 600ms ease";
-    document.getElementById("hint").style.opacity = "0";
-  }, 8000);
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("datetime").textContent = new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).format(now);
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  let bottomVisible = true, speakerVisible = true;
+  window.addEventListener("keydown", (e) => {
+    const k = e.key.toLowerCase();
+    if (k === "h") { bottomVisible = !bottomVisible; document.getElementById("bottomStack").classList.toggle("hidden", !bottomVisible); }
+    if (k === "s") { speakerVisible = !speakerVisible; document.getElementById("speakerBadge").classList.toggle("hidden", !speakerVisible); }
+  });
+
+  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
 </body>
 </html>
