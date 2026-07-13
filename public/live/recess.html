@@ -32,16 +32,19 @@
     font-variant-numeric: tabular-nums;
   }
 
-  .ticker {
+  #topClockBar {
     position: absolute; top: 0; left: 0; right: 0;
     background: rgba(89,31,31,0.85);
     border-bottom: 2px solid var(--gold);
     height: 54px; display: flex; align-items: center; justify-content: center;
   }
-  #tickerText1 {
+  #topClockBar #clock {
     font-family: "EB Garamond", serif;
-    font-size: 26px; letter-spacing: 0.1em;
-    color: var(--paper-alt); font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    font-size: 28px; font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--paper-alt);
+    margin: 0;
   }
 
   #center {
@@ -82,14 +85,6 @@
     color: var(--paper-alt);
   }
 
-  #clock {
-    font-family: "EB Garamond", serif;
-    font-variant-numeric: tabular-nums;
-    font-size: 46px; font-weight: 700;
-    color: var(--paper-alt);
-    margin-top: 4px;
-  }
-
   [contenteditable="true"] {
     cursor: text; border-radius: 6px; padding: 2px 10px; margin: -2px -10px;
   }
@@ -117,11 +112,11 @@
 <body>
 <div id="stage">
 
-  <div id="hint">點文字即可修改跑馬燈／休息文字</div>
+  <div id="hint">點文字即可修改休息文字</div>
   <div id="timecode" id="timecode"></div>
 
-  <div class="ticker">
-    <span id="tickerText1" contenteditable="true" spellcheck="false">休息 5 分鐘，於 19:45 分開會</span>
+  <div id="topClockBar">
+    <div id="clock"></div>
   </div>
 
   <div id="center">
@@ -131,7 +126,6 @@
       <span class="brand-rule"></span>
       <span class="brand-text">東海大學第三十八屆學生議會</span>
     </div>
-    <div id="clock"></div>
   </div>
 
 </div>
@@ -174,7 +168,7 @@
     }).format(now);
   }
 
-  const editableIds = ["tickerText1", "recessLabel"];
+  const editableIds = ["recessLabel"];
 
   function applyState(s) {
     editableIds.forEach((id) => {
