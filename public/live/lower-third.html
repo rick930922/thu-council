@@ -228,7 +228,7 @@
     </div>
 
     <div id="speakerBadge">
-      <div class="speaker-tag">目前發言</div>
+      <div class="speaker-tag" id="speakerTag" contenteditable="true" spellcheck="false">目前發言</div>
       <div class="speaker-plate">
         <span class="speaker-name" id="speakerName" contenteditable="true" spellcheck="false">發言人姓名</span><span class="speaker-role" id="speakerRole" contenteditable="true" spellcheck="false">部長</span>
       </div>
@@ -266,7 +266,7 @@
     return state;
   }
 
-  const editableIds = ["askerName", "speakerName", "speakerRole", "agendaText"];
+  const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText"];
   const state = loadShared();
   editableIds.forEach((id) => {
     if (state[id] !== undefined) document.getElementById(id).textContent = state[id];

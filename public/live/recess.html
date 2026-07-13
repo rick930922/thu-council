@@ -124,7 +124,7 @@
 <body>
 <div id="stage">
 
-  <div id="hint">點文字即可修改跑馬燈內容　｜　時間會自動更新</div>
+  <div id="hint">點文字即可修改跑馬燈／休息文字／時間</div>
   <div id="timecode" id="timecode"></div>
 
   <div class="ticker">
@@ -141,7 +141,7 @@
       <span class="brand-rule"></span>
       <span class="brand-text">東海大學第三十八屆學生議會</span>
     </div>
-    <div id="clock"></div>
+    <div id="clock" contenteditable="true" spellcheck="false"></div>
   </div>
 
 </div>
@@ -158,11 +158,21 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
   }
 
-  const editableIds = ["tickerText1", "recessLabel"];
+  function formatClock(now) {
+    return new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).format(now);
+  }
+
+  const editableIds = ["tickerText1", "recessLabel", "clock"];
   const state = loadShared();
   editableIds.forEach((id) => {
     const key = "recess_" + id;
-    if (state[key] !== undefined) document.getElementById(id).textContent = state[key];
+    if (state[key] !== undefined) {
+      document.getElementById(id).textContent = state[key];
+    } else if (id === "clock") {
+      document.getElementById("clock").textContent = formatClock(new Date());
+    }
   });
   document.getElementById("tickerText2").textContent = document.getElementById("tickerText1").textContent;
 
@@ -176,18 +186,15 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
   });
 
-  function updateClock() {
+  function updateTimecode() {
     const now = new Date();
-    document.getElementById("clock").textContent = new Intl.DateTimeFormat("zh-TW", {
-      timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
-    }).format(now);
     document.getElementById("timecode").textContent = "LIVE " + new Intl.DateTimeFormat("zh-TW", {
       timeZone: "Asia/Taipei", year: "numeric", month: "2-digit", day: "2-digit",
       hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
     }).format(now).replace(/\//g, ".");
   }
-  updateClock();
-  setInterval(updateClock, 1000);
+  updateTimecode();
+  setInterval(updateTimecode, 1000);
 
   setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
