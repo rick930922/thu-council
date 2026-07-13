@@ -67,6 +67,12 @@
     transform: translateY(16px) scale(0.98);
     animation: reveal-in 900ms cubic-bezier(.22,1,.36,1) forwards;
   }
+  /* static end state after the entrance animation finishes, so later class
+     changes (like .flash) never fight with reveal-in over the animation property */
+  .revealed {
+    opacity: 1;
+    transform: none;
+  }
   @keyframes reveal-in {
     to { opacity: 1; transform: translateY(0) scale(1); }
   }
@@ -345,6 +351,13 @@
   }
   updateCountdown();
   setInterval(updateCountdown, 1000);
+
+  document.querySelectorAll(".reveal").forEach((el) => {
+    el.addEventListener("animationend", () => {
+      el.classList.remove("reveal");
+      el.classList.add("revealed");
+    }, { once: true });
+  });
 
   setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
