@@ -52,6 +52,7 @@
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
     gap: 18px;
+    pointer-events: none;
   }
   #recessLabel {
     font-size: 190px;
@@ -60,6 +61,7 @@
     letter-spacing: 0.12em;
     text-shadow: 0 8px 40px rgba(0,0,0,0.5);
     outline: none;
+    pointer-events: auto;
   }
 
   #brandRow {
@@ -88,42 +90,42 @@
   /* ---- attendance rosters (left: 出席議員, right: 列席幹部) ---- */
   .roster-panel {
     position: absolute;
-    top: 74px;
-    width: 420px;
+    top: 66px;
+    width: 460px;
     background: rgba(42,20,20,0.55);
     border: 1px solid rgba(176,141,87,0.4);
     border-radius: 10px;
-    padding: 16px 18px;
+    padding: 12px 16px;
   }
-  #leftRosterPanel { left: 36px; }
-  #rightRosterPanel { right: 36px; }
+  #leftRosterPanel { left: 30px; }
+  #rightRosterPanel { right: 30px; }
 
   .roster-header {
     font-family: "EB Garamond", serif;
-    font-size: 15px;
-    letter-spacing: 0.26em;
+    font-size: 14px;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--gold);
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
   .roster-list {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    gap: 3px;
   }
   .roster-row {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 3px 6px;
+    gap: 9px;
+    padding: 1px 6px;
     border-radius: 4px;
   }
   .roster-row:nth-child(even) {
     background: rgba(255,255,255,0.03);
   }
   .roster-check {
-    width: 17px; height: 17px;
+    width: 20px; height: 20px;
     border: 1.5px solid var(--gold);
     border-radius: 4px;
     flex-shrink: 0;
@@ -137,13 +139,13 @@
     content: "\2713";
     position: absolute; inset: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 12px; line-height: 1;
+    font-size: 14px; line-height: 1;
     color: var(--wine-dark); font-weight: 700;
   }
   .roster-name {
     flex: 1;
-    font-size: 15px;
-    line-height: 1.3;
+    font-size: 21px;
+    line-height: 1.2;
     color: var(--paper-alt);
     outline: none;
   }
