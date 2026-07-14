@@ -87,6 +87,37 @@
     color: var(--paper-alt);
   }
 
+  /* ---- 主席／秘書長／文書記錄 ---- */
+  #rolesRow {
+    display: flex;
+    gap: 22px;
+    margin-top: 22px;
+    pointer-events: auto;
+  }
+  .role-box {
+    background: rgba(42,20,20,0.55);
+    border: 1px solid rgba(176,141,87,0.4);
+    border-radius: 8px;
+    padding: 12px 24px;
+    text-align: center;
+    min-width: 180px;
+  }
+  .role-title {
+    font-family: "EB Garamond", serif;
+    font-size: 15px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    outline: none;
+    margin-bottom: 6px;
+  }
+  .role-name {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--paper-alt);
+    outline: none;
+  }
+
   /* ---- attendance rosters (left: 出席議員, right: 列席幹部) ---- */
   .roster-panel {
     position: absolute;
@@ -203,6 +234,21 @@
       <span class="brand-rule"></span>
       <span class="brand-text">東海大學第三十八屆學生議會</span>
     </div>
+
+    <div id="rolesRow">
+      <div class="role-box">
+        <div class="role-title" id="chairTitle" contenteditable="true" spellcheck="false">會議主席</div>
+        <div class="role-name" id="chairName" contenteditable="true" spellcheck="false">姓名</div>
+      </div>
+      <div class="role-box">
+        <div class="role-title" id="secretaryTitle" contenteditable="true" spellcheck="false">秘書長</div>
+        <div class="role-name" id="secretaryName" contenteditable="true" spellcheck="false">姓名</div>
+      </div>
+      <div class="role-box">
+        <div class="role-title" id="clerkTitle" contenteditable="true" spellcheck="false">文書記錄</div>
+        <div class="role-name" id="clerkName" contenteditable="true" spellcheck="false">姓名</div>
+      </div>
+    </div>
   </div>
 
 </div>
@@ -245,7 +291,12 @@
     }).format(now);
   }
 
-  const editableIds = ["recessLabel"];
+  const editableIds = [
+    "recessLabel",
+    "chairTitle", "chairName",
+    "secretaryTitle", "secretaryName",
+    "clerkTitle", "clerkName",
+  ];
 
   // ---- build the two attendance rosters ----
   function buildRoster(listId, count, keyPrefix, namePlaceholder, defaultTitle) {
