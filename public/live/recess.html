@@ -195,22 +195,12 @@
     100% { color: inherit; }
   }
 
-  #hint {
-    position: absolute; left: 50%; bottom: 10px;
-    transform: translateX(-50%);
-    font-family: "EB Garamond", serif;
-    font-size: 16px; color: rgba(255,255,255,0.55);
-    background: rgba(0,0,0,0.4);
-    padding: 6px 14px; border-radius: 6px;
-    white-space: nowrap;
-    transition: opacity 600ms ease;
-  }
+
 </style>
 </head>
 <body>
 <div id="stage">
 
-  <div id="hint">點文字即可修改休息文字／姓名職稱　｜　點方框可切換出席打勾</div>
   <div id="timecode" id="timecode"></div>
 
   <div id="topClockBar">
@@ -405,8 +395,6 @@
   }
   updateTimecode();
   setInterval(updateTimecode, 1000);
-
-  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
 </body>
 </html>

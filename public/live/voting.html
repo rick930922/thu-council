@@ -151,20 +151,11 @@
   .flash { animation: flash-update 900ms ease; }
   @keyframes flash-update { 0% { color: #ffe9b3; } 100% { color: inherit; } }
 
-  #hint {
-    position: absolute; left: 48px; top: 40px;
-    font-family: "EB Garamond", serif;
-    font-size: 18px; color: rgba(255,255,255,0.6);
-    background: rgba(0,0,0,0.4);
-    padding: 6px 14px; border-radius: 6px;
-    transition: opacity 600ms ease;
-  }
+
 </style>
 </head>
 <body>
 <div id="stage">
-
-  <div id="hint">數字/標題點一下即可修改　｜　點「通過章」可切換：無 → 通過 → 不通過</div>
 
   <div id="brand">
     <span class="thusp-word">THUSP</span>
@@ -308,8 +299,6 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
-
-  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
 </body>
 </html>

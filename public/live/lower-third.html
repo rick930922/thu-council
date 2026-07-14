@@ -188,20 +188,11 @@
     100% { color: inherit; }
   }
 
-  #hint {
-    position: absolute; left: 48px; top: 40px;
-    font-family: "EB Garamond", serif;
-    font-size: 18px; color: rgba(255,255,255,0.6);
-    background: rgba(0,0,0,0.4);
-    padding: 6px 14px; border-radius: 6px;
-    transition: opacity 600ms ease;
-  }
+
 </style>
 </head>
 <body>
 <div id="stage">
-
-  <div id="hint">按 H：顯示/隱藏底部字卡　｜　按 Q：顯示/隱藏質詢議員名牌　｜　按 S：顯示/隱藏發言名牌　｜　點文字即可修改</div>
 
   <div id="topRightStack">
     <div id="brand">
@@ -331,8 +322,6 @@
     if (k === "s") { speakerVisible = !speakerVisible; document.getElementById("speakerBadge").classList.toggle("hidden", !speakerVisible); }
     if (k === "q") { askerVisible = !askerVisible; document.getElementById("askerBadge").classList.toggle("hidden", !askerVisible); }
   });
-
-  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
 </body>
 </html>

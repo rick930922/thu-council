@@ -189,20 +189,11 @@
     100% { color: inherit; }
   }
 
-  #hint {
-    position: absolute; left: 36px; top: 28px;
-    font-family: "EB Garamond", serif;
-    font-size: 18px; color: rgba(255,255,255,0.55);
-    background: rgba(0,0,0,0.4);
-    padding: 6px 14px; border-radius: 6px;
-    transition: opacity 600ms ease;
-  }
+
 </style>
 </head>
 <body>
 <div id="stage">
-
-  <div id="hint">點文字即可修改　｜　開始時間欄位請輸入 24 小時制「HH:MM」，倒數會自動計算</div>
 
   <div id="center">
     <div id="rings">
@@ -358,8 +349,6 @@
       el.classList.add("revealed");
     }, { once: true });
   });
-
-  setTimeout(() => { document.getElementById("hint").style.opacity = "0"; }, 8000);
 </script>
 </body>
 </html>
