@@ -85,6 +85,69 @@
     color: var(--paper-alt);
   }
 
+  /* ---- attendance rosters (left: 出席議員, right: 列席幹部) ---- */
+  .roster-panel {
+    position: absolute;
+    top: 74px;
+    width: 420px;
+    background: rgba(42,20,20,0.55);
+    border: 1px solid rgba(176,141,87,0.4);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  #leftRosterPanel { left: 36px; }
+  #rightRosterPanel { right: 36px; }
+
+  .roster-header {
+    font-family: "EB Garamond", serif;
+    font-size: 15px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .roster-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .roster-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 6px;
+    border-radius: 4px;
+  }
+  .roster-row:nth-child(even) {
+    background: rgba(255,255,255,0.03);
+  }
+  .roster-check {
+    width: 17px; height: 17px;
+    border: 1.5px solid var(--gold);
+    border-radius: 4px;
+    flex-shrink: 0;
+    cursor: pointer;
+    position: relative;
+  }
+  .roster-check.checked {
+    background: var(--gold);
+  }
+  .roster-check.checked::after {
+    content: "\2713";
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; line-height: 1;
+    color: var(--wine-dark); font-weight: 700;
+  }
+  .roster-name {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--paper-alt);
+    outline: none;
+  }
+
   [contenteditable="true"] {
     cursor: text; border-radius: 6px; padding: 2px 10px; margin: -2px -10px;
   }
@@ -100,11 +163,13 @@
   }
 
   #hint {
-    position: absolute; left: 36px; bottom: 28px;
+    position: absolute; left: 50%; bottom: 10px;
+    transform: translateX(-50%);
     font-family: "EB Garamond", serif;
-    font-size: 18px; color: rgba(255,255,255,0.55);
+    font-size: 16px; color: rgba(255,255,255,0.55);
     background: rgba(0,0,0,0.4);
     padding: 6px 14px; border-radius: 6px;
+    white-space: nowrap;
     transition: opacity 600ms ease;
   }
 </style>
@@ -112,11 +177,21 @@
 <body>
 <div id="stage">
 
-  <div id="hint">點文字即可修改休息文字</div>
+  <div id="hint">點文字即可修改休息文字／姓名職稱　｜　點方框可切換出席打勾</div>
   <div id="timecode" id="timecode"></div>
 
   <div id="topClockBar">
     <div id="clock"></div>
+  </div>
+
+  <div id="leftRosterPanel" class="roster-panel">
+    <div class="roster-header">出席議員</div>
+    <div class="roster-list" id="leftRosterList"></div>
+  </div>
+
+  <div id="rightRosterPanel" class="roster-panel">
+    <div class="roster-header">列席幹部</div>
+    <div class="roster-list" id="rightRosterList"></div>
   </div>
 
   <div id="center">
@@ -170,12 +245,50 @@
 
   const editableIds = ["recessLabel"];
 
+  // ---- build the two attendance rosters ----
+  function buildRoster(listId, count, keyPrefix, namePlaceholder, defaultTitle) {
+    const list = document.getElementById(listId);
+    for (let i = 1; i <= count; i++) {
+      const row = document.createElement("div");
+      row.className = "roster-row";
+
+      const check = document.createElement("span");
+      check.className = "roster-check";
+      check.dataset.key = keyPrefix + i + "Checked";
+
+      const name = document.createElement("span");
+      name.className = "roster-name";
+      name.contentEditable = "true";
+      name.spellcheck = false;
+      name.dataset.key = keyPrefix + i + "Name";
+      name.textContent = namePlaceholder + i + "・" + defaultTitle;
+
+      row.appendChild(check);
+      row.appendChild(name);
+      list.appendChild(row);
+    }
+  }
+  buildRoster("leftRosterList", 26, "rosterL", "議員姓名 ", "議員");
+  buildRoster("rightRosterList", 20, "rosterR", "幹部姓名 ", "幹部");
+
   function applyState(s) {
     editableIds.forEach((id) => {
       const el = document.getElementById(id);
       const key = "recess_" + id;
       if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
         el.textContent = s[key];
+      }
+    });
+    document.querySelectorAll(".roster-name[data-key]").forEach((el) => {
+      const key = el.dataset.key;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+      }
+    });
+    document.querySelectorAll(".roster-check[data-key]").forEach((el) => {
+      const key = el.dataset.key;
+      if (s[key] !== undefined) {
+        el.classList.toggle("checked", s[key] === true || s[key] === "true");
       }
     });
   }
@@ -187,6 +300,7 @@
       document.getElementById(id).textContent = initial[key];
     }
   });
+  applyState(initial);
 
   (async () => {
     const remote = await fetchRemote();
@@ -203,6 +317,22 @@
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  document.querySelectorAll(".roster-name[data-key]").forEach((el) => {
+    el.addEventListener("blur", () => {
+      saveShared({ [el.dataset.key]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  document.querySelectorAll(".roster-check[data-key]").forEach((el) => {
+    el.addEventListener("click", () => {
+      const nowChecked = !el.classList.contains("checked");
+      el.classList.toggle("checked", nowChecked);
+      saveShared({ [el.dataset.key]: nowChecked });
+    });
   });
 
   setInterval(async () => {
