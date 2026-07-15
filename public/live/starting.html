@@ -39,7 +39,7 @@
     position: absolute;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
-    width: 640px; height: 640px;
+    width: 740px; height: 740px;
     display: flex; align-items: center; justify-content: center;
     pointer-events: none;
   }
@@ -54,8 +54,8 @@
   #rings .ring.r2 { animation-delay: 1.5s; }
   #rings .ring.r3 { animation-delay: 3s; }
   @keyframes ring-pulse {
-    0%   { width: 260px; height: 260px; opacity: 0.55; transform: translate(-50%, -50%); }
-    100% { width: 620px; height: 620px; opacity: 0; transform: translate(-50%, -50%); }
+    0%   { width: 300px; height: 300px; opacity: 0.55; transform: translate(-50%, -50%); }
+    100% { width: 720px; height: 720px; opacity: 0; transform: translate(-50%, -50%); }
   }
   @media (prefers-reduced-motion: reduce) {
     #rings .ring { animation: none; opacity: 0; }
@@ -85,52 +85,52 @@
   #mark .thusp-word {
     font-family: "EB Garamond", serif;
     font-weight: 700;
-    font-size: 64px;
+    font-size: 92px;
     letter-spacing: 0.34em;
     color: var(--gold);
     animation-delay: 80ms;
   }
   #mark .brand-rule {
-    width: 120px; height: 1px;
+    width: 150px; height: 2px;
     background: var(--gold);
     opacity: 0.7;
-    margin: 18px 0 14px;
+    margin: 24px 0 18px;
     animation-delay: 260ms;
   }
   #mark .brand-text {
-    font-size: 30px; letter-spacing: 0.12em;
+    font-size: 44px; letter-spacing: 0.12em;
     color: var(--paper-alt);
     animation-delay: 380ms;
   }
 
   #eventLabel {
-    margin-top: 46px;
+    margin-top: 54px;
     font-family: "EB Garamond", serif;
-    font-size: 22px;
-    letter-spacing: 0.36em;
+    font-size: 30px;
+    letter-spacing: 0.34em;
     text-transform: uppercase;
     color: var(--gold-soft);
     background: rgba(0,0,0,0.25);
     border: 1px solid rgba(176,141,87,0.45);
-    padding: 10px 30px;
+    padding: 14px 38px;
     border-radius: 999px;
     outline: none;
     animation-delay: 520ms;
   }
 
   #countdownRow {
-    margin-top: 34px;
-    display: flex; align-items: baseline; gap: 16px;
+    margin-top: 40px;
+    display: flex; align-items: baseline; gap: 20px;
     animation-delay: 640ms;
   }
   #countdownLabel {
-    font-size: 24px;
+    font-size: 32px;
     color: var(--ink-soft);
   }
   #countdown {
     font-family: "EB Garamond", serif;
     font-variant-numeric: tabular-nums;
-    font-size: 56px; font-weight: 700;
+    font-size: 78px; font-weight: 700;
     color: var(--paper-alt);
     letter-spacing: 0.06em;
   }
@@ -138,9 +138,9 @@
   @keyframes pulse-text { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 
   #targetTimeText {
-    margin-top: 14px;
+    margin-top: 18px;
     font-family: "EB Garamond", serif;
-    font-size: 20px;
+    font-size: 28px;
     letter-spacing: 0.1em;
     color: var(--ink-soft);
     outline: none;
@@ -152,25 +152,25 @@
     position: absolute; left: 0; right: 0; bottom: 0;
     background: linear-gradient(180deg, rgba(89,31,31,0.9) 0%, rgba(32,13,14,0.95) 100%);
     border-top: 2px solid var(--gold);
-    height: 74px;
+    height: 88px;
     display: flex; align-items: center; justify-content: center;
-    gap: 16px;
+    gap: 20px;
   }
   #sessionText {
     font-family: "EB Garamond", serif;
-    font-size: 22px;
+    font-size: 30px;
     letter-spacing: 0.1em;
     color: var(--paper-alt);
     outline: none;
   }
   #bottomBar .prep-dot {
-    display: flex; align-items: center; gap: 8px;
+    display: flex; align-items: center; gap: 10px;
     font-family: "EB Garamond", serif;
-    font-size: 18px; letter-spacing: 0.18em;
+    font-size: 24px; letter-spacing: 0.18em;
     color: var(--gold-soft);
   }
   #bottomBar .prep-dot .dot {
-    width: 10px; height: 10px; border-radius: 50%;
+    width: 13px; height: 13px; border-radius: 50%;
     background: var(--gold);
     animation: pulse-text 1.6s ease-in-out infinite;
   }
