@@ -289,7 +289,28 @@
   ];
 
   // ---- build the two attendance rosters ----
-  function buildRoster(listId, count, keyPrefix, namePlaceholder, defaultTitle) {
+  const RIGHT_ROSTER_DEFAULTS = [
+    "邱煜翔・會長",
+    "溫侑萱・副會長",
+    "張戎忠・秘書長",
+    "林上邕・副秘書長",
+    "謝耀陞・學權部部長",
+    "才宜禎・學權部副部長",
+    "蔡睿恩・外務部部長",
+    "王傑民・外務部副部長",
+    "林漢儒・學會部部長",
+    "柯承漢・學會部副部長",
+    "社團部部長",
+    "社團部副部長",
+    "劉又瑄・新聞部部長",
+    "陳振家・新聞部副部長",
+    "張惠玟（未定）・總務部部長",
+    "總務部副部長",
+    "林佳穎・選舉委員會主任委員",
+    "賴俞靜・選舉委員會副主任委員",
+  ];
+
+  function buildRoster(listId, count, keyPrefix, namePlaceholder, defaultTitle, defaultNames) {
     const list = document.getElementById(listId);
     for (let i = 1; i <= count; i++) {
       const row = document.createElement("div");
@@ -304,7 +325,7 @@
       name.contentEditable = "true";
       name.spellcheck = false;
       name.dataset.key = keyPrefix + i + "Name";
-      name.textContent = namePlaceholder + i + "・" + defaultTitle;
+      name.textContent = defaultNames ? defaultNames[i - 1] : namePlaceholder + i + "・" + defaultTitle;
 
       row.appendChild(check);
       row.appendChild(name);
@@ -312,7 +333,7 @@
     }
   }
   buildRoster("leftRosterList", 26, "rosterL", "議員姓名 ", "議員");
-  buildRoster("rightRosterList", 20, "rosterR", "幹部姓名 ", "幹部");
+  buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "rosterR", "幹部姓名 ", "幹部", RIGHT_ROSTER_DEFAULTS);
 
   function applyState(s) {
     editableIds.forEach((id) => {
