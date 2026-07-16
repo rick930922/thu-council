@@ -289,6 +289,35 @@
   ];
 
   // ---- build the two attendance rosters ----
+  const LEFT_ROSTER_DEFAULTS = [
+    "梁俊億 議長",
+    "高予恩 副議長",
+    "生科系 陳紀睿 議員",
+    "政治學系 張仲毅 議員",
+    "政治學系 許峻睿 議員",
+    "社會學系 蔡玗霖 議員",
+    "行政管理暨政策學系 李聖亞 議員",
+    "美術系 黃柏皓 議員",
+    "美術系 王立言 議員",
+    "音樂系 洪采妤 議員",
+    "音樂系 林均亞 議員",
+    "音樂系 陳星羽 議員",
+    "環工系 李宇衒 議員",
+    "環工系 陳則宇 議員",
+    "工工系 洪若傑 議員",
+    "電機系 陳信宇 議員",
+    "電機系 林暐翔 議員",
+    "電機系 王郁為 議員",
+    "永續科學與管理學士學位學程 楊琇棋 議員",
+    "畜產系 林琇君 議員",
+    "畜產系 洪崇凱 議員",
+    "畜產系 陳紘 議員",
+    "會計系 楊佩樺 議員",
+    "國貿系 許暐鋒 議員",
+    "薛喬丰 議員",
+    "趙宥任 議員",
+  ];
+
   const RIGHT_ROSTER_DEFAULTS = [
     "邱煜翔・會長",
     "溫侑萱・副會長",
@@ -332,7 +361,7 @@
       list.appendChild(row);
     }
   }
-  buildRoster("leftRosterList", 26, "rosterL", "議員姓名 ", "議員");
+  buildRoster("leftRosterList", LEFT_ROSTER_DEFAULTS.length, "rosterL", "議員姓名 ", "議員", LEFT_ROSTER_DEFAULTS);
   buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "rosterR", "幹部姓名 ", "幹部", RIGHT_ROSTER_DEFAULTS);
 
   function applyState(s) {
