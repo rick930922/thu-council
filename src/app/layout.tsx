@@ -4,6 +4,7 @@ import { Noto_Serif_TC, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import IntroSplash from "@/components/IntroSplash";
 
 const notoSerifTC = Noto_Serif_TC({
   variable: "--font-serif-tc",
@@ -41,6 +42,7 @@ export default function RootLayout({
       className={`${notoSerifTC.variable} ${ebGaramond.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-paper text-ink font-serif">
+        <IntroSplash />
         <SiteHeader />
         <main className="flex-1">
           <ViewTransition enter="page-enter" exit="page-exit" default="none">
