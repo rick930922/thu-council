@@ -8,12 +8,22 @@ export type MinutesRecord = {
   fileUrl: string;
 };
 
-// Optional "browse the full archive" link shown beside a term's section heading,
+// Optional "browse the full archive" link shown on a term's page,
 // keyed by the 5-character 屆 prefix (matches getGroupedMinutes' grouping key).
 export const termArchives: Record<string, string> = {
   第三十七屆:
     "https://drive.google.com/drive/u/4/folders/1qOh6heXfZPnQEihsQ5-8JvdgF7W2PuDd",
 };
+
+// URL slug for each 屆, keyed by the same 5-character prefix. Add an entry
+// here whenever a new term's records are added.
+export const termSlugs: Record<string, string> = {
+  第三十七屆: "37",
+};
+
+export function getTermBySlug(slug: string) {
+  return Object.entries(termSlugs).find(([, s]) => s === slug)?.[0];
+}
 
 export const minutesRecords: MinutesRecord[] = [
   {
@@ -196,4 +206,8 @@ export function getGroupedMinutes() {
     groups.get(key)!.push(record);
   }
   return groups;
+}
+
+export function getMinutesForTerm(term: string) {
+  return getGroupedMinutes().get(term) ?? [];
 }
