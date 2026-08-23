@@ -63,6 +63,18 @@ export default function Home() {
             >
               議員名單
             </Link>
+            <Link
+              href="/minutes"
+              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-colors"
+            >
+              議事紀錄
+            </Link>
+            <Link
+              href="/news"
+              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-colors"
+            >
+              最新消息
+            </Link>
           </div>
         </div>
       </section>
