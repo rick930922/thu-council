@@ -47,8 +47,13 @@ export const secretariat = {
   description:
     "秘書長、副秘書長由議長遴選，報告大會後提請任命；承議長之命處理議會事務並指揮監督所屬職員，得視需要設執行秘書一人。",
   members: [
-    { name: "謝政諺", title: "秘書長", photo: "/members/xie-zhengyan.jpg" },
-    { name: "尚未定案", title: "副秘書長", vacant: true },
+    {
+      name: "謝政諺",
+      title: "秘書長",
+      photo: "/members/xie-zhengyan.jpg",
+      meta: "政治學系政治理論組・四年級",
+    },
+    { name: "王立言", title: "副秘書長", meta: "美術系・三年級" },
   ] satisfies Officer[],
   groups: [
     {
