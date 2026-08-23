@@ -56,6 +56,17 @@ export default async function NewsDetailPage({
           </p>
         ))}
       </div>
+
+      {item.cta && (
+        <a
+          href={item.cta.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-10 inline-block rounded-sm bg-wine px-8 py-3.5 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-all active:scale-[0.97]"
+        >
+          {item.cta.label}
+        </a>
+      )}
     </article>
   );
 }
