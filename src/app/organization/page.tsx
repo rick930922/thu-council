@@ -53,14 +53,14 @@ function OfficerCard({ officer }: { officer: Officer }) {
 
 function CommitteeCard({ committee }: { committee: Committee }) {
   return (
-    <div className="border border-border-soft bg-paper p-6">
+    <div className="flex h-full flex-col border border-border-soft bg-paper p-6">
       <h4 className="font-serif text-base font-semibold text-wine">
         {committee.name}
       </h4>
       <p className="mt-2 text-sm text-ink-soft leading-relaxed">
         {committee.scope}
       </p>
-      <p className="mt-3 text-xs tracking-wide text-gold">
+      <p className="mt-auto pt-3 text-xs tracking-wide text-gold">
         {committee.formation}
       </p>
     </div>
