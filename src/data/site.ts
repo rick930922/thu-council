@@ -7,9 +7,9 @@ export const site = {
   englishName: "Tunghai University Student Parliament",
   tagline: "監督、審議、代言——為東海學子發聲",
   term: "任期 2026.08 – 2027.07",
-  address: "臺中市西屯區臺灣大道四段1727號 學生活動中心 302 室",
-  email: "thu.council38@thu.edu.tw",
-  phone: "04-2359-0121 分機 91038",
+  address: "臺中市西屯區臺灣大道四段1727號 學生活動中心 SAC108",
+  email: "thusp@go.thu.edu.tw",
+  phone: "04-2359-0121 分機 23610",
   officeHours: "週一至週五 12:00–18:00（會期期間另行公告）",
   social: {
     facebook: "https://www.facebook.com/",
