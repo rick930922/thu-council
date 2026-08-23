@@ -23,7 +23,7 @@ export default function SiteHeader() {
             <span className="font-display text-2xl font-bold tracking-[0.3em] text-wine group-hover:text-wine-dark transition-colors">
               {site.abbreviation}
             </span>
-            <span className="my-1 h-px w-10 bg-gold" />
+            <span className="my-1 h-px w-full bg-gold" />
             <span className="font-serif text-sm tracking-wide text-ink-soft">
               {site.name}
             </span>
