@@ -25,7 +25,7 @@ export default function NewsPage() {
             <Reveal key={item.slug} as="li" delay={Math.min(i, 5) * 60}>
               <Link
                 href={`/news/${item.slug}`}
-                className="group flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8 py-6 hover:bg-paper-alt transition-colors px-2 -mx-2"
+                className="group flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8 py-6 hover:bg-paper-alt transition-all active:scale-[0.99] px-2 -mx-2"
               >
                 <div className="flex items-center gap-3 sm:w-40 shrink-0">
                   <span className="text-xs text-ink-soft">{item.date}</span>

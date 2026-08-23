@@ -23,7 +23,10 @@ export default function SiteFooter() {
           <ul className="space-y-2 text-sm text-ink-soft">
             {nav.slice(1).map((item) => (
               <li key={item.href}>
-                <Link href={item.href} className="hover:text-wine transition-colors">
+                <Link
+                  href={item.href}
+                  className="inline-block hover:text-wine transition-all active:scale-[0.96]"
+                >
                   {item.label}
                 </Link>
               </li>
@@ -39,7 +42,10 @@ export default function SiteFooter() {
             <li>{site.address}</li>
             <li>{site.phone}</li>
             <li>
-              <a href={`mailto:${site.email}`} className="hover:text-wine transition-colors">
+              <a
+                href={`mailto:${site.email}`}
+                className="inline-block hover:text-wine transition-all active:scale-[0.96]"
+              >
                 {site.email}
               </a>
             </li>

@@ -15,7 +15,10 @@ export default function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-border-soft bg-paper/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link href="/" className="flex items-center gap-3 group">
+        <Link
+          href="/"
+          className="flex items-center gap-3 group transition-all active:scale-[0.97]"
+        >
           <span className="flex flex-col items-start leading-tight">
             <span className="font-display text-2xl font-bold tracking-[0.3em] text-wine group-hover:text-wine-dark transition-colors">
               {site.abbreviation}
@@ -32,7 +35,7 @@ export default function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative px-3 py-2 text-[0.95rem] tracking-wide transition-colors ${
+              className={`relative px-3 py-2 text-[0.95rem] tracking-wide transition-all active:scale-[0.96] ${
                 isActive(item.href)
                   ? "text-wine font-semibold"
                   : "text-ink-soft hover:text-wine"
@@ -49,7 +52,7 @@ export default function SiteHeader() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="lg:hidden flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-border-soft rounded-md"
+          className="lg:hidden flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-border-soft rounded-md transition-all active:scale-[0.94]"
           aria-label="開啟選單"
           aria-expanded={open}
         >
@@ -72,7 +75,7 @@ export default function SiteHeader() {
               key={item.href}
               href={item.href}
               onClick={() => setOpen(false)}
-              className={`py-2.5 border-b border-border-soft/70 last:border-none ${
+              className={`block py-2.5 border-b border-border-soft/70 last:border-none transition-all active:scale-[0.97] ${
                 isActive(item.href) ? "text-wine font-semibold" : "text-ink-soft"
               }`}
             >

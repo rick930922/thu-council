@@ -31,7 +31,7 @@ export default async function NewsDetailPage({
     <article className="mx-auto max-w-3xl px-6 py-16">
       <Link
         href="/news"
-        className="text-sm text-wine hover:text-wine-dark tracking-wide"
+        className="inline-block text-sm text-wine hover:text-wine-dark tracking-wide transition-all active:scale-[0.96]"
       >
         ← 返回最新消息
       </Link>

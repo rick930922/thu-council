@@ -33,7 +33,7 @@ export default function MinutesPage() {
                 <Reveal key={term} delay={i * 80}>
                   <Link
                     href={`/minutes/${termSlugs[term] ?? encodeURIComponent(term)}`}
-                    className="group block border border-border-soft bg-paper-alt p-7 hover:border-wine/50 transition-colors"
+                    className="group block border border-border-soft bg-paper-alt p-7 hover:border-wine/50 transition-all active:scale-[0.98]"
                   >
                     <h2 className="font-serif text-2xl font-bold text-ink group-hover:text-wine transition-colors">
                       {term}

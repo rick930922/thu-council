@@ -32,7 +32,7 @@ export default function RegulationsPage() {
                     href={reg.fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-5 px-2 -mx-2 hover:bg-paper-alt transition-colors"
+                    className="group flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 py-5 px-2 -mx-2 hover:bg-paper-alt transition-all active:scale-[0.99]"
                   >
                     <span className="font-serif text-base font-medium text-ink group-hover:text-wine transition-colors">
                       {reg.title}

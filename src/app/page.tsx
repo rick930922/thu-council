@@ -53,25 +53,25 @@ export default function Home() {
           <div className="mt-10 flex flex-wrap gap-4">
             <Link
               href="/organization"
-              className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-colors"
+              className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-all active:scale-[0.97]"
             >
               組織成員
             </Link>
             <Link
               href="/members"
-              className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-colors"
+              className="rounded-sm bg-wine px-6 py-3 text-sm tracking-wide text-paper-alt hover:bg-wine-dark transition-all active:scale-[0.97]"
             >
               議員名單
             </Link>
             <Link
               href="/minutes"
-              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-colors"
+              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-all active:scale-[0.97]"
             >
               議事紀錄
             </Link>
             <Link
               href="/news"
-              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-colors"
+              className="rounded-sm border border-wine px-6 py-3 text-sm tracking-wide text-wine hover:bg-wine hover:text-paper-alt transition-all active:scale-[0.97]"
             >
               最新消息
             </Link>
@@ -99,7 +99,7 @@ export default function Home() {
             <Reveal key={item.slug} delay={i * 80}>
               <Link
                 href={`/news/${item.slug}`}
-                className="group flex flex-col border border-border-soft bg-paper-alt p-6 hover:border-wine/50 transition-colors h-full"
+                className="group flex flex-col border border-border-soft bg-paper-alt p-6 hover:border-wine/50 transition-all active:scale-[0.98] h-full"
               >
                 <div className="flex items-center gap-3 mb-4">
                   <span className="text-xs tracking-widest text-gold">
@@ -131,7 +131,7 @@ export default function Home() {
               <Reveal key={link.href} delay={i * 80}>
                 <Link
                   href={link.href}
-                  className="group flex h-full flex-col justify-between bg-paper p-7 hover:bg-paper-alt transition-colors"
+                  className="group flex h-full flex-col justify-between bg-paper p-7 hover:bg-paper-alt transition-all active:scale-[0.98]"
                 >
                   <span className="font-display text-3xl text-gold">
                     {link.numeral}

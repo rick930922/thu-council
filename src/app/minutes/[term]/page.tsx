@@ -65,7 +65,7 @@ export default async function MinutesTermPage({
         <div className="flex flex-wrap items-center justify-between gap-3 mb-10">
           <Link
             href="/minutes"
-            className="text-xs tracking-wide text-ink-soft hover:text-wine transition-colors"
+            className="inline-block text-xs tracking-wide text-ink-soft hover:text-wine transition-all active:scale-[0.96]"
           >
             ← 返回議事紀錄專區
           </Link>
@@ -74,7 +74,7 @@ export default async function MinutesTermPage({
               href={archiveUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-xs tracking-wide text-wine hover:text-wine-dark"
+              className="inline-block text-xs tracking-wide text-wine hover:text-wine-dark transition-all active:scale-[0.96]"
             >
               瀏覽完整資料夾 →
             </a>
@@ -114,7 +114,7 @@ export default async function MinutesTermPage({
                       href={record.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-2 block font-serif text-lg font-semibold text-ink hover:text-wine transition-colors"
+                      className="mt-2 block font-serif text-lg font-semibold text-ink hover:text-wine transition-all active:scale-[0.98]"
                     >
                       {record.title}
                     </a>
@@ -125,7 +125,7 @@ export default async function MinutesTermPage({
                       href={record.fileUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 inline-block text-xs tracking-wide text-wine hover:text-wine-dark"
+                      className="mt-3 inline-block text-xs tracking-wide text-wine hover:text-wine-dark transition-all active:scale-[0.96]"
                     >
                       開啟連結 →
                     </a>

@@ -136,6 +136,16 @@ html {
     transform: none;
     transition: none;
   }
+
+  a,
+  button {
+    transition: none !important;
+  }
+
+  a:active,
+  button:active {
+    transform: none !important;
+  }
 }
 
 /* Entrance splash (see components/IntroSplash.tsx) */
