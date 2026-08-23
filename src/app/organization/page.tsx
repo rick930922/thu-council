@@ -200,9 +200,9 @@ export default function OrganizationPage() {
           </Reveal>
 
           <Reveal delay={80}>
-            <p className="eyebrow mt-10 text-[0.65rem] text-ink-soft">
+            <h3 className="mt-10 font-serif text-2xl font-bold text-ink">
               {disciplinaryTrack.parentCommitteeName}下設四個委員會
-            </p>
+            </h3>
           </Reveal>
           <div className="mt-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {disciplinaryTrack.committees.map((c, i) => (
