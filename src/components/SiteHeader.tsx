@@ -58,34 +58,36 @@ export default function SiteHeader() {
           </Link>
         </div>
 
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          className="lg:hidden flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-border-soft rounded-md transition-all active:scale-[0.94]"
-          aria-label="開啟選單"
-          aria-expanded={open}
-        >
-          <span
-            className={`block h-[1.5px] w-5 bg-ink transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
-          />
-          <span
-            className={`block h-[1.5px] w-5 bg-ink transition-opacity ${open ? "opacity-0" : ""}`}
-          />
-          <span
-            className={`block h-[1.5px] w-5 bg-ink transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
-          />
-        </button>
+        <div className="lg:hidden flex items-center gap-2">
+          <Link
+            href="/petition"
+            className="rounded-sm bg-wine px-3 py-2 text-sm tracking-wide text-paper-alt transition-all active:scale-[0.96]"
+          >
+            學生陳情
+          </Link>
+
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 border border-border-soft rounded-md transition-all active:scale-[0.94]"
+            aria-label="開啟選單"
+            aria-expanded={open}
+          >
+            <span
+              className={`block h-[1.5px] w-5 bg-ink transition-transform ${open ? "translate-y-[3.5px] rotate-45" : ""}`}
+            />
+            <span
+              className={`block h-[1.5px] w-5 bg-ink transition-opacity ${open ? "opacity-0" : ""}`}
+            />
+            <span
+              className={`block h-[1.5px] w-5 bg-ink transition-transform ${open ? "-translate-y-[3.5px] -rotate-45" : ""}`}
+            />
+          </button>
+        </div>
       </div>
 
       {open && (
         <nav className="lg:hidden border-t border-border-soft bg-paper-alt px-6 py-3 flex flex-col">
-          <Link
-            href="/petition"
-            onClick={() => setOpen(false)}
-            className="mb-1 rounded-sm bg-wine px-4 py-2.5 text-center text-sm tracking-wide text-paper-alt transition-all active:scale-[0.97]"
-          >
-            學生陳情處
-          </Link>
           {nav.map((item) => (
             <Link
               key={item.href}
