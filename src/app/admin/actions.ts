@@ -8,7 +8,7 @@ import {
   destroySession,
   isAuthenticated,
 } from "@/lib/admin-auth";
-import { markPetitionStatus } from "@/lib/petitions";
+import { deletePetition, markPetitionStatus } from "@/lib/petitions";
 
 export async function login(formData: FormData) {
   const password = String(formData.get("password") || "");
@@ -36,5 +36,17 @@ export async function toggleHandled(formData: FormData) {
   if (!id || (nextStatus !== "new" && nextStatus !== "handled")) return;
 
   await markPetitionStatus(id, nextStatus);
+  revalidatePath("/admin");
+}
+
+export async function removePetition(formData: FormData) {
+  if (!(await isAuthenticated())) {
+    redirect("/admin");
+  }
+
+  const id = Number(formData.get("id"));
+  if (!id) return;
+
+  await deletePetition(id);
   revalidatePath("/admin");
 }

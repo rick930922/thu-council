@@ -41,3 +41,10 @@ export async function markPetitionStatus(id: number, status: "new" | "handled") 
     update petitions set status = ${status} where id = ${id}
   `;
 }
+
+export async function deletePetition(id: number) {
+  const sql = getSql();
+  await sql`
+    delete from petitions where id = ${id}
+  `;
+}

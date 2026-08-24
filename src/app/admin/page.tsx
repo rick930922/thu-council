@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { isAuthenticated } from "@/lib/admin-auth";
 import { listPetitions } from "@/lib/petitions";
 import { login, logout, toggleHandled } from "./actions";
+import DeleteButton from "./DeleteButton";
 
 export const metadata: Metadata = {
   title: "後台管理",
@@ -126,20 +127,23 @@ export default async function AdminPage({
                   </div>
                 </div>
 
-                <form action={toggleHandled}>
-                  <input type="hidden" name="id" value={p.id} />
-                  <input
-                    type="hidden"
-                    name="nextStatus"
-                    value={p.status === "handled" ? "new" : "handled"}
-                  />
-                  <button
-                    type="submit"
-                    className="rounded-sm border border-border-soft px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-wine hover:text-wine"
-                  >
-                    {p.status === "handled" ? "標記為未處理" : "標記為已處理"}
-                  </button>
-                </form>
+                <div className="flex flex-col items-stretch gap-2">
+                  <form action={toggleHandled}>
+                    <input type="hidden" name="id" value={p.id} />
+                    <input
+                      type="hidden"
+                      name="nextStatus"
+                      value={p.status === "handled" ? "new" : "handled"}
+                    />
+                    <button
+                      type="submit"
+                      className="w-full rounded-sm border border-border-soft px-3 py-1.5 text-xs text-ink-soft transition-colors hover:border-wine hover:text-wine"
+                    >
+                      {p.status === "handled" ? "標記為未處理" : "標記為已處理"}
+                    </button>
+                  </form>
+                  <DeleteButton id={p.id} name={p.name} />
+                </div>
               </div>
 
               <p className="mt-4 whitespace-pre-wrap text-sm leading-relaxed text-ink">
