@@ -5,6 +5,7 @@ export type Petition = {
   name: string;
   email: string;
   phone: string | null;
+  target_member: string | null;
   content: string;
   status: "new" | "handled";
   created_at: string;
@@ -14,19 +15,20 @@ export async function createPetition(input: {
   name: string;
   email: string;
   phone: string;
+  targetMember: string;
   content: string;
 }) {
   const sql = getSql();
   await sql`
-    insert into petitions (name, email, phone, content)
-    values (${input.name}, ${input.email}, ${input.phone || null}, ${input.content})
+    insert into petitions (name, email, phone, target_member, content)
+    values (${input.name}, ${input.email}, ${input.phone || null}, ${input.targetMember || null}, ${input.content})
   `;
 }
 
 export async function listPetitions(): Promise<Petition[]> {
   const sql = getSql();
   const rows = await sql<Petition[]>`
-    select id, name, email, phone, content, status, created_at
+    select id, name, email, phone, target_member, content, status, created_at
     from petitions
     order by created_at desc
   `;

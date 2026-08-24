@@ -116,6 +116,14 @@ export default async function AdminPage({
                   <div className="mt-1 text-xs text-ink-soft">
                     {formatDate(p.created_at)}
                   </div>
+                  <div className="mt-1 text-xs">
+                    <span className="text-ink-soft">陳情對象：</span>
+                    <span className="font-medium text-wine">
+                      {!p.target_member || p.target_member === "unspecified"
+                        ? "不指定（交由議會統一處理）"
+                        : p.target_member}
+                    </span>
+                  </div>
                 </div>
 
                 <form action={toggleHandled}>

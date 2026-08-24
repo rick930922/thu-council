@@ -15,15 +15,21 @@ export async function submitPetition(formData: FormData) {
   const name = String(formData.get("name") || "").trim();
   const email = String(formData.get("email") || "").trim();
   const phone = String(formData.get("phone") || "").trim();
+  const targetMember = String(formData.get("targetMember") || "").trim();
   const content = String(formData.get("content") || "").trim();
 
-  if (!name || !email || !content) {
+  if (!name || !email || !phone || !targetMember || !content) {
     redirect("/petition?error=missing");
   }
   if (!EMAIL_RE.test(email)) {
     redirect("/petition?error=email");
   }
-  if (name.length > 50 || email.length > 100 || phone.length > 30) {
+  if (
+    name.length > 50 ||
+    email.length > 100 ||
+    phone.length > 30 ||
+    targetMember.length > 50
+  ) {
     redirect("/petition?error=length");
   }
   if (content.length < 10) {
@@ -35,7 +41,7 @@ export async function submitPetition(formData: FormData) {
 
   let success = false;
   try {
-    await createPetition({ name, email, phone, content });
+    await createPetition({ name, email, phone, targetMember, content });
     success = true;
   } catch (err) {
     console.error("submitPetition failed:", err);

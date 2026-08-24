@@ -7,6 +7,7 @@ create table if not exists petitions (
   name text not null,
   email text not null,
   phone text,
+  target_member text,
   content text not null,
   status text not null default 'new',
   created_at timestamptz not null default now()

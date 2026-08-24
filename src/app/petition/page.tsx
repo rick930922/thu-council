@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
 import { site } from "@/data/site";
+import { getGroupedMembers } from "@/data/members";
 import { submitPetition } from "./actions";
 
 export const metadata: Metadata = {
@@ -9,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 const ERROR_MESSAGES: Record<string, string> = {
-  missing: "請填寫姓名、電子信箱與陳情內容。",
+  missing: "請將表單填寫完畢再送出。",
   email: "電子信箱格式看起來不太正確，請再確認一次。",
   length: "姓名、信箱或電話欄位字數過長，請確認後再送出。",
   short: "陳情內容太短了，請再多描述一些讓我們能了解狀況。",
@@ -25,13 +26,14 @@ export default async function PetitionPage({
 }) {
   const { error } = await searchParams;
   const errorMessage = error ? ERROR_MESSAGES[error] : undefined;
+  const groupedMembers = getGroupedMembers();
 
   return (
     <div>
       <PageHero
         eyebrow="STUDENT PETITION"
         title="學生陳情處"
-        description={`任何對校園生活、議會運作或自治事務的建議與訴求，都歡迎透過以下表單直接告訴我們。${site.shortName}會妥善記錄每一筆陳情，並由相關委員會追蹤處理。`}
+        description={`任何對校園生活、議會運作或自治事務的建議與訴求，都歡迎透過以下表單直接告訴我們。你可以選擇想陳情的議員，議會秘書處收到後會將內容轉交給該議員；若不指定，則會交由相關委員會統一追蹤處理。`}
       />
 
       <section className="mx-auto max-w-2xl px-6 py-16">
@@ -96,16 +98,47 @@ export default async function PetitionPage({
                 htmlFor="phone"
                 className="mb-2 block text-sm font-medium text-ink"
               >
-                聯絡電話
+                聯絡電話 <span className="text-wine">*</span>
               </label>
               <input
                 type="tel"
                 id="phone"
                 name="phone"
+                required
                 maxLength={30}
                 className="w-full rounded-sm border border-border-soft bg-paper-alt px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-wine"
-                placeholder="選填，方便的話留下電話"
+                placeholder="請留下方便聯繫的電話"
               />
+            </div>
+
+            <div>
+              <label
+                htmlFor="targetMember"
+                className="mb-2 block text-sm font-medium text-ink"
+              >
+                想陳情給哪位議員 <span className="text-wine">*</span>
+              </label>
+              <select
+                id="targetMember"
+                name="targetMember"
+                required
+                defaultValue="unspecified"
+                className="w-full rounded-sm border border-border-soft bg-paper-alt px-4 py-3 text-sm text-ink outline-none transition-colors focus:border-wine"
+              >
+                <option value="unspecified">不指定，交由議會統一處理</option>
+                {[...groupedMembers.entries()].map(([college, list]) => (
+                  <optgroup key={college} label={college}>
+                    {list
+                      .filter((m) => !m.resigned)
+                      .map((m) => (
+                        <option key={m.id} value={m.name}>
+                          {m.name}
+                          {m.department ? `（${m.department}）` : ""}
+                        </option>
+                      ))}
+                  </optgroup>
+                ))}
+              </select>
             </div>
 
             <div>
