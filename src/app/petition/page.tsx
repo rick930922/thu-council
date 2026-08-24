@@ -14,6 +14,8 @@ const ERROR_MESSAGES: Record<string, string> = {
   length: "姓名、信箱或電話欄位字數過長，請確認後再送出。",
   short: "陳情內容太短了，請再多描述一些讓我們能了解狀況。",
   long: "陳情內容過長（上限 2000 字），請精簡後再送出。",
+  server:
+    "系統暫時無法送出陳情，可能是後端設定尚未完成，請稍後再試，或直接寫信到議會信箱反映。",
 };
 
 export default async function PetitionPage({

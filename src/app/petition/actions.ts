@@ -33,7 +33,16 @@ export async function submitPetition(formData: FormData) {
     redirect("/petition?error=long");
   }
 
-  await createPetition({ name, email, phone, content });
+  let success = false;
+  try {
+    await createPetition({ name, email, phone, content });
+    success = true;
+  } catch (err) {
+    console.error("submitPetition failed:", err);
+  }
 
-  redirect("/petition/thanks");
+  if (success) {
+    redirect("/petition/thanks");
+  }
+  redirect("/petition?error=server");
 }
