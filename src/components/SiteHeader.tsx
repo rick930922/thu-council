@@ -30,24 +30,33 @@ export default function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
-          {nav.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`relative px-3 py-2 text-[0.95rem] tracking-wide transition-all active:scale-[0.96] ${
-                isActive(item.href)
-                  ? "text-wine font-semibold"
-                  : "text-ink-soft hover:text-wine"
-              }`}
-            >
-              {item.label}
-              {isActive(item.href) && (
-                <span className="absolute inset-x-3 -bottom-0.5 h-[2px] bg-gold" />
-              )}
-            </Link>
-          ))}
-        </nav>
+        <div className="hidden lg:flex items-center gap-3">
+          <nav className="flex items-center gap-1">
+            {nav.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`relative px-3 py-2 text-[0.95rem] tracking-wide transition-all active:scale-[0.96] ${
+                  isActive(item.href)
+                    ? "text-wine font-semibold"
+                    : "text-ink-soft hover:text-wine"
+                }`}
+              >
+                {item.label}
+                {isActive(item.href) && (
+                  <span className="absolute inset-x-3 -bottom-0.5 h-[2px] bg-gold" />
+                )}
+              </Link>
+            ))}
+          </nav>
+
+          <Link
+            href="/petition"
+            className="ml-2 rounded-sm bg-wine px-4 py-2 text-sm tracking-wide text-paper-alt transition-all hover:bg-wine-dark active:scale-[0.96]"
+          >
+            學生陳情處
+          </Link>
+        </div>
 
         <button
           type="button"
@@ -70,6 +79,13 @@ export default function SiteHeader() {
 
       {open && (
         <nav className="lg:hidden border-t border-border-soft bg-paper-alt px-6 py-3 flex flex-col">
+          <Link
+            href="/petition"
+            onClick={() => setOpen(false)}
+            className="mb-1 rounded-sm bg-wine px-4 py-2.5 text-center text-sm tracking-wide text-paper-alt transition-all active:scale-[0.97]"
+          >
+            學生陳情處
+          </Link>
           {nav.map((item) => (
             <Link
               key={item.href}
