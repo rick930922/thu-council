@@ -16,7 +16,7 @@ export default function PetitionThanksPage() {
       <section className="mx-auto max-w-2xl px-6 py-16">
         <Reveal>
           <p className="leading-relaxed text-ink-soft">
-            感謝你花時間告訴{site.shortName}你的想法。我們已經收到這筆陳情，相關委員會會盡快進行了解與追蹤，如有需要會透過你留下的聯絡方式與你聯繫。
+            感謝你花時間告訴{site.shortName}你的想法。我們已經收到這筆陳情，如有需要會透過你留下的聯絡方式與你聯繫。
           </p>
 
           <Link
