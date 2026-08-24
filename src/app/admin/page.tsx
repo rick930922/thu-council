@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { isAuthenticated } from "@/lib/admin-auth";
 import { listPetitions } from "@/lib/petitions";
 import { login, logout, toggleHandled } from "./actions";
@@ -23,12 +24,12 @@ function formatDate(iso: string) {
 export default async function AdminPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{ error?: string; status?: string }>;
 }) {
   const authed = await isAuthenticated();
+  const { error, status } = await searchParams;
 
   if (!authed) {
-    const { error } = await searchParams;
     return (
       <div className="mx-auto flex max-w-sm flex-col px-6 py-24">
         <h1 className="font-serif text-2xl font-bold text-ink">後台登入</h1>
@@ -64,6 +65,9 @@ export default async function AdminPage({
 
   const petitions = await listPetitions();
   const newCount = petitions.filter((p) => p.status === "new").length;
+  const handledCount = petitions.filter((p) => p.status === "handled").length;
+  const activeStatus: "new" | "handled" = status === "handled" ? "handled" : "new";
+  const filtered = petitions.filter((p) => p.status === activeStatus);
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-12">
@@ -87,11 +91,36 @@ export default async function AdminPage({
         </form>
       </div>
 
-      {petitions.length === 0 ? (
-        <p className="mt-12 text-sm text-ink-soft">目前還沒有任何陳情。</p>
+      <div className="mt-6 flex gap-2">
+        <Link
+          href="/admin?status=new"
+          className={`rounded-sm px-4 py-2 text-sm tracking-wide transition-colors ${
+            activeStatus === "new"
+              ? "bg-wine text-paper-alt"
+              : "border border-border-soft text-ink-soft hover:border-wine hover:text-wine"
+          }`}
+        >
+          未處理（{newCount}）
+        </Link>
+        <Link
+          href="/admin?status=handled"
+          className={`rounded-sm px-4 py-2 text-sm tracking-wide transition-colors ${
+            activeStatus === "handled"
+              ? "bg-forest text-paper-alt"
+              : "border border-border-soft text-ink-soft hover:border-forest hover:text-forest"
+          }`}
+        >
+          已處理（{handledCount}）
+        </Link>
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="mt-12 text-sm text-ink-soft">
+          {activeStatus === "new" ? "目前沒有未處理的陳情。" : "目前沒有已處理的陳情。"}
+        </p>
       ) : (
         <div className="mt-8 flex flex-col gap-4">
-          {petitions.map((p) => (
+          {filtered.map((p) => (
             <div
               key={p.id}
               className={`rounded-sm border p-5 ${
