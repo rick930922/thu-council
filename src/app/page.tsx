@@ -77,6 +77,44 @@ export default function Home() {
             </Link>
           </div>
         </div>
+
+        <div className="bg-wine-dark py-4 sm:py-5">
+          <div className="marquee-band">
+            <div className="marquee-track marquee-track--rtl">
+              {[0, 1].map((group) => (
+                <div key={group} className="flex shrink-0 items-center">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className="font-display marquee-outline mx-8 shrink-0 whitespace-nowrap text-lg font-semibold tracking-[0.22em] sm:text-xl"
+                    >
+                      TUNGHAI UNIVERSITY
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="marquee-band mt-1">
+            <div className="marquee-track marquee-track--ltr">
+              {[0, 1].map((group) => (
+                <div key={group} className="flex shrink-0 items-center">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="flex shrink-0 items-center">
+                      <span className="font-serif mx-4 whitespace-nowrap text-2xl font-bold tracking-wide text-paper-alt sm:text-4xl">
+                        STUDENT PARLIAMENT
+                      </span>
+                      <span className="font-display mx-4 whitespace-nowrap text-3xl font-black tracking-wide text-gold sm:text-5xl">
+                        38TH
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16">
