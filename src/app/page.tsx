@@ -35,46 +35,8 @@ export default function Home() {
 
   return (
     <div>
-      <section className="relative overflow-hidden border-b border-border-soft">
-        <div className="pointer-events-none absolute inset-0 z-0 flex flex-col justify-center gap-3">
-          <div className="marquee-band">
-            <div className="marquee-track marquee-track--rtl">
-              {[0, 1].map((group) => (
-                <div key={group} className="flex shrink-0 items-center">
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <span
-                      key={i}
-                      className="font-display marquee-outline mx-8 shrink-0 whitespace-nowrap text-lg font-semibold tracking-[0.22em] sm:text-xl"
-                    >
-                      TUNGHAI UNIVERSITY
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="marquee-band">
-            <div className="marquee-track marquee-track--ltr">
-              {[0, 1].map((group) => (
-                <div key={group} className="flex shrink-0 items-center">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span key={i} className="flex shrink-0 items-center">
-                      <span className="font-serif marquee-outline [--stroke-color:var(--paper-alt)] mx-4 whitespace-nowrap text-2xl font-bold tracking-wide sm:text-4xl">
-                        STUDENT PARLIAMENT
-                      </span>
-                      <span className="font-display marquee-outline mx-4 whitespace-nowrap text-3xl font-black tracking-wide sm:text-5xl">
-                        38TH
-                      </span>
-                    </span>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="relative z-10 mx-auto max-w-6xl px-6 py-20 sm:py-28">
+      <section className="border-b border-border-soft">
+        <div className="mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <p className="eyebrow text-xs text-wine mb-5">
             {site.englishName}
           </p>
@@ -113,6 +75,44 @@ export default function Home() {
             >
               最新消息
             </Link>
+          </div>
+        </div>
+
+        <div className="bg-wine-dark py-4 sm:py-5">
+          <div className="marquee-band">
+            <div className="marquee-track marquee-track--rtl">
+              {[0, 1].map((group) => (
+                <div key={group} className="flex shrink-0 items-center">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <span
+                      key={i}
+                      className="font-display marquee-outline mx-8 shrink-0 whitespace-nowrap text-lg font-semibold tracking-[0.22em] sm:text-xl"
+                    >
+                      TUNGHAI UNIVERSITY
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="marquee-band mt-1">
+            <div className="marquee-track marquee-track--ltr">
+              {[0, 1].map((group) => (
+                <div key={group} className="flex shrink-0 items-center">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <span key={i} className="flex shrink-0 items-center">
+                      <span className="font-serif mx-4 whitespace-nowrap text-2xl font-bold tracking-wide text-paper-alt sm:text-4xl">
+                        STUDENT PARLIAMENT
+                      </span>
+                      <span className="font-display mx-4 whitespace-nowrap text-3xl font-black tracking-wide text-gold sm:text-5xl">
+                        38TH
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
