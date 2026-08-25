@@ -11,7 +11,7 @@ export const members: CouncilMember[] = [
 
   { id: "zhang-zhongyi", name: "張仲毅", college: "社會科學院", department: "政治學系", resigned: true },
   { id: "liang-junyi", name: "梁俊億", college: "社會科學院", department: "政治學系政治理論組" },
-  { id: "xu-junrui", name: "許峻睿", college: "社會科學院", department: "政治學系" },
+  { id: "xu-junrui", name: "許峻叡", college: "社會科學院", department: "政治學系" },
   { id: "cai-yulin", name: "蔡玗霖", college: "社會科學院", department: "社會學系" },
   { id: "li-shengya", name: "李聖亞", college: "社會科學院", department: "行政管理暨政策學系", resigned: true },
 
