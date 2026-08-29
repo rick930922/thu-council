@@ -7,10 +7,30 @@ export type NewsItem = {
   category: NewsCategory;
   excerpt: string;
   content: string[];
+  images?: string[];
   cta?: { label: string; href: string };
 };
 
 export const newsItems: NewsItem[] = [
+  {
+    slug: "38th-speaker-election-result",
+    title: "第三十八屆學生議會正副議長選舉結果公告",
+    date: "2026-08-28",
+    category: "公告",
+    excerpt:
+      "第三十八屆學生議會正副議長選舉結果正式出爐，政治系梁俊億當選議長、美術系高予恩當選副議長。",
+    images: [
+      "/news/38th-speaker-election-cover.png",
+      "/news/38th-speaker-election-notice.png",
+    ],
+    content: [
+      "東海大學第三十八屆學生議會成立大會於115年6月1日舉行，同時辦理正、副議長選舉，經議員投票及開票程序後，選舉結果正式出爐。",
+      "本次議長選舉中，政治系梁俊億獲得17票，政治系張仲毅獲得8票，由梁俊億當選第三十八屆學生議會議長。",
+      "副議長選舉部分，美術系高予恩獲得22票，音樂系洪采妤、環工系陳則宇及社會系蔡玗霖各獲1票，最終由高予恩當選第三十八屆學生議會副議長。",
+      "依據《東海大學學生議會組織法》及《東海大學學生議會正副議長選舉罷免辦法》，本會秘書處正式向全體東海大學師生公告本次選舉結果。",
+      "第三十八屆學生議會正、副議長將依相關法規主持議事、推動議會運作，與全體議員共同維護學生自治與議事制度之正常運作。",
+    ],
+  },
   {
     slug: "student-petition-office-launch",
     title: "本會網站新增「學生陳情處」，即日起開放使用",

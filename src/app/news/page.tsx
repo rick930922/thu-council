@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import Reveal from "@/components/Reveal";
@@ -27,7 +28,18 @@ export default function NewsPage() {
                 href={`/news/${item.slug}`}
                 className="group flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-8 py-6 hover:bg-paper-alt transition-all active:scale-[0.99] px-2 -mx-2"
               >
-                <div className="flex items-center gap-3 sm:w-40 shrink-0">
+                {item.images?.[0] && (
+                  <div className="relative hidden h-20 w-20 shrink-0 overflow-hidden rounded-sm border border-border-soft bg-paper-alt sm:block">
+                    <Image
+                      src={item.images[0]}
+                      alt=""
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </div>
+                )}
+                <div className="flex items-center gap-3 sm:w-32 shrink-0">
                   <span className="text-xs text-ink-soft">{item.date}</span>
                 </div>
                 <div className="flex-1">

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNewsBySlug, newsItems } from "@/data/news";
@@ -48,6 +49,29 @@ export default async function NewsDetailPage({
       </h1>
 
       <div className="rule my-8" />
+
+      {item.images && item.images.length > 0 && (
+        <div
+          className={`mb-10 grid gap-4 ${
+            item.images.length > 1 ? "sm:grid-cols-2" : "grid-cols-1"
+          }`}
+        >
+          {item.images.map((src, index) => (
+            <div
+              key={src}
+              className="relative aspect-square overflow-hidden rounded-sm border border-border-soft bg-paper-alt"
+            >
+              <Image
+                src={src}
+                alt={`${item.title} 圖片 ${index + 1}`}
+                fill
+                sizes="(min-width: 640px) 50vw, 100vw"
+                className="object-cover"
+              />
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="space-y-5">
         {item.content.map((paragraph, index) => (
