@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { site } from "@/data/site";
+import { recruitFormUrl, site } from "@/data/site";
 import { getSortedNews } from "@/data/news";
 import Reveal from "@/components/Reveal";
 
@@ -27,6 +27,12 @@ const quickLinks = [
     title: "法規彙編專區",
     description: "組織、議事、選罷與財務相關自治法規全文。",
     href: "/regulations",
+  },
+  {
+    numeral: "V",
+    title: "招募表單",
+    description: "議秘處招募開放中，立即填寫線上報名表單。",
+    href: recruitFormUrl,
   },
 ];
 
@@ -164,27 +170,32 @@ export default function Home() {
               快速連結
             </h2>
           </Reveal>
-          <div className="grid gap-px bg-border-soft sm:grid-cols-2 lg:grid-cols-4 border border-border-soft">
-            {quickLinks.map((link, i) => (
-              <Reveal key={link.href} delay={i * 80}>
-                <Link
-                  href={link.href}
-                  className="group flex h-full flex-col justify-between bg-paper p-7 hover:bg-paper-alt transition-all active:scale-[0.98]"
-                >
-                  <span className="font-display text-3xl text-gold">
-                    {link.numeral}
-                  </span>
-                  <div className="mt-6">
-                    <h3 className="font-serif text-lg font-semibold text-ink group-hover:text-wine transition-colors">
-                      {link.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-ink-soft leading-relaxed">
-                      {link.description}
-                    </p>
-                  </div>
-                </Link>
-              </Reveal>
-            ))}
+          <div className="grid gap-px bg-border-soft sm:grid-cols-2 lg:grid-cols-5 border border-border-soft">
+            {quickLinks.map((link, i) => {
+              const isExternal = link.href.startsWith("http");
+              return (
+                <Reveal key={link.href} delay={i * 80}>
+                  <Link
+                    href={link.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                    className="group flex h-full flex-col justify-between bg-paper p-7 hover:bg-paper-alt transition-all active:scale-[0.98]"
+                  >
+                    <span className="font-display text-3xl text-gold">
+                      {link.numeral}
+                    </span>
+                    <div className="mt-6">
+                      <h3 className="font-serif text-lg font-semibold text-ink group-hover:text-wine transition-colors">
+                        {link.title}
+                      </h3>
+                      <p className="mt-2 text-sm text-ink-soft leading-relaxed">
+                        {link.description}
+                      </p>
+                    </div>
+                  </Link>
+                </Reveal>
+              );
+            })}
           </div>
         </div>
       </section>

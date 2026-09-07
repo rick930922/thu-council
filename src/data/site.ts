@@ -25,4 +25,7 @@ export const nav = [
   { href: "/news", label: "最新消息" },
   { href: "/minutes", label: "議事紀錄" },
   { href: "/regulations", label: "法規彙編" },
+  { href: "/petition", label: "學生陳情處" },
 ] as const;
+
+export const recruitFormUrl = "https://forms.gle/fEuUnSo7G2rfWg3x8";
