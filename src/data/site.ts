@@ -28,4 +28,4 @@ export const nav = [
   { href: "/petition", label: "學生陳情處" },
 ] as const;
 
-export const recruitFormUrl = "https://forms.gle/fEuUnSo7G2rfWg3x8";
+export const recruitFormUrl = "https://forms.gle/uGB9vQnCN8144B6s6";
