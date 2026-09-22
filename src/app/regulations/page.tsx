@@ -15,7 +15,7 @@ export default function RegulationsPage() {
       <PageHero
         eyebrow="Regulations"
         title="法規彙編專區"
-        description="與學生議會直接相關之組織、議事及選罷法規全文，點選條目可開啟《東海大學學生自治法規》彙編對應頁次。"
+        description="點選下方連結開啟《（115）東海大學學生自治法規》彙編全文。"
       />
 
       <section className="mx-auto max-w-4xl px-6 py-16 space-y-14">

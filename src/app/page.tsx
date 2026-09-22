@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { recruitFormUrl, site } from "@/data/site";
+import { site } from "@/data/site";
 import { getSortedNews } from "@/data/news";
 import Reveal from "@/components/Reveal";
 
@@ -27,12 +27,6 @@ const quickLinks = [
     title: "法規彙編專區",
     description: "組織、議事、選罷與財務相關自治法規全文。",
     href: "/regulations",
-  },
-  {
-    numeral: "V",
-    title: "招募表單",
-    description: "議秘處招募開放中，立即填寫線上報名表單。",
-    href: recruitFormUrl,
   },
 ];
 
@@ -170,7 +164,7 @@ export default function Home() {
               快速連結
             </h2>
           </Reveal>
-          <div className="grid gap-px bg-border-soft sm:grid-cols-2 lg:grid-cols-5 border border-border-soft">
+          <div className="grid gap-px bg-border-soft sm:grid-cols-2 lg:grid-cols-4 border border-border-soft">
             {quickLinks.map((link, i) => {
               const isExternal = link.href.startsWith("http");
               return (

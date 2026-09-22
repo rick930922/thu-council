@@ -6,7 +6,6 @@ const baseUrl = "https://thu-council.vercel.app";
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages = [
     "",
-    "/about",
     "/organization",
     "/members",
     "/news",

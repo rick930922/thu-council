@@ -19,14 +19,10 @@ export const site = {
 
 export const nav = [
   { href: "/", label: "首頁" },
-  { href: "/about", label: "關於議會" },
   { href: "/organization", label: "組織成員" },
   { href: "/members", label: "學生議員" },
   { href: "/news", label: "最新消息" },
   { href: "/minutes", label: "議事紀錄" },
   { href: "/regulations", label: "法規彙編" },
-  { href: "/slideshow", label: "幻燈片" },
   { href: "/petition", label: "學生陳情處" },
 ] as const;
-
-export const recruitFormUrl = "https://forms.gle/uGB9vQnCN8144B6s6";

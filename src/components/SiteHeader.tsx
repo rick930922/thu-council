@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { nav, recruitFormUrl, site } from "@/data/site";
+import { nav, site } from "@/data/site";
 
 export default function SiteHeader() {
   const pathname = usePathname();
@@ -49,27 +49,9 @@ export default function SiteHeader() {
               </Link>
             ))}
           </nav>
-
-          <a
-            href={recruitFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="ml-2 rounded-sm bg-wine px-4 py-2 text-sm tracking-wide text-paper-alt transition-all hover:bg-wine-dark active:scale-[0.96]"
-          >
-            招募表單
-          </a>
         </div>
 
         <div className="lg:hidden flex items-center gap-2">
-          <a
-            href={recruitFormUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-sm bg-wine px-3 py-2 text-sm tracking-wide text-paper-alt transition-all active:scale-[0.96]"
-          >
-            招募表單
-          </a>
-
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
