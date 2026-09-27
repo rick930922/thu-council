@@ -66,6 +66,12 @@
   #askerBadge, #speakerBadge {
     width: 420px;
     text-align: right;
+    transition: opacity 360ms ease, transform 360ms ease;
+  }
+  #askerBadge.hidden, #speakerBadge.hidden {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
   }
   .speaker-tag {
     display: inline-block;
@@ -408,11 +414,17 @@
   setInterval(updateClock, 1000);
 
   // ---- invisible operator controls: never shown on screen ----------------
-  // ← previous agenda item · → next agenda item
+  // ← previous agenda item · → next agenda item · N show/hide 質詢議員／目前備詢
+  let qaVisible = true;
   window.addEventListener("keydown", (e) => {
     if (document.activeElement && document.activeElement.isContentEditable) return;
     if (e.key === "ArrowRight") goToIndex(agendaIndex + 1);
     if (e.key === "ArrowLeft") goToIndex(agendaIndex - 1);
+    if (e.key.toLowerCase() === "n") {
+      qaVisible = !qaVisible;
+      document.getElementById("askerBadge").classList.toggle("hidden", !qaVisible);
+      document.getElementById("speakerBadge").classList.toggle("hidden", !qaVisible);
+    }
   });
 </script>
 </body>
