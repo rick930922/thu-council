@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8" />
+<title>學生議會直播 - 議程字卡</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=optional" rel="stylesheet">
+<style>
+  :root {
+    --paper-alt: #fdfbf6;
+    --ink: #2a2420;
+    --ink-soft: #6b6055;
+    --wine: #7a2e2e;
+    --wine-dark: #591f1f;
+    --gold: #b08d57;
+    --border-soft: #e4dac9;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: transparent;
+    width: 1920px; height: 1080px;
+    overflow: auto;
+    font-family: "Noto Serif TC", serif;
+  }
+  #stage { position: relative; width: 100%; height: 100%; }
+
+  #brand {
+    position: absolute; top: 40px; right: 48px;
+    display: flex; flex-direction: column; align-items: flex-end;
+    background: rgba(42,20,20,0.55);
+    padding: 14px 26px;
+    border-radius: 8px;
+    border: 1px solid rgba(176,141,87,0.5);
+  }
+  #brand .thusp-word {
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 24px;
+    letter-spacing: 0.32em;
+    color: var(--gold);
+  }
+  #brand .brand-rule {
+    width: 60px; height: 1px;
+    background: var(--gold);
+    opacity: 0.6;
+    margin: 6px 0 4px;
+  }
+  #brand .brand-text {
+    color: var(--paper-alt); font-family: "EB Garamond", serif;
+    font-size: 18px; letter-spacing: 0.1em; white-space: nowrap;
+  }
+
+  /* ---------- top-left: current agenda item card ---------- */
+  #agendaCard {
+    position: absolute; top: 40px; left: 48px;
+    max-width: 760px;
+    transition: opacity 360ms ease, transform 360ms ease;
+  }
+  #agendaCard.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
+  .agenda-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--wine-dark);
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    padding: 5px 16px;
+    border-radius: 4px 4px 0 0;
+    outline: none;
+  }
+  .agenda-plate {
+    background: rgba(253,251,246,0.96);
+    padding: 22px 28px 24px;
+    border-radius: 0 6px 6px 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  #agendaNumber {
+    font-family: "EB Garamond", serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--wine);
+    outline: none;
+    margin-bottom: 6px;
+  }
+  #agendaTitle {
+    font-size: 40px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: var(--ink);
+    outline: none;
+  }
+  #agendaDetail {
+    margin-top: 10px;
+    font-size: 22px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    outline: none;
+  }
+  #agendaDetail:empty { display: none; }
+
+  /* ---------- bottom: ticker + info bar (same family as the other cards) ---------- */
+  #bottomStack {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    transition: transform 420ms cubic-bezier(.22,1,.36,1), opacity 320ms ease;
+  }
+  #bottomStack.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
+  .info-bar {
+    background: linear-gradient(180deg, rgba(89,31,31,0.97) 0%, rgba(42,20,20,0.97) 100%);
+    height: 96px;
+    display: flex; align-items: center;
+    padding: 0 40px; gap: 32px;
+  }
+  .clock {
+    font-family: "EB Garamond", serif;
+    font-variant-numeric: tabular-nums;
+    font-size: 46px; font-weight: 700; color: var(--paper-alt);
+    min-width: 210px;
+  }
+  .v-div { width: 1px; height: 44px; background: rgba(176,141,87,0.4); }
+  .agenda-text {
+    flex: 1; font-size: 30px; font-weight: 600; color: var(--paper-alt); outline: none;
+  }
+  .live-dot {
+    display: flex; align-items: center; gap: 10px;
+    font-family: "EB Garamond", serif; font-size: 22px; letter-spacing: 0.16em; color: var(--paper-alt);
+  }
+  .live-dot .dot {
+    width: 14px; height: 14px; border-radius: 50%; background: #c0392b;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  [contenteditable="true"] { cursor: text; border-radius: 4px; padding: 2px 6px; margin: -2px -6px; }
+  [contenteditable="true"]:hover { background: rgba(176,141,87,0.15); }
+  [contenteditable="true"]:focus {
+    background: rgba(176,141,87,0.25);
+    box-shadow: 0 0 0 1px rgba(176,141,87,0.6);
+  }
+  .flash { animation: flash-update 900ms ease; }
+  @keyframes flash-update { 0% { color: #ffe9b3; } 100% { color: inherit; } }
+
+
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <div id="brand">
+    <span class="thusp-word">THUSP</span>
+    <span class="brand-rule"></span>
+    <span class="brand-text">東海大學第三十八屆學生議會</span>
+  </div>
+
+  <div id="agendaCard">
+    <div class="agenda-tag">本次議會</div>
+    <div class="agenda-plate">
+      <div id="agendaNumber" contenteditable="true" spellcheck="false">一</div>
+      <div id="agendaTitle" contenteditable="true" spellcheck="false">宣布開會</div>
+      <div id="agendaDetail" contenteditable="true" spellcheck="false"></div>
+    </div>
+  </div>
+
+  <div id="bottomStack">
+    <div class="info-bar">
+      <div class="clock" id="datetime"></div>
+      <div class="v-div"></div>
+      <div class="agenda-text" id="agendaBottomText" contenteditable="true" spellcheck="false">第一會期第一次常會</div>
+      <div class="live-dot"><span class="dot"></span>LIVE</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const STORAGE_KEY = "thu-council-live-v1";
+  const API_URL = "/api/live-state";
+
+  function loadShared() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}"); }
+    catch (e) { return {}; }
+  }
+  function saveLocal(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+  async function fetchRemote() {
+    try {
+      const res = await fetch(API_URL, { cache: "no-store" });
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (e) { return null; }
+  }
+  function postRemote(patch) {
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    }).catch(() => {});
+  }
+  function saveShared(patch) {
+    const state = loadShared();
+    Object.assign(state, patch);
+    saveLocal(state);
+    postRemote(patch);
+  }
+
+  // ---- this meeting's full agenda, in order -------------------------------
+  // Cycle through with the Right/N (next) and Left/P (previous) keys — no
+  // on-screen buttons, so nothing extra shows up on stream. Every field
+  // stays directly editable too, for on-the-fly wording tweaks.
+  const AGENDA_ITEMS = [
+    { num: "一", title: "宣布開會", detail: "" },
+    { num: "二", title: "主席報告", detail: "" },
+    { num: "三", title: "報告及詢答事項", detail: "報告事項・質詢事項" },
+    { num: "報告事項　一", title: "學生議會秘書長任命", detail: "任命謝政諺（政治學系政治理論組四年級）為本會秘書長" },
+    { num: "報告事項　二", title: "確認第三十八屆第一會期議事日程", detail: "第一次常會 9/30　｜　第二次常會 10/22　｜　第三次常會 11/12　｜　第四次常會 12/18" },
+    { num: "質詢事項　一", title: "學生會會長施政報告並備質詢", detail: "" },
+    { num: "質詢事項　二", title: "行政中心各部門施政報告並備質詢", detail: "" },
+    { num: "四", title: "本次會議提案", detail: "提案一：擬請通過「東海大學第三十八屆學生會行政中心一級幹部人事任命案」" },
+    { num: "五", title: "臨時動議", detail: "" },
+    { num: "六", title: "聲明與補述", detail: "" },
+    { num: "七", title: "散會", detail: "" },
+  ];
+
+  const editableIds = ["agendaNumber", "agendaTitle", "agendaDetail", "agendaBottomText"];
+  const state = loadShared();
+  let agendaIndex = Number(state.agenda_index || 0);
+
+  function renderAgendaItem(i) {
+    const item = AGENDA_ITEMS[i];
+    if (!item) return;
+    document.getElementById("agendaNumber").textContent = item.num;
+    document.getElementById("agendaTitle").textContent = item.title;
+    document.getElementById("agendaDetail").textContent = item.detail;
+  }
+
+  function goToIndex(i, { persist = true } = {}) {
+    agendaIndex = ((i % AGENDA_ITEMS.length) + AGENDA_ITEMS.length) % AGENDA_ITEMS.length;
+    renderAgendaItem(agendaIndex);
+    ["agendaNumber", "agendaTitle", "agendaDetail"].forEach((id) => {
+      const el = document.getElementById(id);
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    if (persist) {
+      saveShared({
+        agenda_index: agendaIndex,
+        agenda_agendaNumber: AGENDA_ITEMS[agendaIndex].num,
+        agenda_agendaTitle: AGENDA_ITEMS[agendaIndex].title,
+        agenda_agendaDetail: AGENDA_ITEMS[agendaIndex].detail,
+      });
+    }
+  }
+
+  // seed from shared state (falls back to the preset for the saved index)
+  editableIds.forEach((id) => {
+    const key = "agenda_" + id;
+    if (state[key] !== undefined) document.getElementById(id).textContent = state[key];
+  });
+  if (state.agenda_agendaNumber === undefined) renderAgendaItem(agendaIndex);
+
+  editableIds.forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener("blur", () => {
+      saveShared({ ["agenda_" + id]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+
+  function applyState(s) {
+    editableIds.forEach((id) => {
+      const el = document.getElementById(id);
+      const key = "agenda_" + id;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+      }
+    });
+    if (s.agenda_index !== undefined && Number(s.agenda_index) !== agendaIndex) {
+      agendaIndex = Number(s.agenda_index);
+    }
+  }
+
+  (async () => {
+    const remote = await fetchRemote();
+    if (remote) {
+      saveLocal(Object.assign({}, loadShared(), remote));
+      applyState(remote);
+    }
+  })();
+
+  setInterval(async () => {
+    const remote = await fetchRemote();
+    if (!remote) return;
+    saveLocal(Object.assign({}, loadShared(), remote));
+    applyState(remote);
+  }, 1500);
+
+  function updateClock() {
+    const now = new Date();
+    document.getElementById("datetime").textContent = new Intl.DateTimeFormat("zh-TW", {
+      timeZone: "Asia/Taipei", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false,
+    }).format(now);
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ---- invisible operator controls: never shown on screen ----------------
+  // →/N next agenda item · ←/P previous item · H toggle whole card ·
+  // B toggle bottom info bar
+  let cardVisible = true, bottomVisible = true;
+  window.addEventListener("keydown", (e) => {
+    if (document.activeElement && document.activeElement.isContentEditable) return;
+    const k = e.key.toLowerCase();
+    if (k === "arrowright" || k === "n") goToIndex(agendaIndex + 1);
+    if (k === "arrowleft" || k === "p") goToIndex(agendaIndex - 1);
+    if (k === "h") { cardVisible = !cardVisible; document.getElementById("agendaCard").classList.toggle("hidden", !cardVisible); }
+    if (k === "b") { bottomVisible = !bottomVisible; document.getElementById("bottomStack").classList.toggle("hidden", !bottomVisible); }
+  });
+</script>
+</body>
+</html>
