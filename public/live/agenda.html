@@ -26,8 +26,18 @@
   }
   #stage { position: relative; width: 100%; height: 100%; }
 
+  /* ---------- top-right stack: logo + asker/speaker badges ---------- */
+  #topRightStack {
+    position: absolute;
+    top: 40px; right: 48px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 16px;
+    z-index: 5;
+  }
+
   #brand {
-    position: absolute; top: 40px; right: 48px;
     display: flex; flex-direction: column; align-items: flex-end;
     background: rgba(42,20,20,0.55);
     padding: 14px 26px;
@@ -50,6 +60,42 @@
   #brand .brand-text {
     color: var(--paper-alt); font-family: "EB Garamond", serif;
     font-size: 18px; letter-spacing: 0.1em; white-space: nowrap;
+  }
+
+  /* ---------- floating "質詢議員" / "目前備詢" callouts ---------- */
+  #askerBadge, #speakerBadge {
+    width: 420px;
+    text-align: right;
+  }
+  .speaker-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--wine-dark);
+    font-family: "EB Garamond", serif;
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    padding: 5px 16px;
+    border-radius: 4px 4px 0 0;
+    outline: none;
+  }
+  .speaker-plate {
+    background: rgba(253,251,246,0.96);
+    padding: 14px 20px;
+    border-radius: 0 0 6px 6px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  }
+  .speaker-name {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    outline: none;
+  }
+  .speaker-role {
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-left: 8px;
+    outline: none;
   }
 
   /* ---------- top-left: current agenda item card ---------- */
@@ -104,6 +150,22 @@
   #bottomStack {
     position: absolute; left: 0; right: 0; bottom: 0;
   }
+  .ticker {
+    background: var(--paper-alt);
+    border-top: 2px solid var(--gold);
+    border-bottom: 1px solid var(--border-soft);
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #tickerText1 {
+    font-family: "EB Garamond", serif;
+    font-size: 24px;
+    letter-spacing: 0.1em;
+    color: var(--wine-dark);
+    font-weight: 600;
+  }
   .info-bar {
     background: linear-gradient(180deg, rgba(89,31,31,0.97) 0%, rgba(42,20,20,0.97) 100%);
     height: 96px;
@@ -145,10 +207,26 @@
 <body>
 <div id="stage">
 
-  <div id="brand">
-    <span class="thusp-word">THUSP</span>
-    <span class="brand-rule"></span>
-    <span class="brand-text">東海大學第三十八屆學生議會</span>
+  <div id="topRightStack">
+    <div id="brand">
+      <span class="thusp-word">THUSP</span>
+      <span class="brand-rule"></span>
+      <span class="brand-text">東海大學第三十八屆學生議會</span>
+    </div>
+
+    <div id="askerBadge">
+      <div class="speaker-tag">質詢議員</div>
+      <div class="speaker-plate">
+        <span class="speaker-name" id="askerName" contenteditable="true" spellcheck="false">議員姓名</span>
+      </div>
+    </div>
+
+    <div id="speakerBadge">
+      <div class="speaker-tag" id="speakerTag" contenteditable="true" spellcheck="false">目前備詢</div>
+      <div class="speaker-plate">
+        <span class="speaker-name" id="speakerName" contenteditable="true" spellcheck="false">發言人姓名</span><span class="speaker-role" id="speakerRole" contenteditable="true" spellcheck="false">部長</span>
+      </div>
+    </div>
   </div>
 
   <div id="agendaCard">
@@ -161,6 +239,9 @@
   </div>
 
   <div id="bottomStack">
+    <div class="ticker">
+      <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次常會</span>
+    </div>
     <div class="info-bar">
       <div class="clock" id="datetime"></div>
       <div class="v-div"></div>
@@ -204,9 +285,9 @@
   }
 
   // ---- this meeting's full agenda, in order -------------------------------
-  // Cycle through with the Right/N (next) and Left/P (previous) keys — no
-  // on-screen buttons, so nothing extra shows up on stream. Every field
-  // stays directly editable too, for on-the-fly wording tweaks.
+  // Cycle through with the Left/Right arrow keys — no on-screen buttons, so
+  // nothing extra shows up on stream. Every field stays directly editable
+  // too, for on-the-fly wording tweaks.
   const AGENDA_ITEMS = [
     { num: "一", title: "宣布開會", detail: "" },
     { num: "二", title: "主席報告", detail: "" },
@@ -222,6 +303,9 @@
   ];
 
   const editableIds = ["agendaNumber", "agendaTitle", "agendaDetail", "agendaBottomText"];
+  // asker/speaker badges + ticker keep the same (unprefixed) state keys that
+  // lower-third.html used, so any values already set there carry straight over
+  const sharedKeyIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "tickerText1"];
   const state = loadShared();
   let agendaIndex = Number(state.agenda_index || 0);
 
@@ -256,11 +340,22 @@
     if (state[key] !== undefined) document.getElementById(id).textContent = state[key];
   });
   if (state.agenda_agendaNumber === undefined) renderAgendaItem(agendaIndex);
+  sharedKeyIds.forEach((id) => {
+    if (state[id] !== undefined) document.getElementById(id).textContent = state[id];
+  });
 
   editableIds.forEach((id) => {
     const el = document.getElementById(id);
     el.addEventListener("blur", () => {
       saveShared({ ["agenda_" + id]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+    el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
+  });
+  sharedKeyIds.forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener("blur", () => {
+      saveShared({ [id]: el.textContent });
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
@@ -272,6 +367,12 @@
       const key = "agenda_" + id;
       if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
         el.textContent = s[key];
+      }
+    });
+    sharedKeyIds.forEach((id) => {
+      const el = document.getElementById(id);
+      if (s[id] !== undefined && document.activeElement !== el && el.textContent !== s[id]) {
+        el.textContent = s[id];
       }
     });
     if (s.agenda_index !== undefined && Number(s.agenda_index) !== agendaIndex) {

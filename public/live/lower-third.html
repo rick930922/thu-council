@@ -28,18 +28,8 @@
   }
   #stage { position: relative; width: 100%; height: 100%; }
 
-  /* ---------- top-right stack: logo + name badges, auto-spaced ---------- */
-  #topRightStack {
-    position: absolute;
-    top: 40px; right: 48px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 16px;
-    z-index: 5;
-  }
-
   #brand {
+    position: absolute; top: 40px; right: 48px;
     display: flex; flex-direction: column; align-items: flex-end;
     background: rgba(42,20,20,0.55);
     padding: 14px 26px;
@@ -67,67 +57,13 @@
     white-space: nowrap;
   }
 
-  /* ---------- floating "質詢議員" / "目前發言" callouts ---------- */
-  #askerBadge, #speakerBadge {
-    width: 420px;
-    text-align: right;
-    transition: opacity 360ms ease, transform 360ms ease;
-  }
-  #askerBadge.hidden, #speakerBadge.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
-  .speaker-tag {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--wine-dark);
-    font-family: "EB Garamond", serif;
-    font-weight: 700;
-    font-size: 18px;
-    letter-spacing: 0.2em;
-    padding: 5px 16px;
-    border-radius: 4px 4px 0 0;
-  }
-  .speaker-plate {
-    background: rgba(253,251,246,0.96);
-    padding: 14px 20px;
-    border-radius: 0 0 6px 6px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
-  }
-  .speaker-name {
-    font-size: 30px;
-    font-weight: 700;
-    color: var(--ink);
-    outline: none;
-  }
-  .speaker-role {
-    font-size: 18px;
-    color: var(--ink-soft);
-    margin-left: 8px;
-    outline: none;
-  }
-
-  /* ---------- bottom: ticker + info bar ---------- */
+  /* ---------- bottom: info bar ---------- */
   #bottomStack {
     position: absolute;
     left: 0; right: 0; bottom: 0;
     transition: transform 420ms cubic-bezier(.22,1,.36,1), opacity 320ms ease;
   }
   #bottomStack.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
-
-  .ticker {
-    background: var(--paper-alt);
-    border-top: 2px solid var(--gold);
-    border-bottom: 1px solid var(--border-soft);
-    height: 46px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  #tickerText1 {
-    font-family: "EB Garamond", serif;
-    font-size: 24px;
-    letter-spacing: 0.1em;
-    color: var(--wine-dark);
-    font-weight: 600;
-  }
 
   .info-bar {
     background: linear-gradient(180deg, rgba(89,31,31,0.97) 0%, rgba(42,20,20,0.97) 100%);
@@ -194,32 +130,13 @@
 <body>
 <div id="stage">
 
-  <div id="topRightStack">
-    <div id="brand">
-      <span class="thusp-word">THUSP</span>
-      <span class="brand-rule"></span>
-      <span class="brand-text">東海大學第三十八屆學生議會</span>
-    </div>
-
-    <div id="askerBadge">
-      <div class="speaker-tag">質詢議員</div>
-      <div class="speaker-plate">
-        <span class="speaker-name" id="askerName" contenteditable="true" spellcheck="false">議員姓名</span>
-      </div>
-    </div>
-
-    <div id="speakerBadge">
-      <div class="speaker-tag" id="speakerTag" contenteditable="true" spellcheck="false">目前發言</div>
-      <div class="speaker-plate">
-        <span class="speaker-name" id="speakerName" contenteditable="true" spellcheck="false">發言人姓名</span><span class="speaker-role" id="speakerRole" contenteditable="true" spellcheck="false">部長</span>
-      </div>
-    </div>
+  <div id="brand">
+    <span class="thusp-word">THUSP</span>
+    <span class="brand-rule"></span>
+    <span class="brand-text">東海大學第三十八屆學生議會</span>
   </div>
 
   <div id="bottomStack">
-    <div class="ticker">
-      <span id="tickerText1" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
-    </div>
     <div class="info-bar">
       <div class="clock" id="datetime"></div>
       <div class="v-div"></div>
@@ -263,7 +180,7 @@
     return state;
   }
 
-  const editableIds = ["askerName", "speakerTag", "speakerName", "speakerRole", "agendaText", "tickerText1"];
+  const editableIds = ["agendaText"];
 
   function applyState(s) {
     editableIds.forEach((id) => {
@@ -315,12 +232,13 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  let bottomVisible = true, speakerVisible = true, askerVisible = true;
+  let bottomVisible = true;
   window.addEventListener("keydown", (e) => {
-    const k = e.key.toLowerCase();
-    if (k === "h") { bottomVisible = !bottomVisible; document.getElementById("bottomStack").classList.toggle("hidden", !bottomVisible); }
-    if (k === "s") { speakerVisible = !speakerVisible; document.getElementById("speakerBadge").classList.toggle("hidden", !speakerVisible); }
-    if (k === "q") { askerVisible = !askerVisible; document.getElementById("askerBadge").classList.toggle("hidden", !askerVisible); }
+    if (document.activeElement && document.activeElement.isContentEditable) return;
+    if (e.key.toLowerCase() === "h") {
+      bottomVisible = !bottomVisible;
+      document.getElementById("bottomStack").classList.toggle("hidden", !bottomVisible);
+    }
   });
 </script>
 </body>
