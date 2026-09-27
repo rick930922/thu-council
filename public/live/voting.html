@@ -81,10 +81,12 @@
   .vote-box .label {
     font-size: 30px; font-weight: 700; color: var(--wine-dark);
     outline: none;
+  }
+  .vote-box .label.clickable {
     cursor: pointer;
     user-select: none;
   }
-  .vote-box .label:hover {
+  .vote-box .label.clickable:hover {
     text-decoration: underline;
     text-underline-offset: 6px;
   }
@@ -95,17 +97,10 @@
     font-variant-numeric: tabular-nums;
     line-height: 1;
     margin-top: 6px;
-    transition: filter 200ms ease;
   }
   .vote-box .unit {
     font-size: 22px; color: var(--ink); margin-left: 4px;
   }
-
-  /* results stay blurred (hidden from the audience) until an 同意/不同意/廢票
-     label is clicked; the operator can still click straight through the blur
-     to edit the number, and it sharpens automatically while focused so they
-     can see what they're typing. */
-  #voteBoxes.hidden .count:not(:focus) { filter: blur(20px); }
 
   #stamp {
     position: absolute; top: 50%; left: 50%;
@@ -183,12 +178,12 @@
 
   <div id="voteBoxes">
     <div class="vote-box">
-      <div class="label">同意</div>
+      <div class="label clickable" id="agreeLabel">同意</div>
       <div><span class="count" id="agreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
       <div id="stamp">通過</div>
     </div>
     <div class="vote-box">
-      <div class="label">不同意</div>
+      <div class="label clickable" id="disagreeLabel">不同意</div>
       <div><span class="count" id="disagreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
     </div>
     <div class="vote-box">
@@ -256,23 +251,8 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
   });
 
-  // results stay hidden (blurred) until an 同意/不同意/廢票 label is clicked
-  let resultsRevealed = state.vote_resultsRevealed || false;
-  const voteBoxesEl = document.getElementById("voteBoxes");
-  function renderReveal() {
-    voteBoxesEl.classList.toggle("hidden", !resultsRevealed);
-  }
-  renderReveal();
-  document.querySelectorAll("#voteBoxes .label").forEach((el) => {
-    el.addEventListener("click", () => {
-      resultsRevealed = !resultsRevealed;
-      renderReveal();
-      saveShared({ vote_resultsRevealed: resultsRevealed });
-    });
-  });
-
-  // stamp cycle: none -> pass -> fail -> none
-  const stampStates = ["none", "pass", "fail"];
+  // stamp: click 同意 to show 通過, click 不同意 to show 不通過; clicking the
+  // same one again (or the stamp itself) resets it back to hidden
   const stampLabels = { pass: "通過", fail: "不通過" };
   let stampState = state.vote_stampState || "none";
   const stampEl = document.getElementById("stamp");
@@ -283,13 +263,15 @@
       stampEl.classList.add("show", stampState);
     }
   }
-  renderStamp();
-  stampEl.addEventListener("click", () => {
-    const idx = (stampStates.indexOf(stampState) + 1) % stampStates.length;
-    stampState = stampStates[idx];
+  function setStamp(next) {
+    stampState = stampState === next ? "none" : next;
     renderStamp();
     saveShared({ vote_stampState: stampState });
-  });
+  }
+  renderStamp();
+  document.getElementById("agreeLabel").addEventListener("click", () => setStamp("pass"));
+  document.getElementById("disagreeLabel").addEventListener("click", () => setStamp("fail"));
+  stampEl.addEventListener("click", () => setStamp("none"));
 
   function applyState(s) {
     editableIds.forEach((id) => {
@@ -302,10 +284,6 @@
     if (s.vote_stampState !== undefined && s.vote_stampState !== stampState) {
       stampState = s.vote_stampState;
       renderStamp();
-    }
-    if (s.vote_resultsRevealed !== undefined && s.vote_resultsRevealed !== resultsRevealed) {
-      resultsRevealed = s.vote_resultsRevealed;
-      renderReveal();
     }
   }
 
