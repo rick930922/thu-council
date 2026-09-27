@@ -56,9 +56,7 @@
   #agendaCard {
     position: absolute; top: 40px; left: 48px;
     max-width: 760px;
-    transition: opacity 360ms ease, transform 360ms ease;
   }
-  #agendaCard.hidden { opacity: 0; transform: translateY(-10px); pointer-events: none; }
   .agenda-tag {
     display: inline-block;
     background: var(--gold);
@@ -105,9 +103,7 @@
   /* ---------- bottom: ticker + info bar (same family as the other cards) ---------- */
   #bottomStack {
     position: absolute; left: 0; right: 0; bottom: 0;
-    transition: transform 420ms cubic-bezier(.22,1,.36,1), opacity 320ms ease;
   }
-  #bottomStack.hidden { transform: translateY(100%); opacity: 0; pointer-events: none; }
   .info-bar {
     background: linear-gradient(180deg, rgba(89,31,31,0.97) 0%, rgba(42,20,20,0.97) 100%);
     height: 96px;
@@ -308,16 +304,11 @@
   setInterval(updateClock, 1000);
 
   // ---- invisible operator controls: never shown on screen ----------------
-  // →/N next agenda item · ←/P previous item · H toggle whole card ·
-  // B toggle bottom info bar
-  let cardVisible = true, bottomVisible = true;
+  // ← previous agenda item · → next agenda item
   window.addEventListener("keydown", (e) => {
     if (document.activeElement && document.activeElement.isContentEditable) return;
-    const k = e.key.toLowerCase();
-    if (k === "arrowright" || k === "n") goToIndex(agendaIndex + 1);
-    if (k === "arrowleft" || k === "p") goToIndex(agendaIndex - 1);
-    if (k === "h") { cardVisible = !cardVisible; document.getElementById("agendaCard").classList.toggle("hidden", !cardVisible); }
-    if (k === "b") { bottomVisible = !bottomVisible; document.getElementById("bottomStack").classList.toggle("hidden", !bottomVisible); }
+    if (e.key === "ArrowRight") goToIndex(agendaIndex + 1);
+    if (e.key === "ArrowLeft") goToIndex(agendaIndex - 1);
   });
 </script>
 </body>
