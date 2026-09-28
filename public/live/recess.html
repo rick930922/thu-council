@@ -131,6 +131,10 @@
   #leftRosterPanel { left: 30px; }
   #rightRosterPanel { right: 30px; }
 
+  #rightRosterList.roster-list { gap: 16px; margin-top: 4px; }
+  #rightRosterList .roster-name { font-size: 24px; font-weight: 600; }
+  #rightRosterList .roster-row { padding: 4px 6px; }
+
   .roster-header {
     font-family: "EB Garamond", serif;
     font-size: 14px;
@@ -213,7 +217,7 @@
   </div>
 
   <div id="rightRosterPanel" class="roster-panel">
-    <div class="roster-header">列席幹部</div>
+    <div class="roster-header">第一會期第一次常會議程</div>
     <div class="roster-list" id="rightRosterList"></div>
   </div>
 
@@ -319,24 +323,13 @@
   ];
 
   const RIGHT_ROSTER_DEFAULTS = [
-    "邱煜翔・會長",
-    "溫侑萱・副會長",
-    "張戎忠・秘書長",
-    "林上邕・副秘書長",
-    "謝耀陞・學權部部長",
-    "才宜禎・學權部副部長",
-    "蔡睿恩・外務部部長",
-    "王傑民・外務部副部長",
-    "林漢儒・學會部部長",
-    "柯承漢・學會部副部長",
-    "社團部部長",
-    "社團部副部長",
-    "劉又瑄・新聞部部長",
-    "陳振家・新聞部副部長",
-    "張惠玟（未定）・總務部部長",
-    "總務部副部長",
-    "林佳穎・選舉委員會主任委員",
-    "賴俞靜・選舉委員會副主任委員",
+    "一、宣布開會",
+    "二、主席報告",
+    "三、報告及詢答事項",
+    "四、本次會議提案",
+    "五、臨時動議",
+    "六、聲明與補述",
+    "七、散會",
   ];
 
   function buildRoster(listId, count, keyPrefix, namePlaceholder, defaultTitle, defaultNames) {
@@ -362,7 +355,7 @@
     }
   }
   buildRoster("leftRosterList", LEFT_ROSTER_DEFAULTS.length, "rosterL", "議員姓名 ", "議員", LEFT_ROSTER_DEFAULTS);
-  buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "rosterR", "幹部姓名 ", "幹部", RIGHT_ROSTER_DEFAULTS);
+  buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "agendaR", "議程項目 ", "", RIGHT_ROSTER_DEFAULTS);
 
   function applyState(s) {
     editableIds.forEach((id) => {
