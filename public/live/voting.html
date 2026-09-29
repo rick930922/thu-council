@@ -5,7 +5,7 @@
 <title>學生議會直播 - 表決畫面</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=optional" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=optional" rel="stylesheet">
 <style>
   :root {
     --paper-alt: #fdfbf6;
@@ -23,6 +23,8 @@
     overflow: auto;
     background: transparent;
     font-family: "Noto Serif TC", serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   #stage { position: relative; width: 100%; height: 100%; }
 
@@ -48,8 +50,9 @@
     margin: 6px 0 4px;
   }
   #brand .brand-text {
-    color: var(--paper-alt); font-family: "EB Garamond", serif;
-    font-size: 18px; letter-spacing: 0.1em; white-space: nowrap;
+    color: var(--paper-alt); font-family: "Noto Sans TC", sans-serif;
+    font-weight: 600;
+    font-size: 18px; letter-spacing: 0.06em; white-space: nowrap;
   }
 
   #agendaBanner {
@@ -61,7 +64,8 @@
   }
   #agendaTitle {
     color: var(--paper-alt);
-    font-size: 26px; font-weight: 600;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 27px; font-weight: 700;
     outline: none;
   }
 
@@ -79,6 +83,7 @@
     position: relative;
   }
   .vote-box .label {
+    font-family: "Noto Sans TC", sans-serif;
     font-size: 30px; font-weight: 700; color: var(--wine-dark);
     outline: none;
   }
@@ -105,7 +110,7 @@
   #stamp {
     position: absolute; top: 50%; left: 50%;
     transform: translate(-50%, -50%) rotate(-8deg);
-    font-family: "EB Garamond", serif;
+    font-family: "Noto Sans TC", sans-serif;
     font-weight: 700;
     font-size: 44px;
     padding: 10px 30px;
@@ -139,7 +144,8 @@
   }
   .v-div { width: 1px; height: 44px; background: rgba(176,141,87,0.4); }
   .agenda-text {
-    flex: 1; font-size: 30px; font-weight: 600; color: var(--paper-alt); outline: none;
+    flex: 1; font-family: "Noto Sans TC", sans-serif;
+    font-size: 30px; font-weight: 700; color: var(--paper-alt); outline: none;
   }
   .live-dot {
     display: flex; align-items: center; gap: 10px;
