@@ -69,63 +69,62 @@
     outline: none;
   }
 
+  /* ---- 七部會人事同意權表決面板：固定在畫面右側，不佔用左側鏡頭空間 ---- */
   #voteBoxes {
     position: absolute;
-    right: 40px; bottom: 124px;
-    display: flex; gap: 40px;
+    top: 150px; right: 40px;
+    width: 800px;
+    background: rgba(42,20,20,0.78);
+    border: 1px solid rgba(176,141,87,0.5);
+    border-radius: 10px;
+    padding: 16px 22px 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   }
-  .vote-box {
-    background: var(--gold);
-    border-radius: 8px;
-    padding: 20px 44px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-    text-align: center;
-    position: relative;
+  .vr, .vr-header {
+    display: grid;
+    grid-template-columns: 196px 150px 150px 104px 100px;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 4px;
   }
-  .vote-box .label {
+  .vr { border-top: 1px solid rgba(176,141,87,0.22); }
+  .vr-header {
     font-family: "Noto Sans TC", sans-serif;
-    font-size: 30px; font-weight: 700; color: var(--wine-dark);
-    outline: none;
-  }
-  .vote-box .label.clickable {
-    cursor: pointer;
-    user-select: none;
-  }
-  .vote-box .label.clickable:hover {
-    text-decoration: underline;
-    text-underline-offset: 6px;
-  }
-  .vote-box .count {
-    font-family: "EB Garamond", serif;
-    font-size: 76px; font-weight: 700; color: var(--ink);
-    outline: none;
-    font-variant-numeric: tabular-nums;
-    line-height: 1;
-    margin-top: 6px;
-  }
-  .vote-box .unit {
-    font-size: 22px; color: var(--ink); margin-left: 4px;
-  }
-
-  #stamp {
-    position: absolute; top: 50%; left: 50%;
-    transform: translate(-50%, -50%) rotate(-8deg);
-    font-family: "Noto Sans TC", sans-serif;
-    font-weight: 700;
-    font-size: 44px;
-    padding: 10px 30px;
-    border: 5px solid currentColor;
-    border-radius: 6px;
+    font-size: 15px; font-weight: 700;
     letter-spacing: 0.1em;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 250ms ease, transform 250ms ease;
-    cursor: pointer;
-    user-select: none;
+    color: var(--gold);
   }
-  #stamp.show { opacity: 0.92; pointer-events: auto; }
-  #stamp.pass { color: var(--forest); background: rgba(63,77,58,0.08); }
-  #stamp.fail { color: var(--wine); background: rgba(122,46,46,0.08); }
+  .vr-header span:not(:first-child) { text-align: center; }
+  .vr-name {
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 19px; font-weight: 700;
+    color: var(--paper-alt);
+  }
+  .vr-metric {
+    display: flex; align-items: baseline; justify-content: center; gap: 6px;
+  }
+  .vr-label {
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 15px; font-weight: 600; color: var(--gold);
+    white-space: nowrap;
+  }
+  .vr-label.clickable { cursor: pointer; user-select: none; }
+  .vr-label.clickable:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .vr-count {
+    font-family: "EB Garamond", serif;
+    font-size: 27px; font-weight: 700; color: var(--paper-alt);
+    font-variant-numeric: tabular-nums;
+    min-width: 30px; text-align: center;
+    outline: none;
+  }
+  .vr-status {
+    text-align: center;
+    font-family: "Noto Sans TC", sans-serif;
+    font-size: 16px; font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+  .vr-status.pass { color: #8fd18f; }
+  .vr-status.fail { color: #e79a9a; }
 
   #bottomStack {
     position: absolute; left: 0; right: 0; bottom: 0;
@@ -183,19 +182,10 @@
   </div>
 
   <div id="voteBoxes">
-    <div class="vote-box">
-      <div class="label clickable" id="agreeLabel">同意</div>
-      <div><span class="count" id="agreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
-      <div id="stamp">通過</div>
+    <div class="vr-header">
+      <span>部門／職稱</span><span>同意</span><span>不同意</span><span>廢票</span><span>結果</span>
     </div>
-    <div class="vote-box">
-      <div class="label clickable" id="disagreeLabel">不同意</div>
-      <div><span class="count" id="disagreeCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
-    </div>
-    <div class="vote-box">
-      <div class="label">廢票</div>
-      <div><span class="count" id="spoiledCount" contenteditable="true" spellcheck="false">0</span><span class="unit">人</span></div>
-    </div>
+    <div id="voteRows"></div>
   </div>
 
   <div id="bottomStack">
@@ -241,7 +231,20 @@
     postRemote(patch);
   }
 
-  const editableIds = ["agendaTitle", "agreeCount", "disagreeCount", "spoiledCount", "agendaBottomText"];
+  // ---- 七部會一級幹部人事同意權表決 ----
+  const DEPARTMENTS = [
+    { id: "xuequan", name: "學權部代理部長" },
+    { id: "waiwu", name: "外務部代理部長" },
+    { id: "xuehui", name: "學會部代理部長" },
+    { id: "shetuan", name: "社團部代理部長" },
+    { id: "xinwen", name: "新聞部代理部長" },
+    { id: "zongwu", name: "總務部代理部長" },
+    { id: "xuanwei", name: "選委會代理主委" },
+  ];
+  const stampLabels = { pass: "● 通過", fail: "● 不通過" };
+  const deptStamp = {};
+
+  const editableIds = ["agendaTitle", "agendaBottomText"];
   const state = loadShared();
   editableIds.forEach((id) => {
     const key = "vote_" + id;
@@ -257,10 +260,48 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
   });
 
-  // while focused on the 同意/不同意 count, Up/Down arrow adjusts it by 1
-  ["agreeCount", "disagreeCount"].forEach((id) => {
-    const el = document.getElementById(id);
+  function renderDeptStatus(id) {
+    const badge = document.querySelector('.vr-status[data-dept="' + id + '"]');
+    const next = deptStamp[id] || "none";
+    badge.classList.remove("pass", "fail");
+    if (next === "none") {
+      badge.textContent = "";
+    } else {
+      badge.textContent = stampLabels[next];
+      badge.classList.add(next);
+    }
+  }
+  function setDeptStamp(id, next) {
+    deptStamp[id] = deptStamp[id] === next ? "none" : next;
+    renderDeptStatus(id);
+    saveShared({ ["vote_" + id + "_stamp"]: deptStamp[id] });
+  }
+
+  const voteRows = document.getElementById("voteRows");
+  DEPARTMENTS.forEach((d) => {
+    const row = document.createElement("div");
+    row.className = "vr";
+    row.innerHTML =
+      '<span class="vr-name">' + d.name + '</span>' +
+      '<span class="vr-metric"><span class="vr-label clickable" data-dept="' + d.id + '" data-vote="pass">同意</span>' +
+      '<span class="vr-count" contenteditable="true" spellcheck="false" data-key="vote_' + d.id + '_agree">0</span></span>' +
+      '<span class="vr-metric"><span class="vr-label clickable" data-dept="' + d.id + '" data-vote="fail">不同意</span>' +
+      '<span class="vr-count" contenteditable="true" spellcheck="false" data-key="vote_' + d.id + '_disagree">0</span></span>' +
+      '<span class="vr-metric"><span class="vr-count" contenteditable="true" spellcheck="false" data-key="vote_' + d.id + '_spoiled">0</span></span>' +
+      '<span class="vr-status" data-dept="' + d.id + '"></span>';
+    voteRows.appendChild(row);
+  });
+
+  // count cells: type + Enter to save, click to focus then Up/Down to nudge by 1
+  document.querySelectorAll(".vr-count[data-key]").forEach((el) => {
+    const key = el.dataset.key;
+    if (state[key] !== undefined) el.textContent = state[key];
+    el.addEventListener("blur", () => {
+      saveShared({ [key]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
     el.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); el.blur(); return; }
       if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
       e.preventDefault();
       let val = parseInt(el.textContent, 10);
@@ -268,32 +309,20 @@
       val += e.key === "ArrowUp" ? 1 : -1;
       if (val < 0) val = 0;
       el.textContent = String(val);
-      saveShared({ ["vote_" + id]: el.textContent });
+      saveShared({ [key]: el.textContent });
       el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
     });
   });
 
-  // stamp: click 同意 to show 通過, click 不同意 to show 不通過; clicking the
-  // same one again (or the stamp itself) resets it back to hidden
-  const stampLabels = { pass: "通過", fail: "不通過" };
-  let stampState = state.vote_stampState || "none";
-  const stampEl = document.getElementById("stamp");
-  function renderStamp() {
-    stampEl.classList.remove("show", "pass", "fail");
-    if (stampState !== "none") {
-      stampEl.textContent = stampLabels[stampState];
-      stampEl.classList.add("show", stampState);
-    }
-  }
-  function setStamp(next) {
-    stampState = stampState === next ? "none" : next;
-    renderStamp();
-    saveShared({ vote_stampState: stampState });
-  }
-  renderStamp();
-  document.getElementById("agreeLabel").addEventListener("click", () => setStamp("pass"));
-  document.getElementById("disagreeLabel").addEventListener("click", () => setStamp("fail"));
-  stampEl.addEventListener("click", () => setStamp("none"));
+  // 同意/不同意 labels: click to set/toggle that department's pass/fail result
+  document.querySelectorAll(".vr-label.clickable[data-dept]").forEach((el) => {
+    el.addEventListener("click", () => setDeptStamp(el.dataset.dept, el.dataset.vote));
+  });
+
+  DEPARTMENTS.forEach((d) => {
+    deptStamp[d.id] = state["vote_" + d.id + "_stamp"] || "none";
+    renderDeptStatus(d.id);
+  });
 
   function applyState(s) {
     editableIds.forEach((id) => {
@@ -303,10 +332,19 @@
         el.textContent = s[key];
       }
     });
-    if (s.vote_stampState !== undefined && s.vote_stampState !== stampState) {
-      stampState = s.vote_stampState;
-      renderStamp();
-    }
+    document.querySelectorAll(".vr-count[data-key]").forEach((el) => {
+      const key = el.dataset.key;
+      if (s[key] !== undefined && document.activeElement !== el && el.textContent !== s[key]) {
+        el.textContent = s[key];
+      }
+    });
+    DEPARTMENTS.forEach((d) => {
+      const key = "vote_" + d.id + "_stamp";
+      if (s[key] !== undefined && s[key] !== deptStamp[d.id]) {
+        deptStamp[d.id] = s[key];
+        renderDeptStatus(d.id);
+      }
+    });
   }
 
   (async () => {
