@@ -189,6 +189,10 @@
     color: var(--paper-alt);
     outline: none;
   }
+  .roster-name.resigned {
+    text-decoration: line-through;
+    opacity: 0.55;
+  }
 
   [contenteditable="true"] {
     cursor: text; border-radius: 6px; padding: 2px 10px; margin: -2px -10px;
@@ -361,6 +365,14 @@
   }
   buildRoster("leftRosterList", LEFT_ROSTER_DEFAULTS.length, "rosterL", "議員姓名 ", "議員", LEFT_ROSTER_DEFAULTS);
   buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "agendaR", "議程項目 ", "", RIGHT_ROSTER_DEFAULTS);
+
+  // 已辭職議員：劃線標示
+  const RESIGNED_NAMES = ["張仲毅", "李聖亞"];
+  document.querySelectorAll("#leftRosterList .roster-name").forEach((el) => {
+    if (RESIGNED_NAMES.some((n) => el.textContent.startsWith(n))) {
+      el.classList.add("resigned");
+    }
+  });
 
   function applyState(s) {
     editableIds.forEach((id) => {
