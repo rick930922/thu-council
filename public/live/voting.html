@@ -257,6 +257,22 @@
     el.addEventListener("keydown", (e) => { if (e.key === "Enter") { e.preventDefault(); el.blur(); } });
   });
 
+  // while focused on the 同意/不同意 count, Up/Down arrow adjusts it by 1
+  ["agreeCount", "disagreeCount"].forEach((id) => {
+    const el = document.getElementById(id);
+    el.addEventListener("keydown", (e) => {
+      if (e.key !== "ArrowUp" && e.key !== "ArrowDown") return;
+      e.preventDefault();
+      let val = parseInt(el.textContent, 10);
+      if (isNaN(val)) val = 0;
+      val += e.key === "ArrowUp" ? 1 : -1;
+      if (val < 0) val = 0;
+      el.textContent = String(val);
+      saveShared({ ["vote_" + id]: el.textContent });
+      el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash");
+    });
+  });
+
   // stamp: click 同意 to show 通過, click 不同意 to show 不通過; clicking the
   // same one again (or the stamp itself) resets it back to hidden
   const stampLabels = { pass: "通過", fail: "不通過" };
