@@ -19,14 +19,14 @@ export default function NewsImageCarousel({
   const goNext = () => setIndex((i) => (i + 1) % images.length);
 
   return (
-    <div className="mb-10">
-      <div className="relative aspect-square w-full max-w-md mx-auto overflow-hidden rounded-sm border border-border-soft bg-paper-alt">
+    <div className="mb-10 w-full max-w-sm mx-auto">
+      <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-border-soft bg-paper-alt">
         <Image
           src={images[index]}
           alt={`${alt} 圖片 ${index + 1}`}
           fill
-          sizes="(min-width: 640px) 28rem, 100vw"
-          className="object-cover"
+          sizes="(min-width: 640px) 24rem, 100vw"
+          className="object-contain"
           priority={index === 0}
         />
 
@@ -65,26 +65,28 @@ export default function NewsImageCarousel({
               </svg>
             </button>
 
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {images.map((src, i) => (
-                <button
-                  key={src}
-                  type="button"
-                  onClick={() => setIndex(i)}
-                  aria-label={`前往第 ${i + 1} 張圖片`}
-                  className={`h-1.5 rounded-full transition-all ${
-                    i === index ? "w-4 bg-paper-alt" : "w-1.5 bg-paper-alt/50"
-                  }`}
-                />
-              ))}
-            </div>
-
             <div className="absolute top-2 right-2 rounded-full bg-ink/40 px-2 py-0.5 text-xs text-paper-alt tracking-wide">
               {index + 1} / {images.length}
             </div>
           </>
         )}
       </div>
+
+      {hasMultiple && (
+        <div className="mt-3 flex justify-center gap-1.5">
+          {images.map((src, i) => (
+            <button
+              key={src}
+              type="button"
+              onClick={() => setIndex(i)}
+              aria-label={`前往第 ${i + 1} 張圖片`}
+              className={`h-1.5 rounded-full transition-all ${
+                i === index ? "w-4 bg-wine" : "w-1.5 bg-border-soft"
+              }`}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
