@@ -13,6 +13,21 @@ export type NewsItem = {
 
 export const newsItems: NewsItem[] = [
   {
+    slug: "38th-first-regular-session-notice",
+    title: "第三十八屆學生議會第一會期第一次常會開會公告",
+    date: "2026-09-27",
+    category: "會議通知",
+    excerpt:
+      "東海大學第三十八屆學生議會訂於9月30日（三）晚間6時，假人文大樓H122召開第一會期第一次常會，同步提供YouTube線上直播，歡迎全校師生到場或線上參與。",
+    images: ["/news/38th-first-session-notice.png"],
+    content: [
+      "東海大學第三十八屆學生議會訂於中華民國一百一十五年九月三十日（星期三）下午六時，假人文大樓H122教室召開第一會期第一次常會，歡迎全校師生踴躍到場旁聽，共同關心校園公共事務。",
+      "與會議員及現場旁聽同學，請攜帶學生證以利工作人員核對身分。",
+      "本次常會同步提供YouTube線上直播，直播連結將於會議當日公告於本會Instagram限時動態，歡迎無法到場的同學上線參與，共同監督議會運作。",
+      "本公告由東海大學第三十八屆學生議會秘書處發布。",
+    ],
+  },
+  {
     slug: "38th-speaker-election-result",
     title: "第三十八屆學生議會正副議長選舉結果公告",
     date: "2026-08-28",
