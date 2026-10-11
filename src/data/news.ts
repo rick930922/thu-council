@@ -13,6 +13,35 @@ export type NewsItem = {
 
 export const newsItems: NewsItem[] = [
   {
+    slug: "38th-first-session-personnel-consent-result",
+    title: "第一會期第一次常會行政中心一級幹部人事同意權案行使結果",
+    date: "2026-10-02",
+    category: "公告",
+    excerpt:
+      "本會於9月30日召開第一會期第一次常會，完成學生會行政中心一級幹部人事同意權案行使，學權部、外務部、學會部、社團部、新聞部、總務部部長及選舉委員會主任委員等7項人事案全數同意通過。",
+    images: [
+      "/news/38th-personnel-consent-result-00.png",
+      "/news/38th-personnel-consent-result-01.png",
+      "/news/38th-personnel-consent-result-02.png",
+      "/news/38th-personnel-consent-result-03.png",
+      "/news/38th-personnel-consent-result-04.png",
+      "/news/38th-personnel-consent-result-05.png",
+      "/news/38th-personnel-consent-result-06.png",
+      "/news/38th-personnel-consent-result-07.png",
+    ],
+    content: [
+      "本會於中華民國一百一十五年九月三十日召開第三十八屆第一會期第一次常會，完成東海大學學生會行政中心一級幹部人事同意權案之行使，結果公告如下：",
+      "學權部部長被提名人謝耀陞（政治學系三年級），同意票17張、不同意票1張、無效票1張，同意為學權部部長。",
+      "外務部部長被提名人蔡睿恩（會計學系三年級），同意票16張、不同意票3張、無效票0張，同意為外務部部長。",
+      "學會部部長被提名人林漢儒（國際經營管理學位學程三年級），同意票16張、不同意票3張、無效票0張，同意為學會部部長。",
+      "社團部部長被提名人孫宥芯（日本語言文化學系三年級），同意票17張、不同意票2張、無效票0張，同意為社團部部長。",
+      "新聞部部長被提名人劉又瑄（國際經營與貿易學系三年級），同意票17張、不同意票2張、無效票0張，同意為新聞部部長。",
+      "總務部部長被提名人張惠玟（財務金融學系三年級），同意票17張、不同意票2張、無效票0張，同意為總務部部長。",
+      "選舉委員會主任委員被提名人林佳穎（政治學系四年級），同意票18張、不同意票1張、無效票0張，同意為選舉委員會主任委員。",
+      "以上7項人事同意權案均經本會議員行使同意權後通過，本會秘書處已依《東海大學學生議會職權行使法》第20條第1項，將行使結果正式函覆學生會會長。",
+    ],
+  },
+  {
     slug: "38th-first-regular-session-notice",
     title: "第三十八屆學生議會第一會期第一次常會開會公告",
     date: "2026-09-27",
