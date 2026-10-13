@@ -96,42 +96,35 @@ export const secretariat = {
   ] satisfies SecretariatGroup[],
 };
 
-export const proceduralTrack = {
+// 依《東海大學學生會組織章程》第27條、第28條，程序委員會與紀律委員會
+// 是兩個各自獨立的機構，彼此之間、以及與第29條常設委員會之間，都不是
+// 上下隸屬關係——三者皆平行設於學生議會大會之下。
+export const proceduralCommittee = {
   name: "程序委員會",
   englishName: "Procedural Committee",
   formation: "議長、副議長為當然召集委員，其餘議員得自由加入，人數不限。",
   scope:
     "審定各項提案手續是否完備、收受議案、決定議案之合併與次序，並負責質詢時間分配及秘書處議事日程之審查。",
-  committees: [
-    {
-      id: "legislation",
-      name: "法制委員會",
-      formation: "有意願之議員加入，並互選出一位召集委員。",
-      scope: "稽查學生會各項法規有無不合時宜或相互牴觸之處，並研擬合宜之法規修正案。",
-    },
-    {
-      id: "rights-protection",
-      name: "權益維護委員會",
-      formation: "有意願之議員加入，並互選出一位召集委員。",
-      scope: "了解學生權益是否受損卻無單位處理，聚焦校方措施與學生會行政單位相關事項。",
-    },
-    {
-      id: "budget-audit",
-      name: "經費稽核委員會",
-      formation:
-        "由議長、副議長及財務暨行政審查委員會下四個委員會之召集委員共 6 人組成，互選出一位召集委員。",
-      scope: "稽核學生會經費運用情形，按學期審查各項預算執行情形並向大會報告。",
-    },
-  ] satisfies Committee[],
+  legalBasis: "《東海大學學生會組織章程》第27條",
 };
 
-export const disciplinaryTrack = {
+export const disciplinaryCommittee = {
   name: "紀律委員會",
   englishName: "Discipline Committee",
   formation: "由議會各委員會之召集委員組成，互選出一位召集委員。",
   scope:
     "審議議員違反議事規則或行為規範之懲戒案，以及議員因無故缺席達三次而法定解職之調查案件。",
-  committees: [
+  legalBasis: "《東海大學學生會組織章程》第28條",
+};
+
+// 依組織章程第29條，本會下設之常設委員會：財務暨行政審查委員會（下轄活動、
+// 社團學會、學權、綜合四個委員會）、法制委員會、權益維護委員會、經費稽核委員會。
+export const financeAdminReview = {
+  id: "finance-admin-review",
+  name: "財務暨行政審查委員會",
+  formation: "下轄活動、社團學會、學權、綜合四個委員會，各委員會互選一位召集委員。",
+  scope: "統籌審查及監督行政中心各部會之經費使用與工作事項，分由下列四個委員會分工負責。",
+  subCommittees: [
     {
       id: "activities",
       name: "活動委員會",
@@ -158,5 +151,29 @@ export const disciplinaryTrack = {
         "審查及監督學生議會、學生評議會、行政中心秘書處及其他部會之經費使用與工作事項。",
     },
   ] satisfies Committee[],
-  parentCommitteeName: "財務暨行政審查委員會",
+};
+
+export const standingCommittees = {
+  legalBasis: "《東海大學學生會組織章程》第29條",
+  committees: [
+    {
+      id: "legislation",
+      name: "法制委員會",
+      formation: "有意願之議員加入，並互選出一位召集委員。",
+      scope: "稽查學生會各項法規有無不合時宜或相互牴觸之處，並研擬合宜之法規修正案。",
+    },
+    {
+      id: "rights-protection",
+      name: "權益維護委員會",
+      formation: "有意願之議員加入，並互選出一位召集委員。",
+      scope: "了解學生權益是否受損卻無單位處理，聚焦校方措施與學生會行政單位相關事項。",
+    },
+    {
+      id: "budget-audit",
+      name: "經費稽核委員會",
+      formation:
+        "由議長、副議長及財務暨行政審查委員會下四個委員會之召集委員共 6 人組成，互選出一位召集委員。",
+      scope: "稽核學生會經費運用情形，按學期審查各項預算執行情形並向大會報告。",
+    },
+  ] satisfies Committee[],
 };
