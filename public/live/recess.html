@@ -367,7 +367,7 @@
   buildRoster("rightRosterList", RIGHT_ROSTER_DEFAULTS.length, "agendaR", "議程項目 ", "", RIGHT_ROSTER_DEFAULTS);
 
   // 已辭職議員：劃線標示
-  const RESIGNED_NAMES = ["張仲毅", "李聖亞"];
+  const RESIGNED_NAMES = ["張仲毅", "李聖亞", "薛喬丰"];
   document.querySelectorAll("#leftRosterList .roster-name").forEach((el) => {
     if (RESIGNED_NAMES.some((n) => el.textContent.startsWith(n))) {
       el.classList.add("resigned");

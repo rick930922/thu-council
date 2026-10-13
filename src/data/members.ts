@@ -38,7 +38,7 @@ export const members: CouncilMember[] = [
   { id: "yang-peihua", name: "楊佩樺", college: "管理學院", department: "會計系" },
   { id: "xu-weifeng", name: "許偉鋒", college: "管理學院", department: "國貿系" },
 
-  { id: "xue-qiaofeng", name: "薛喬丰", college: "研究所", department: "" },
+  { id: "xue-qiaofeng", name: "薛喬丰", college: "研究所", department: "", resigned: true },
   { id: "zhao-youren", name: "趙宥任", college: "研究所", department: "" },
 ];
 
