@@ -189,11 +189,39 @@
     100% { color: inherit; }
   }
 
+  /* ---- 萬聖節節慶裝飾（淡化，不干擾資訊） ---- */
+  .hw-web { position: absolute; z-index: 1; pointer-events: none; opacity: 0.4; }
+  .hw-bat { position: absolute; z-index: 1; pointer-events: none; font-size: 28px; opacity: 0.5; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.4)); animation: hw-flit 10s ease-in-out infinite; }
+  .hw-bat.hw-b2 { animation-duration: 12.5s; animation-delay: -4s; }
+  .hw-bat.hw-b3 { animation-duration: 8.5s; animation-delay: -6.5s; }
+  @keyframes hw-flit {
+    0%, 100% { transform: translate(0,0) rotate(0deg); }
+    25% { transform: translate(16px,-14px) rotate(-8deg); }
+    50% { transform: translate(2px,10px) rotate(5deg); }
+    75% { transform: translate(-14px,-8px) rotate(-4deg); }
+  }
+  .hw-pumpkin { font-size: 0.85em; margin-left: 4px; }
 
 </style>
 </head>
 <body>
 <div id="stage">
+
+  <svg class="hw-web" style="top:-10px; left:-10px;" width="130" height="130" viewBox="0 0 120 120">
+    <g fill="none" stroke="#e8dcc8" stroke-width="1.1">
+      <path d="M0,0 L120,120 M0,40 L66,106 M0,70 L40,110 M0,96 L18,114 M40,0 L106,66 M70,0 L110,40 M96,0 L114,18"/>
+      <path d="M0,0 Q14,16 0,34" /><path d="M0,0 Q26,20 14,46" /><path d="M0,0 Q40,26 30,58" /><path d="M0,0 Q54,30 48,70" />
+    </g>
+  </svg>
+  <svg class="hw-web" style="top:-10px; right:-10px; transform:scaleX(-1);" width="130" height="130" viewBox="0 0 120 120">
+    <g fill="none" stroke="#e8dcc8" stroke-width="1.1">
+      <path d="M0,0 L120,120 M0,40 L66,106 M0,70 L40,110 M0,96 L18,114 M40,0 L106,66 M70,0 L110,40 M96,0 L114,18"/>
+      <path d="M0,0 Q14,16 0,34" /><path d="M0,0 Q26,20 14,46" /><path d="M0,0 Q40,26 30,58" /><path d="M0,0 Q54,30 48,70" />
+    </g>
+  </svg>
+  <span class="hw-bat" style="top:150px; left:300px;">🦇</span>
+  <span class="hw-bat hw-b2" style="top:220px; left:1560px;">🦇</span>
+  <span class="hw-bat hw-b3" style="top:860px; left:220px;">🦇</span>
 
   <div id="center">
     <div id="rings">
@@ -218,7 +246,7 @@
   </div>
 
   <div id="bottomBar">
-    <span class="prep-dot"><span class="dot"></span>準備中</span>
+    <span class="prep-dot"><span class="dot"></span>準備中<span class="hw-pumpkin">🎃</span></span>
     <span style="opacity:.4;">｜</span>
     <span id="sessionText" contenteditable="true" spellcheck="false">東海大學第三十八屆學生議會・第1次定期大會</span>
   </div>
